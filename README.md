@@ -1,4 +1,4 @@
-CloudyWithAChanceOfAwesome
+NightKnights
 ==========================
 
-Actually it's sunny, and we're always awesome.
+Dream Team public repository for NightKnights application
