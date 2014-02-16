@@ -102,6 +102,7 @@ function handleComplete(event)
   
   if(manifest.length==totalLoaded)
   {
+    //Display the title screen
     addTitleView();
   }
 }
@@ -128,3 +129,97 @@ function handleFileLoad(event)
   }
 }
 
+function addTitleView()
+{
+  //The x is written like this for clarity, so we know the offset
+  startB.x = 240 - 31.5;
+  startB.y = 160;
+  startB.name = 'startB';  
+  
+  creditsB.x = 241 - 42;
+  creditsB.y = 200;
+    
+  //Title view is a container that holds all of our elements to be displayed.
+  //It acts just like a view, and in order to display it, we simply add it to the stage.
+  TitleView.addChild(main, startB, creditsB);
+  stage.addChild(bg, TitleView);
+  stage.update();
+    
+  // Button Listeners
+  // For these events, you put in the name of the function: the function object to call.
+  startB.onPress = tweenTitleView;
+  creditsB.onPress = showCredits;
+}
+
+function showCredits()
+{
+  // Show Credits
+	
+  credits.x = 480;
+	
+  stage.addChild(credits);
+  stage.update();
+  //Animates via Tween
+  Tween.get(credits).to({x:0}, 300);
+  //When you click on the screen, hide the credits
+  credits.onPress = hideCredits;
+}
+ 
+// Hide Credits
+ 
+function hideCredits(e)
+{
+  Tween.get(credits).to({x:480}, 300).call(rmvCredits);
+}
+ 
+// Remove Credits
+ 
+function rmvCredits()
+{
+  stage.removeChild(credits);
+}
+ 
+// Tween Title View
+ 
+function tweenTitleView()
+{       
+  // Start Game
+	
+  Tween.get(TitleView).to({y:-320}, 300).call(addGameView);
+}
+
+function addGameView()
+{
+    // Destroy Menu & Credits screen
+    //This is how we stop rendering the current view
+    stage.removeChild(TitleView);
+    //Since we aren't using these again, we destruct them.
+    TitleView = null;
+    credits = null;
+     
+    // Add Game View
+     
+    player.x = 2;
+    player.y = 160 - 37.5;
+    cpu.x = 480 - 25;
+    cpu.y = 160 - 37.5;
+    ball.x = 240 - 15;
+    ball.y = 160 - 15;
+     
+    // Score
+     
+    playerScore = new Text('0', 'bold 20px Arial', '#A3FF24');
+    playerScore.x = 211;
+    playerScore.y = 20;
+     
+    cpuScore = new Text('0', 'bold 20px Arial', '#A3FF24');
+    cpuScore.x = 262;
+    cpuScore.y = 20;
+     
+    stage.addChild(playerScore, cpuScore, player, cpu, ball);
+    stage.update();
+     
+    // Start Listener 
+     
+    bg.onPress = startGame;
+}
