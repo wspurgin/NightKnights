@@ -1,6 +1,6 @@
 -- start of night knights code
-
-CREATE DATABASE night_knights;
+DROP DATABASE IF EXISTS night_knights;
+CREATE DATABASE IF NOT EXISTS night_knights DEFAULT CHARSET=utf8;
 USE night_knights;
 
 CREATE TABLE Users(
@@ -15,14 +15,13 @@ CREATE TABLE Users(
 
 CREATE TABLE Characters(
     `id` int(11) AUTO_INCREMENT PRIMARY KEY,
-    `user_id` int(11) NOT NULL UNIQUE KEY,
     `name` varchar(32) NOT NULL UNIQUE KEY,
     `energy` int(11) NOT NULL DEFAULT 0,
     `experience` int(11) NOT NULL DEFAULT 0,
     `level` int(11) NOT NULL DEFAULT 1,
     
     CONSTRAINT character_fk_user
-    FOREIGN KEY (`user_id`)
+    FOREIGN KEY (`id`)
         REFERENCES Users(`id`)
         ON UPDATE CASCADE ON DELETE CASCADE,
 
@@ -159,8 +158,8 @@ VALUES
     (1, 'picoriley', 'acloudy@smu.edu', '$2y$10$eGtIfbkb9Ou11VdEzhi2p.WbeOw/8a8d5ON9mnFZtQKalSCmOiuP.');
 
 
-INSERT INTO `Characters` (`id`, `user_id`, `name`, `energy`, `experience`, `level`)
+INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
-    (3, 1, 'picoriley', 0, 0, 1);
+    (1, 'picoriley', 0, 0, 1);
 
 -- end of night-knights code
