@@ -1,0 +1,5 @@
+i=1; for file in *
+do
+mv "$file" $(printf "%d.png" $i);
+i=$((i + 1))
+done
