@@ -1,5 +1,3 @@
-<--This space intentionally left blank.-->
-
 <html>
     <head>
         <title>NightKnights!</title>
