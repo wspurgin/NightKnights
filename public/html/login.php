@@ -12,6 +12,7 @@
 
         New Recruits
         <div id="newbies" class="infobox">I'm also in a box!</div>
-        
+
+        <div id="copyright"> </div>
     </body>
 </html>
