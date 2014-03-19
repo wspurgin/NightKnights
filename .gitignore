@@ -1,3 +1,9 @@
 .DS_Store
 .directory
 *.log
+
+###don't upload unsaved, changed files
+*.*~
+
+###just because
+init.php
