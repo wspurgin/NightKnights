@@ -1,6 +1,7 @@
 .DS_Store
 .directory
 *.log
+vendor/
 
 ###don't upload unsaved, changed files
 *.*~
