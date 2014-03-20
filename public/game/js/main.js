@@ -51,8 +51,9 @@ var totalLoaded = 0;
 
 var TitleView = new Container();
 
-function Main()
+function main()
 {
+  console.log("greatjearb");
   canvas = document.getElementById('PongStage');
   stage = new Stage(canvas);
   stage.mouseEventsEnabled = true;
