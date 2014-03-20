@@ -2,6 +2,7 @@
 .directory
 *.log
 vendor/
+composer.lock
 
 ###don't upload unsaved, changed files
 *.*~
