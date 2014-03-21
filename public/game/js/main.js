@@ -31,7 +31,8 @@ function main()
   
   //Declare all of the images up front, and give each one a unique id
   manifest = [
-            {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"}
+            {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
+            {src:"backgrounds/WorldMap.png", id:"worldMap"}
         ];
   
   preload = new createjs.LoadQueue();
@@ -91,10 +92,11 @@ function handleFileLoad(event)
       document.body.appendChild(event.result);
      }
  }
-
+ 
 function addTitleView()
 {
-    var backgroundSheet = new createjs.SpriteSheet({
+  /*
+  var backgroundSheet = new createjs.SpriteSheet({
     "animations":
       {
         "normal": [0]
@@ -106,7 +108,10 @@ function addTitleView()
   var background = new createjs.Sprite(backgroundSheet, "normal");
   background.scaleX = 3;
   background.scaleY = 3;
-  background.z = -10;
-  stage.addChildAt(background, stage.getChildIndex(loadingText));
+  stage.addChildAt(background, 0);
+  stage.update();*/
+  stage.removeChildAt(0);
+  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
+  stage.addChildAt(worldMap, 0);
   stage.update();
 }
