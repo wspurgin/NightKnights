@@ -9,11 +9,10 @@
 
 <body>
 
-  <nav>
-    <div>
-      <?php include("modules/navbar.html"); ?>
-    </div>
-  </nav>
+
+  <div>
+    <?php include("modules/navbar.html"); ?>
+  </div>
 
   <footer>
     <?php include("modules/copyright.html"); ?>

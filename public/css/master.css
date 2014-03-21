@@ -1,12 +1,12 @@
 body
 {
   background-color: black;
+  color: white;
 }
 
 header
 {
   text-align: center;
-  color: white;
 }
 
 p
@@ -50,7 +50,7 @@ p
 
 form ul > li
 {
-  
+
 }
 
 label
@@ -61,4 +61,31 @@ label
 footer
 {
   text-align: center;
+}
+
+#navbar div
+{
+  height: 100px;
+  border-style: solid;
+  border-color: white;
+  border: 10px;
+  text-align: center;
+}
+
+#navbar div > div
+{
+  height: 100px;
+  display: inline-block;
+  text-align: center;
+  font-size: 2em;
+}
+
+#navbar > div:after
+{
+  content: '';
+  display: inline-block;
+  width: 100%;
+
+  font-size: 0px;
+  line-height: 0px;
 }
