@@ -48,6 +48,16 @@ p
   text-align: center;
 }
 
+form ul > li
+{
+  
+}
+
+label
+{
+  color: white;
+}
+
 footer
 {
   text-align: center;
