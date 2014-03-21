@@ -8,6 +8,16 @@
 </head>
 
 <body>
-  
+
+  <nav>
+    <div>
+      <?php include("modules/navbar.html"); ?>
+    </div>
+  </nav>
+
+  <footer>
+    <?php include("modules/copyright.html"); ?>
+  </footer>
+
 </body>
 </html>
