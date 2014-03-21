@@ -1,4 +1,5 @@
 <?
-require_once('../../init.php');
-require_once('../../lib/password.php');
-require_once('../../lib/session.php');
+require '../vendor/autoload.php';
+require_once('../init.php');
+require_once('password.php');
+require_once('session.php');
