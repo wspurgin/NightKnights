@@ -17,12 +17,12 @@
 
   <p class="infocaption">Returning Nights</p>
   <div id="returning" class="infobox center">
-    <p>Login form goes here.</p>
+    <?php include("modules/login.html"); ?>
   </div>
 
   <p class="infocaption">New Recruits</p>
   <div id="newbies" class="infobox center">
-    <p>Account creation form goes here.</p>
+    <?php include("modules/createAccount.html"); ?>
   </div>
 
   <p class="infocaption">STORY</p>
