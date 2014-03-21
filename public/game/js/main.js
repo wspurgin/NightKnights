@@ -32,7 +32,8 @@ function main()
   //Declare all of the images up front, and give each one a unique id
   manifest = [
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
-            {src:"backgrounds/WorldMap.png", id:"worldMap"}
+            {src:"backgrounds/WorldMap.png", id:"worldMap"},
+            {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
         ];
   
   preload = new createjs.LoadQueue();
@@ -58,7 +59,9 @@ function updateLoading(event)
 //What gets called when we're done loading.  
 function doneLoading(event) 
 {
-  addTitleView();
+  //Remove the loading text.
+  stage.removeChildAt(0);
+  worldView();
 }
  
 /*Allows us to discern the files we're loading, and do something different for each.
@@ -93,25 +96,39 @@ function handleFileLoad(event)
      }
  }
  
-function addTitleView()
+function worldView()
 {
-  /*
-  var backgroundSheet = new createjs.SpriteSheet({
+ stage.enableMouseOver();
+ worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
+ var stageSelect = new createjs.Container();
+ 
+ var stageSelectSheet = new createjs.SpriteSheet({
     "animations":
       {
-        "normal": [0]
+        "default": [0],
+        "highlighted": [1, 3, "highlighted"]
       },
-        "images": [preload.getResult("bgSprites")],
-        "frames": {width:255, height:112}
+        "images": [preload.getResult("stageSelectSprites")],
+        "frames": {width:50, height:50, count:4}
   });
   
-  var background = new createjs.Sprite(backgroundSheet, "normal");
-  background.scaleX = 3;
-  background.scaleY = 3;
-  stage.addChildAt(background, 0);
-  stage.update();*/
-  stage.removeChildAt(0);
-  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
-  stage.addChildAt(worldMap, 0);
+  var forest = new createjs.Sprite(stageSelectSheet, "default");
+  forest.setTransform(130, 230);
+  forest.framerate = 10;
+  forest.on("rollover", stageOver);
+  forest.on("rollout", stageOut);
+  stageSelect.addChild(forest);  
+
+  stage.addChild(worldMap, stageSelect);
   stage.update();
+}
+
+function stageOver(event) {
+    console.log("In");
+    this.gotoAndPlay("highlighted");
+}
+
+function stageOut(event) {
+    console.log("out");
+    this.gotoAndPlay("default");
 }
