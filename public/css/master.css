@@ -1,4 +1,54 @@
+body
+{
+  background-color: black;
+}
+
+header
+{
+  text-align: center;
+  color: white;
+}
+
+p
+{
+  color:white;
+}
+
 .infobox
 {
-  
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  display: inline-block;
+}
+
+.infocaption
+{
+  margin-bottom: 0px;
+
+  font-size: 2em;
+}
+
+.center
+{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.words p
+{
+  width: auto;
+  text-align: center;
+}
+
+footer
+{
+  text-align: center;
 }

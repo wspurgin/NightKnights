@@ -1,28 +1,38 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Welcome to Hibera, Night Knights!</title>
-        <meta charset="utf-8" \>
+<head>
+  <title>Welcome to Hibera, Night Knights!</title>
+  <meta charset="utf-8" \>
 
+  <link rel="stylesheet" type="text/css" href="../css/master.css">
+</head>
 
-    </head>
+<body>
 
-    <body>
-        <h1 id="titlebanner" class="title">NIGHT KNIGHTS</h1>
+  <div>
+    <header>
+      <h1>NIGHT KNIGHTS</h1>
+    </header>
+  </div>
 
-        Returning Nights
-        <div id="returning" class="infobox">
-            I'm in a box
-        </div>
+  <p class="infocaption">Returning Nights</p>
+  <div id="returning" class="infobox center">
+    <p>Login form goes here.</p>
+  </div>
 
-        New Recruits
-        <div id="newbies" class="infobox">
-            I'm also in a box!
-        </div>
+  <p class="infocaption">New Recruits</p>
+  <div id="newbies" class="infobox center">
+    <p>Account creation form goes here.</p>
+  </div>
 
-        <div id="copyright">
-            <?php include("modules/copyright.html"); ?>
-        </div>
+  <p class="infocaption">STORY</p>
+  <div id="blurb" class="infobox words center">
+    <p>STORY GOES HERE!</p>
+  </div>
 
-    </body>
+  <footer>
+    <?php include("modules/copyright.html"); ?>
+  </footer>
+
+</body>
 </html>
