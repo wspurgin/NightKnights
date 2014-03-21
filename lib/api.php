@@ -5,8 +5,8 @@
 * @author Will Spurgin
 */
 
-require '../vendor/autoload.php';
-require_once('../init.php');
+require_once('../../vendor/autoload.php');
+require_once('../../init.php');
 require_once('password.php');
 require_once('session.php');
 
@@ -34,5 +34,15 @@ Class Api
 	public function __contruct()
 	{
 		$this->db = getConnection();
+	}
+
+	public function __clone()
+	{
+		return clone $this;
+	}
+
+	public function getCurrentUser()
+	{
+		echo json_encode('{ "user": "current_user" }');
 	}
 }

@@ -6,7 +6,7 @@
 * @author Will Spurgin 
 */
 
-class ClassName extends AnotherClass
+class Password
 {
 	
 	function __construct($password)

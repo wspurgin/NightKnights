@@ -1,5 +1,5 @@
 <?
-require '../../vendor/autoload.php';
+require_once('../../vendor/autoload.php');
 require_once('../../lib/config.php');
 
 
@@ -14,13 +14,13 @@ foreach ($ROUTES as $route) {
 	if($route->type == Route::GET)
 		$app->get($route->url, $route->callable);
 	elseif ($route->type == Route::POST)
-		# code...
+		$app->post($route->url, $route->callable);
 	elseif ($route->type == Route::PUT)
-		# code...
+		$app->put($route->url, $route->callable);
 	elseif ($route->type == Route::DELETE)
-		# code...
+		$app->delete($route->url, $route->callable);
 	else
-		// not supported route type
+		$app->log("Unsupported route type for '$route->type', on Route $route");
 }
 
 $app->run();
