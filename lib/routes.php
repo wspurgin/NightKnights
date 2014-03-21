@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 Route
 	type GET POST PUT DELETE
@@ -6,18 +6,30 @@ Route
 	callable [callable] where to go with url
 */
 
-/*
 
+/*
 class Route
 {
+	public var $type;
+	public var $url;
+	public var $callable;
+
+	//enum stuff
+	const GET = 0;
+	const POST = 1;
+	const PUT = 2;
+	const DELETE = 3;
+	
+	$typeArray = array(Route::GET, Route::POST, Route::PUT, Route::DELETE);
+
 	function __construct($url, $type, $callable)
 	{
-		if $type not in [Route::GET, Route::POST, Route::PUT, Route::DELETE]
+		if in_array($type, $typeArray)
 			throw new Exception("Unsupported type", 1);
 		else
 			$this->type = $type;
 
-		if url is string
+		if is_string($url)
 			$this->url = $url;
 		else
 			throw new Exception("Route url must be of type string", 1);
@@ -29,5 +41,5 @@ class Route
 			
 	}
 }
-
 */
+?>
