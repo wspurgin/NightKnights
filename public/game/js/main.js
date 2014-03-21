@@ -63,38 +63,17 @@ function doneLoading(event)
   stage.removeChildAt(0);
   worldView();
 }
- 
-/*Allows us to discern the files we're loading, and do something different for each.
-function handleFileLoad(event) 
-{
-  //triggered when an individual file completes loading
-      
-  switch(event.type)
-  {
-    case PreloadJS.IMAGE:
-    //image loaded
-      var img = new Image();
-      img.src = event.src;
-      img.onload = handleLoadComplete;
-      window[event.id] = new Bitmap(img);
-    break;
 
-    case PreloadJS.SOUND:
-    //sound loaded
-    handleLoadComplete();
-    break;
-  }
-  
-}*/
- function handleFileLoad(event) {
-     var item = event.item; // A reference to the item that was passed in to the LoadQueue
-     var type = item.type;
+//What gets called each time we load something.
+function handleFileLoad(event) {
+    var item = event.item; // A reference to the item that was passed in to the LoadQueue
+    var type = item.type;
 
-     // Add any images to the page body.
-     if (type == createjs.LoadQueue.IMAGE) {
-      document.body.appendChild(event.result);
-     }
- }
+    // Add any images to the page body.
+    if (type == createjs.LoadQueue.IMAGE) {
+    document.body.appendChild(event.result);
+    }
+}
  
 function worldView()
 {
@@ -117,18 +96,29 @@ function worldView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  stageSelect.addChild(forest);  
+  
+  var mountain = new createjs.Sprite(stageSelectSheet, "default");
+  mountain.setTransform(320, 170);
+  mountain.framerate = 10;
+  mountain.on("rollover", stageOver);
+  mountain.on("rollout", stageOut);
+  
+  var castle = new createjs.Sprite(stageSelectSheet, "default");
+  castle.setTransform(600, 240);
+  castle.framerate = 10;
+  castle.on("rollover", stageOver);
+  castle.on("rollout", stageOut);
+  
+  stageSelect.addChild(forest, mountain, castle);  
 
   stage.addChild(worldMap, stageSelect);
   stage.update();
 }
 
 function stageOver(event) {
-    console.log("In");
     this.gotoAndPlay("highlighted");
 }
 
 function stageOut(event) {
-    console.log("out");
     this.gotoAndPlay("default");
 }
