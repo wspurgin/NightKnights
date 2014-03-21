@@ -13,50 +13,17 @@ var bg; //The background graphic
 //[Title View]
   
  
-var main; //The Main Background
-var startB; //The Start button in the main menu
-var creditsB; //The credits button in the main menu
- 
-//[Credits]
- 
- 
-var credits; //The Credits screen
- 
-//[Game View]
- 
- 
-var player; //The player paddle graphic
-var ball; //The ball graphic
-var cpu; //The CPU paddle
-var win; //The winning popup
-var lose; //The losing popup
+var totalLoaded;
 
-//[Score]
- 
-var playerScore; //The main player score
-var cpuScore; //The CPU score
-var cpuSpeed=6; //The speed of the CPU paddle; the faster it is the harder the game is
-
-// Variables
- 
-var xSpeed = 5;
-var ySpeed = 5;
-
-var tkr = new Object;
-
-//preloader
-var preloader;
-var manifest;
-var totalLoaded = 0;
 
 var TitleView = new createjs.Container();
 
 function main()
 {
   
-  canvas = document.getElementById("gameCanvas");
+  canvas = document.getElementById("backgroundCanvas");
   stage = new createjs.Stage(canvas);
-  messageField = new createjs.Text("Loading", "bold 24px Arial", "#000000");
+  messageField = new createjs.Text("Loading", "bold 24px Helvetica", "#000000");
   messageField.maxWidth = 1000;
   messageField.textAlign = "center";
   messageField.x = canvas.width / 2;
@@ -94,7 +61,10 @@ function main()
   });
   
   var background = new createjs.Sprite(spriteSheet, "normal");
-  stage.addChild(background);
+  background.scaleX = 3;
+  background.scaleY = 3;
+  background.z = -10;
+  stage.addChildAt(background, stage.getChildIndex(messageField));
   stage.update();
 
   //var animation = new createjs.Sprite(spriteSheet, "run");
