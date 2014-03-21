@@ -9,11 +9,9 @@
 
 <body>
 
-  <div>
-    <header>
-      <h1>NIGHT KNIGHTS</h1>
-    </header>
-  </div>
+  <header>
+    <h1>NIGHT KNIGHTS</h1>
+  </header>
 
   <p class="infocaption">Returning Nights</p>
   <div id="returning" class="infobox center">

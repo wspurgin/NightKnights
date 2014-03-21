@@ -6,12 +6,11 @@ Route
 	callable [callable] where to go with url
 */
 
-
 class Route
 {
 	public $type;
 	public $url;
-	public $callable = array();
+	public $callable;
 
 	//enum stuff
 	const GET = 0;
