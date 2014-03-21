@@ -84,13 +84,21 @@ function main()
         ];
 	
         
-   var data = {
-     images: ["backgrounds/raws/TheMasterSheet.png"],
-     frames: {width:765, height:336},
-     //animations: {run:[0,4], jump:[5,8,"run"]}
-  };
-  var spriteSheet = new createjs.SpriteSheet(data);
+  var spriteSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "normal": [0]
+      },
+        "images": ["backgrounds/raws/TheMasterSheet.png"],
+        "frames": {width:255, height:112}
+  });
+  
+  var background = new createjs.Sprite(spriteSheet, "normal");
+  stage.addChild(background);
+  stage.update();
+
   //var animation = new createjs.Sprite(spriteSheet, "run");
+  
   
   
   preload = new createjs.LoadQueue();
@@ -101,6 +109,7 @@ function main()
 
   
   //Set the FPS of the game and link the stage to it.
+  createjs.Ticker.setFPS(60);
   createjs.Ticker.addEventListener("tick", stage);
 }
 
