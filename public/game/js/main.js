@@ -5,71 +5,34 @@
 var canvas; //Will be linked to the canvas in our index.html page
 var stage; //Is the equivalent of stage in AS3; we'll add "children" to it
  
-// Graphics
-//[Background]
- 
-var bg; //The background graphic
- 
-//[Title View]
+var loadingText;
   
  
 var totalLoaded;
 
-
+//[Views]
 var TitleView = new createjs.Container();
+var WorldView = new createjs.Container();
+var AreaView = new createjs.Container();
+var EncounterView = new createjs.Container();
 
 function main()
 {
-  
   canvas = document.getElementById("backgroundCanvas");
   stage = new createjs.Stage(canvas);
-  messageField = new createjs.Text("Loading", "bold 24px Helvetica", "#000000");
-  messageField.maxWidth = 1000;
-  messageField.textAlign = "center";
-  messageField.x = canvas.width / 2;
-  messageField.y = canvas.height / 2;
+  loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
+  loadingText.maxWidth = 1000;
+  loadingText.textAlign = "center";
+  loadingText.x = canvas.width / 2;
+  loadingText.y = canvas.height / 2;
   stage.mouseEventsEnabled = true;
-  stage.addChild(messageField);
+  stage.addChild(loadingText);
   stage.update();   //update the stage to show text
   
   //Declare all of the images up front, and give each one a unique id
   manifest = [
-            {src:"backgrounds/Castle1.png", id:"bg"}
-            /*{src:"main.png", id:"main"},
-            {src:"startB.png", id:"startB"},
-            {src:"creditsB.png", id:"creditsB"},
-            {src:"credits.png", id:"credits"},
-            {src:"paddle.png", id:"cpu"},
-            {src:"paddle.png", id:"player"},
-            {src:"ball.png", id:"ball"},
-            {src:"win.png", id:"win"},
-            {src:"lose.png", id:"lose"},
-            {src:"playerScore.mp3|playerScore.ogg", id:"playerScore"},
-            {src:"enemyScore.mp3|enemyScore.ogg", id:"enemyScore"},
-            {src:"hit.mp3|hit.ogg", id:"hit"},
-            {src:"wall.mp3|wall.ogg", id:"wall"}*/
+            {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"}
         ];
-	
-        
-  var spriteSheet = new createjs.SpriteSheet({
-    "animations":
-      {
-        "normal": [0]
-      },
-        "images": ["backgrounds/raws/TheMasterSheet.png"],
-        "frames": {width:255, height:112}
-  });
-  
-  var background = new createjs.Sprite(spriteSheet, "normal");
-  background.scaleX = 3;
-  background.scaleY = 3;
-  background.z = -10;
-  stage.addChildAt(background, stage.getChildIndex(messageField));
-  stage.update();
-
-  //var animation = new createjs.Sprite(spriteSheet, "run");
-  
-  
   
   preload = new createjs.LoadQueue();
   preload.installPlugin(createjs.Sound);
@@ -84,23 +47,17 @@ function main()
 }
 
 //This function lets us follow the progress of the loading operation.
-//We can make a progress bar in here!
+//We update the loading text with the current progress after each resource is loaded.
 function updateLoading(event)
 {
-  messageField.text = "Loading " + (preload.progress*100|0) + "%"
+  loadingText.text = "Loading " + (preload.progress*100|0) + "%"
   stage.update();
 }
 
 //What gets called when we're done loading.  
 function doneLoading(event) 
 {
-  totalLoaded++;
-  
-  if(manifest.length==totalLoaded)
-  {
-    //Display the title screen
-    addTitleView();
-  }
+  addTitleView();
 }
  
 /*Allows us to discern the files we're loading, and do something different for each.
@@ -137,92 +94,19 @@ function handleFileLoad(event)
 
 function addTitleView()
 {
-  /*var bg = queue.getResult("myImage");
-  //The x is written like this for clarity, so we know the offset
-  bg.x = 0;
-  bg.y = 0; 
-    
-  //Title view is a container that holds all of our elements to be displayed.
-  //It acts just like a view, and in order to display it, we simply add it to the stage.
-  TitleView.addChild(bg);
-  stage.addChild(bg, TitleView);
+    var backgroundSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "normal": [0]
+      },
+        "images": [preload.getResult("bgSprites")],
+        "frames": {width:255, height:112}
+  });
+  
+  var background = new createjs.Sprite(backgroundSheet, "normal");
+  background.scaleX = 3;
+  background.scaleY = 3;
+  background.z = -10;
+  stage.addChildAt(background, stage.getChildIndex(loadingText));
   stage.update();
-    
-  // Button Listeners
-  // For these events, you put in the name of the function: the function object to call.
-  //startB.onPress = tweenTitleView;
-  //creditsB.onPress = showCredits;*/
 }
-/*
-function showCredits()
-{
-  // Show Credits
-	
-  credits.x = 480;
-	
-  stage.addChild(credits);
-  stage.update();
-  //Animates via Tween
-  Tween.get(credits).to({x:0}, 300);
-  //When you click on the screen, hide the credits
-  credits.onPress = hideCredits;
-}
- 
-// Hide Credits
- 
-function hideCredits(e)
-{
-  Tween.get(credits).to({x:480}, 300).call(rmvCredits);
-}
- 
-// Remove Credits
- 
-function rmvCredits()
-{
-  stage.removeChild(credits);
-}
- 
-// Tween Title View
- 
-function tweenTitleView()
-{       
-  // Start Game
-	
-  Tween.get(TitleView).to({y:-320}, 300).call(addGameView);
-}
-
-function addGameView()
-{
-    // Destroy Menu & Credits screen
-    //This is how we stop rendering the current view
-    stage.removeChild(TitleView);
-    //Since we aren't using these again, we destruct them.
-    TitleView = null;
-    credits = null;
-     
-    // Add Game View
-     
-    player.x = 2;
-    player.y = 160 - 37.5;
-    cpu.x = 480 - 25;
-    cpu.y = 160 - 37.5;
-    ball.x = 240 - 15;
-    ball.y = 160 - 15;
-     
-    // Score
-     
-    playerScore = new Text('0', 'bold 20px Arial', '#A3FF24');
-    playerScore.x = 211;
-    playerScore.y = 20;
-     
-    cpuScore = new Text('0', 'bold 20px Arial', '#A3FF24');
-    cpuScore.x = 262;
-    cpuScore.y = 20;
-     
-    stage.addChild(playerScore, cpuScore, player, cpu, ball);
-    stage.update();
-     
-    // Start Listener 
-     
-    bg.onPress = startGame;
-}*/
