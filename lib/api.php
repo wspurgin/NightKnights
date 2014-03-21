@@ -12,8 +12,27 @@ require_once('session.php');
 
 Class Api
 {
-	function __contruct()
+
+	private $db;
+
+	private function getConnection()
 	{
-		# code...
+	    $dbhost = DB_HOST;
+	    $dbname = DB_NAME;
+	    $dbuser = DB_USER;
+	    $dbpass = DB_PASS;
+
+	    $dbset = "mysql:host=$dbhost;dbname=$dbname;";
+
+	    $connection = new PDO($dbset, $dbuser, $dbpass);
+	    $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	    return $db;		
+	}
+
+	public function __contruct()
+	{
+		$this->db = getConnection();
 	}
 }
