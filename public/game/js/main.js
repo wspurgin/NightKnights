@@ -49,13 +49,13 @@ var preloader;
 var manifest;
 var totalLoaded = 0;
 
-var TitleView = new Container();
+var TitleView = new createjs.Container();
 
 function main()
 {
   console.log("greatjearb");
   canvas = document.getElementById('PongStage');
-  stage = new Stage(canvas);
+  stage = new createjs.Stage(canvas);
   stage.mouseEventsEnabled = true;
   
   //Declare all of the images up front, and give each one a unique id
@@ -77,8 +77,8 @@ function main()
         ];
 	
   //The preloader here handles the resource loading, and then lets us load the items from the manifest.
-  preloader = new PreloadJS();
-  preloader.installPlugin(SoundJS);
+  preloader = new createjs.LoadQueue();
+  preloader.installPlugin(createjs.SoundJS);
   preloader.onProgress = handleProgress;
   preloader.onComplete = handleComplete;
   preloader.onFileLoad = handleFileLoad;
