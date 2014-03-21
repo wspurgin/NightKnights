@@ -53,15 +53,22 @@ var TitleView = new createjs.Container();
 
 function main()
 {
-  console.log("greatjearb");
-  canvas = document.getElementById('PongStage');
+  
+  canvas = document.getElementById("gameCanvas");
   stage = new createjs.Stage(canvas);
+  messageField = new createjs.Text("Loading", "bold 24px Arial", "#000000");
+  messageField.maxWidth = 1000;
+  messageField.textAlign = "center";
+  messageField.x = canvas.width / 2;
+  messageField.y = canvas.height / 2;
   stage.mouseEventsEnabled = true;
+  stage.addChild(messageField);
+  stage.update();   //update the stage to show text
   
   //Declare all of the images up front, and give each one a unique id
   manifest = [
-            {src:"bg.png", id:"bg"},
-            {src:"main.png", id:"main"},
+            {src:"backgrounds/Castle1.png", id:"bg"}
+            /*{src:"main.png", id:"main"},
             {src:"startB.png", id:"startB"},
             {src:"creditsB.png", id:"creditsB"},
             {src:"credits.png", id:"credits"},
@@ -73,31 +80,40 @@ function main()
             {src:"playerScore.mp3|playerScore.ogg", id:"playerScore"},
             {src:"enemyScore.mp3|enemyScore.ogg", id:"enemyScore"},
             {src:"hit.mp3|hit.ogg", id:"hit"},
-            {src:"wall.mp3|wall.ogg", id:"wall"}
+            {src:"wall.mp3|wall.ogg", id:"wall"}*/
         ];
 	
-  //The preloader here handles the resource loading, and then lets us load the items from the manifest.
-  preloader = new createjs.LoadQueue();
-  preloader.installPlugin(createjs.SoundJS);
-  preloader.onProgress = handleProgress;
-  preloader.onComplete = handleComplete;
-  preloader.onFileLoad = handleFileLoad;
-  preloader.loadManifest(manifest);
+        
+   var data = {
+     images: ["backgrounds/raws/TheMasterSheet.png"],
+     frames: {width:765, height:336},
+     //animations: {run:[0,4], jump:[5,8,"run"]}
+  };
+  var spriteSheet = new createjs.SpriteSheet(data);
+  //var animation = new createjs.Sprite(spriteSheet, "run");
+  
+  
+  preload = new createjs.LoadQueue();
+  preload.installPlugin(createjs.Sound);
+  preload.addEventListener("complete", doneLoading); // add an event listener for when load is completed
+  preload.addEventListener("progress", updateLoading);
+  preload.loadManifest(manifest);
+
   
   //Set the FPS of the game and link the stage to it.
-  Ticker.setFPS(30);
-  Ticker.addListener(stage); 
+  createjs.Ticker.addEventListener("tick", stage);
 }
 
 //This function lets us follow the progress of the loading operation.
 //We can make a progress bar in here!
-function handleProgress(event)
+function updateLoading(event)
 {
-  //use event.loaded to get the percentage of the loading
+  messageField.text = "Loading " + (preload.progress*100|0) + "%"
+  stage.update();
 }
 
 //What gets called when we're done loading.  
-function handleComplete(event) 
+function doneLoading(event) 
 {
   totalLoaded++;
   
@@ -108,7 +124,7 @@ function handleComplete(event)
   }
 }
  
-//Allows us to discern the files we're loading, and do something different for each.
+/*Allows us to discern the files we're loading, and do something different for each.
 function handleFileLoad(event) 
 {
   //triggered when an individual file completes loading
@@ -128,30 +144,37 @@ function handleFileLoad(event)
     handleLoadComplete();
     break;
   }
-}
+  
+}*/
+ function handleFileLoad(event) {
+     var item = event.item; // A reference to the item that was passed in to the LoadQueue
+     var type = item.type;
+
+     // Add any images to the page body.
+     if (type == createjs.LoadQueue.IMAGE) {
+      document.body.appendChild(event.result);
+     }
+ }
 
 function addTitleView()
 {
+  /*var bg = queue.getResult("myImage");
   //The x is written like this for clarity, so we know the offset
-  startB.x = 240 - 31.5;
-  startB.y = 160;
-  startB.name = 'startB';  
-  
-  creditsB.x = 241 - 42;
-  creditsB.y = 200;
+  bg.x = 0;
+  bg.y = 0; 
     
   //Title view is a container that holds all of our elements to be displayed.
   //It acts just like a view, and in order to display it, we simply add it to the stage.
-  TitleView.addChild(main, startB, creditsB);
+  TitleView.addChild(bg);
   stage.addChild(bg, TitleView);
   stage.update();
     
   // Button Listeners
   // For these events, you put in the name of the function: the function object to call.
-  startB.onPress = tweenTitleView;
-  creditsB.onPress = showCredits;
+  //startB.onPress = tweenTitleView;
+  //creditsB.onPress = showCredits;*/
 }
-
+/*
 function showCredits()
 {
   // Show Credits
@@ -223,4 +246,4 @@ function addGameView()
     // Start Listener 
      
     bg.onPress = startGame;
-}
+}*/
