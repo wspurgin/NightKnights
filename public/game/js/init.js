@@ -108,7 +108,9 @@ function initEncounterView()
   player = new Player();
   nightmare = new Nightmare();
   nightmare.sprite = new createjs.Bitmap(preload.getResult("testMonster"));
-  nightmare.sprite.setTransform(bgCanvas.width / 2, 100, 1, 1);
+  nightmare.sprite.x = bgCanvas.width / 2 - nightmare.sprite.getBounds().width / 2;
+  nightmare.sprite.y = 100;
+  createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   
   encounterView.addChild(background, filler, backButton, combatMenu, nightmare.sprite);
 }
@@ -174,6 +176,8 @@ function stageOut(event) {
     this.gotoAndPlay("default");
 }
 
-
-
+function tweenFinish(tween) {
+    //nightmare = tween._target;
+}
+        
 
