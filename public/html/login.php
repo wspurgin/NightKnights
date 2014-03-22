@@ -12,19 +12,25 @@
     <h1>NIGHT KNIGHTS</h1>
   </header>
 
-  <p class="infocaption">Returning Nights</p>
-  <div id="returning" class="infobox center">
-    <?php include("modules/login.html"); ?>
+  <div class="center" id="login">
+    <p class="infocaption">Returning Nights</p>
+    <div id="returning" class="infobox">
+      <?php include("modules/login.html"); ?>
+    </div>
   </div>
 
-  <p class="infocaption">New Recruits</p>
-  <div id="newbies" class="infobox center">
-    <?php include("modules/createAccount.html"); ?>
+  <div class="center" id="account">
+    <p class="infocaption">New Recruits</p>
+    <div id="newbies" class="infobox">
+      <?php include("modules/createAccount.html"); ?>
+    </div>
   </div>
 
-  <p class="infocaption">STORY</p>
-  <div id="blurb" class="infobox words center">
-    <p>STORY GOES HERE!</p>
+  <div class="center" id="story">
+    <p class="infocaption">STORY</p>
+    <div id="blurb" class="infobox words">
+      <p>STORY GOES HERE!</p>
+    </div>
   </div>
 
   <?php include("modules/copyright.html"); ?>

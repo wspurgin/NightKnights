@@ -25,6 +25,17 @@ p
   color:white;
 }
 
+label
+{
+  color: white;
+}
+
+form ul
+{
+  list-style-type: none;
+  padding-left: 0px;
+}
+
 .infobox
 {
   border-style: solid;
@@ -37,7 +48,7 @@ p
   padding-left: 10px;
   padding-right: 10px;
 
-  display: inline-block;
+  display: block;
 }
 
 .infocaption
@@ -48,6 +59,8 @@ p
 
 .center
 {
+  width: 30%;
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
@@ -59,14 +72,9 @@ p
   text-align: center;
 }
 
-form ul
+#story
 {
-  list-style-type: none;
-}
-
-label
-{
-  color: white;
+  width: 70%;
 }
 
 #navbar div
