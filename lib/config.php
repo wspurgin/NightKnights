@@ -2,7 +2,7 @@
 require_once('api.php');
 require_once('routes.php');
 
-$session_validator = "username";
+$session_validator = "user_id";
 $api = new Api($session_validator);
 
 /*

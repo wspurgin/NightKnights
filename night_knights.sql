@@ -9,7 +9,8 @@ CREATE TABLE Users(
     `email` varchar(64) NOT NULL,
     `password` varchar(128) NOT NULL,
     
-    UNIQUE KEY `username_UNIQUE` (`username`)
+    UNIQUE KEY `username_UNIQUE` (`username`),
+    UNIQUE KEY `email_UNIQUE` (`email`)
 
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
