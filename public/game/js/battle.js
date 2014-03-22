@@ -31,7 +31,7 @@ function Combatant()
       this.energy = 0;
       this.die();
     }
-    console.log(this.name + "took " + damage + " damage and has " + this.energy + " left.");
+    console.log(this.name + " took " + damage + " damage and has " + this.energy + " left.");
     this.animateHP();
   }
 }
@@ -51,6 +51,7 @@ function Player(name, level, energy)
     
   this.die = function () {
     console.log("The nightmare sucks the last of your energy, and you pass out.");
+    //switchTo(worldView);
   }
   
   this.animateHP = function () {
@@ -62,6 +63,7 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
 {
   this.sprite;
   
+  this.isDead = false;
   this.name = name;
   this.level = level;
   this.energy = energy;
@@ -72,10 +74,18 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   
   this.die = function () {
     console.log("You have slain the " + this.name + "!");
+    this.isDead = true;
+    
+    //switchTo(areaView);
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBarSmall, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {nightmare.attack(player);});
+    createjs.Tween.get(hpBarSmall, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
+      if(nightmare.isDead)
+        createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750);
+      else
+        nightmare.attack(player);
+    });
   }
 }
 

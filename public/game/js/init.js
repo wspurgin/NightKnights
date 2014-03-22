@@ -122,9 +122,11 @@ function initEncounterView()
   player = new Player("Pico", 1, 15);
   nightmare = new Nightmare("Big Snake", 1, 10, 1, 1);
   nightmare.sprite = new createjs.Bitmap(preload.getResult("testMonster"));
-  nightmare.sprite.x = bgCanvas.width / 2 - nightmare.sprite.getBounds().width / 2;
-  nightmare.sprite.y = 100;
-  createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
+  nightmare.sprite.x = bgCanvas.width / 2;
+  nightmare.sprite.y = bgCanvas.height / 4;
+  nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
+  nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
+  createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:160}, 1000).to({y:170}, 1000).to({y:180}, 1000).to({y:170}, 1000);
   
   encounterView.addChild(background, textContainer, backButton, combatMenu, nightmare.sprite);
 }
