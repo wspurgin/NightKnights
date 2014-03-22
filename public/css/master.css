@@ -38,7 +38,6 @@ label
 
   padding-top: 5px;
   padding-bottom: 5px;
-
   padding-left: 10px;
   padding-right: 10px;
 
@@ -85,7 +84,7 @@ label
   text-align: center;
 }
 
-#story
+#storydiv
 {
   width: 70%;
 }
