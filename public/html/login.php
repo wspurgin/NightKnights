@@ -1,10 +1,9 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-  <title>Welcome to Hibera, Night Knights!</title>
-  <meta charset="utf-8" \>
-
-  <link rel="stylesheet" type="text/css" href="../css/master.css">
+  <title>Night Knights - Login</title>
+  
+  <?php include("modules/commonHead.html"); ?>
 </head>
 
 <body>
@@ -28,9 +27,7 @@
     <p>STORY GOES HERE!</p>
   </div>
 
-  <footer>
-    <?php include("modules/copyright.html"); ?>
-  </footer>
+  <?php include("modules/copyright.html"); ?>
 
 </body>
 </html>
