@@ -35,6 +35,7 @@ function main()
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
             {src:"backgrounds/ForestMap.png", id:"forestMap"},
+            {src:"sprites/back.png", id:"backButton"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
         ];
   
@@ -65,6 +66,7 @@ function doneLoading(event)
   bgStage.removeChildAt(0);
   initWorldView();
   initForestView();
+  initEncounterView();
   switchTo(worldView);
 }
 
@@ -138,7 +140,11 @@ function initForestView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  forest.on("click", function() {switchTo(worldView);});
+  forest.on("click", function() {switchTo(encounterView);});
+  
+  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  backButton.setTransform(10, 10);
+  backButton.on("click", function() {switchTo(worldView);});
   
   filler = new createjs.Text("AREA VIEW, YO!", "bold 24px Arial", "#000000");
   filler.maxWidth = 1000;
@@ -146,7 +152,35 @@ function initForestView()
   filler.x = bgCanvas.width / 2;
   filler.y = bgCanvas.height / 2;
   
-  areaView.addChild(forestMap, forest, filler);
+  areaView.addChild(forestMap, forest, filler, backButton);
+}
+
+function initEncounterView()
+{
+   var backgroundSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "normal": [0]
+      },
+        "images": [preload.getResult("bgSprites")],
+        "frames": {width:255, height:112}
+  });
+  
+  var background = new createjs.Sprite(backgroundSheet, "normal");
+  background.scaleX = 3;
+  background.scaleY = 3;
+  
+  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  backButton.setTransform(10, 10);
+  backButton.on("click", function() {switchTo(areaView);});
+  
+  filler = new createjs.Text("ENCOUNTER VIEW, BRO!", "bold 24px Arial", "#000000");
+  filler.maxWidth = 1000;
+  filler.textAlign = "center";
+  filler.x = bgCanvas.width / 2;
+  filler.y = bgCanvas.height / 2;
+  
+  encounterView.addChild(background, filler, backButton);
 }
 
 function switchTo(view)
