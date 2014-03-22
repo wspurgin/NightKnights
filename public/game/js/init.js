@@ -105,7 +105,12 @@ function initEncounterView()
   
   initMenuView();
   
-  encounterView.addChild(background, filler, backButton, combatMenu);
+  player = new Player();
+  nightmare = new Nightmare();
+  nightmare.sprite = new createjs.Bitmap(preload.getResult("testMonster"));
+  nightmare.sprite.setTransform(bgCanvas.width / 2, 100, 1, 1);
+  
+  encounterView.addChild(background, filler, backButton, combatMenu, nightmare.sprite);
 }
  
 function initMenuView()

@@ -4,30 +4,15 @@ body
   color: white;
 }
 
-header
-{
-  text-align: center;
-}
-
 #navrule, #footrule
 {
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-footer
+.footer
 {
   text-align: center;
-}
-
-p
-{
-  color:white;
-}
-
-label
-{
-  color: white;
 }
 
 .infobox
@@ -84,28 +69,29 @@ label
   text-align: center;
 }
 
-#storydiv
+#navbar
 {
-  width: 70%;
+  height: 50px;
+  text-align: center;
 }
 
 #navbar div
 {
-  height: 100px;
-  text-align: center;
+  display: inline-block;
+  font-size: 3em;
 }
 
-#navbar div > div
+#navbar p
 {
-  display: inline-block;
-  font-size: 2em;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 #navbar > div:after
 {
   content: '';
-  display: inline-block;
   width: 100%;
+  display: inline-block;
   font-size: 0px;
   line-height: 0px;
 }

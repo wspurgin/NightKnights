@@ -1,28 +1,68 @@
 
+/* battle.js
+ * Author: Anthony Cloudy
+ * Handles all of the game logic and classes associated with combat.
+ */
+
+var player;
+var nightmare;
+
 function Combatant()
 {
-  this.sprite;
-  this.health;
-  this.attackStat;
-  this.defenseStat;
-  this.magicStat;
+  //[Properties]
+  this.isAlive = true;
+  this.energy; //Essentially HP
   this.level;
-  this.attack = function (combatant) {
-    
+  this.attackDice;
+  this.defenceDice;
+  
+  //[Functions]
+  this.attack = function (victim) {
+    var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
+    if (netDamage < 0)
+      netDamage = 0;
+    if (netDamage)
+      victim.hurt(netDamage);
+  }
+  
+  this.hurt = function (damage) {
+    this.energy -= damage;
+    if (this.energy <= 0) {
+      this.isAlive = false;
+    }
   }
 }
 
-
-function dice()
+function Player()
 {
-  this.init = function (numberOfDice, numberOfSides, bonusModifier) {
-    this.sides = numberOfSides;
-    this.quantity = numberOfDice;
-    this.modifier = bonusModifier;
-    if (this.modifier === undefined){
-      this.modifier = 0;
-    }
-  };
+  //this.weapon;
+  this.energy = 10;
+  this.attackDice = new dice(2,6);
+  this.defenceDice = new dice(1,4);
+}
+
+function Nightmare()
+{
+  this.sprite;
+  this.energy = 10;
+  this.attackDice = new dice(2,6);
+  this.defenceDice = new dice(1,4);
+}
+
+Player.prototype = new Combatant();
+Nightmare.prototype = new Combatant();
+
+/*A function to simulate rolling "Dungeons & Dragons" style dice. 
+ * This lets us build more a normalized random function through the use of multiple rolls
+ */
+function dice(numberOfDice, numberOfSides, bonusModifier)
+{
+  this.sides = numberOfSides;
+  this.quantity = numberOfDice;
+  this.modifier = bonusModifier;
+  if (this.modifier === undefined){
+    this.modifier = 0;
+  }
   
   this.roll = function ()
   {
