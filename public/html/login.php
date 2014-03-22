@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
   <header>
     <h1>NIGHT KNIGHTS</h1>
   </header>
