@@ -4,11 +4,13 @@
  * Handles all of the game logic and classes associated with combat.
  */
 
+var player;
+var nightmare;
+
 function Combatant()
 {
   //[Properties]
   this.isAlive = true;
-  this.sprite;
   this.energy; //Essentially HP
   this.level;
   this.attackDice;
@@ -41,6 +43,7 @@ function Player()
 
 function Nightmare()
 {
+  this.sprite;
   this.energy = 10;
   this.attackDice = new dice(2,6);
   this.defenceDice = new dice(1,4);
