@@ -6,11 +6,15 @@
 * @author Will Spurgin 
 */
 
+require_once('password_fun.php');
+
 class Password
 {
-	
-	function __construct($password)
+	public static function check($hashed_password, $unhashed_password)
 	{
-
+		if ($hashed_password == password_hash($unhashed_password, PASSWORD_DEFAULT))
+			return "true";
+		else
+			return "false";
 	}
 }

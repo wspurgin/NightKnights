@@ -38,10 +38,13 @@ function getSession($set_guest=true)
 // this function will destory any active sessions
 function newSession($name)
 {
+    $_COOKIE = array();
     if(isset($_SESSION))
         destroySession();
+
     session_name($name); // set session name
     session_start(); // start session
+    $_SESSION['last_access'] = time();
 }
 
 // Session must be active

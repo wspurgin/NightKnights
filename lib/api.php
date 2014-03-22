@@ -30,14 +30,15 @@ Class Api
 	    $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	    return $db;		
+	    return $connection;		
 	}
 
 	// function for getting session (though disabling guest sessions)
 	// and validating the session.
-	private function session()
+	public function session()
 	{
-		$goodSession = getSession(false); // false for disabling guest sessions
+		$goodSession = true;
+		getSession(false); // false for disabling guest sessions
 
 		// validate session if validation is required
 		if (isset($session_validation))
@@ -54,11 +55,12 @@ Class Api
 					return false;
 			}
 		}
+		return $goodSession;
 	}
 
-	public function __contruct($session_validation=NULL)
+	public function __construct($session_validation=NULL)
 	{
-		$this->db = getConnection();
+		$this->db = $this->getConnection();
 		$this->session_validation = $session_validation;
 	}
 
@@ -67,11 +69,71 @@ Class Api
 		return clone $this;
 	}
 
+	public function loginUser()
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		try
+		{
+			$body = $app->request->getBody();
+			$login = json_decode($body);
+			$sql = "SELECT * FROM `Users` WHERE `email`=:email";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":email", $login->email);
+			$stmt->execute();
+
+			$user = $stmt->fetchObject();
+			if(empty($user))
+				$app->halt(404);
+			else
+			{
+				if (!Password::check($user->password, $login->password))
+					$app->halt(404, (string)Password::check($user->password, $login->password));
+				else
+				{
+					// user authentication completed. Start session
+					newSession(md5(SALT.$user->username));
+					$_SESSION['user_id'] = $user->id;
+					$_SESSION['username'] = $user->username;
+					$response['success'] = true;
+					$response['message'] = "$user->username logged in successfully";
+					$response['session'] = $_SESSION;
+				}
+			}
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$app->halt(500);
+			// echo $e->getMessage();
+		}
+		echo json_encode($response);
+	}
+
 	public function getCurrentUser()
 	{
+		$app = \Slim\Slim::getInstance();
 		if (!$this->session())
-			echo "Bad session";
+			$app->halt(404, 'no sess');
 		else
-			echo json_encode('{ "user": "current_user" }');
+		{
+			try
+			{
+				$sql = "SELECT `username`, `email` FROM `Users` WHERE `id`=:id";
+				$stmt = $this->db->prepare($sql);
+				$stmt->bindParam(":id", $_SESSION['user_id']);
+				$stmt->execute();
+				$user = $stmt->fetchObject();
+				if(empty($user))
+					$app->halt(404);
+				else
+					echo json_encode($user);
+			}
+			catch(Exception $e)
+			{
+				$app->log($e->getMessage());
+				$app->halt(500);
+			}
+		}
 	}
 }
