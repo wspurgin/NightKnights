@@ -1,1 +1,9 @@
-/*Currently a blank file...*/
+header
+{
+  text-align: center;
+}
+
+#storydiv
+{
+  width: 70%;
+}
