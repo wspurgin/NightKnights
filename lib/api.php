@@ -114,7 +114,7 @@ Class Api
 	{
 		$app = \Slim\Slim::getInstance();
 		if (!$this->session())
-			$app->halt(404, 'no sess');
+			$app->halt(404);
 		else
 		{
 			try
@@ -129,11 +129,27 @@ Class Api
 				else
 					echo json_encode($user);
 			}
-			catch(Exception $e)
+			catch(PDOException $e)
 			{
-				$app->log($e->getMessage());
+				$app->log->error($e->getMessage());
 				$app->halt(500);
 			}
 		}
+	}
+
+	public function createUser()
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		try
+		{
+			#code goes here
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$app->halt(500);
+		}
+		echo json_encode($response);
 	}
 }
