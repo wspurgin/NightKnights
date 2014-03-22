@@ -110,9 +110,12 @@ function initEncounterView()
   hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
   hpBarEmpty.setTransform(100, 300);
   
-  //createjs.Tween.get(hpBar, {loop: true}).to({scaleX:0}, 2000).to({scaleX:1}, 2000);
+  hpBarSmall = new createjs.Bitmap(preload.getResult("hpBarSmall"));
+  hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50);
+  hpBarEmptySmall = new createjs.Bitmap(preload.getResult("hpBarEmptySmall"));
+  hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50);
   
-  textContainer.addChild(playerhp, hpBarEmpty, hpBar);
+  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall);
   
   initMenuView();
   

@@ -75,7 +75,7 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   }
   
   this.animateHP = function () {
-    //createjs.Tween.get(hpBar, {loop: false}).to({scaleX:(energy/maxEnergy)}, 1000);
+    createjs.Tween.get(hpBarSmall, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000);
   }
 }
 
