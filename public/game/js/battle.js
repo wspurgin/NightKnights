@@ -10,9 +10,9 @@ var nightmare;
 function Combatant()
 {
   //[Properties]
-  this.isAlive = true;
   this.energy; //Essentially HP
   this.level;
+  this.name;
   this.attackDice;
   this.defenceDice;
   
@@ -28,32 +28,67 @@ function Combatant()
   this.hurt = function (damage) {
     this.energy -= damage;
     if (this.energy <= 0) {
-      this.isAlive = false;
+      this.energy = 0;
+      this.die();
     }
-    console.log("Took " + damage + " and has " + this.energy + " left.");
+    console.log(this.name + "took " + damage + " damage and has " + this.energy + " left.");
+    this.animateHP();
   }
 }
 
-function Player()
+function Player(name, level, energy)
 {
   //this.weapon;
-  this.energy = 10;
+  this.name = name;
+  this.level = level;
+  this.energy = energy;
+  this.maxEnergy = energy;
+  
+  //Hardcoded until I implement weapons.
   this.attackDice = new dice(2,6);
   this.defenceDice = new dice(1,4);
+  
+    
+  this.die = function () {
+    console.log("The nightmare sucks the last of your energy, and you pass out.");
+  }
+  
+  this.animateHP = function () {
+    createjs.Tween.get(hpBar, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000);
+  }
 }
 
-function Nightmare()
+function Nightmare(name, level, energy, attackStat, defenceStat)
 {
   this.sprite;
-  this.energy = 10;
-  this.attackDice = new dice(2,6);
-  this.defenceDice = new dice(1,4);
+  
+  this.name = name;
+  this.level = level;
+  this.energy = energy;
+  this.maxEnergy = energy;
+  
+  this.attackDice = new dice(2, 6, attackStat);
+  this.defenceDice = new dice(1, 4, defenceStat);
+  
+  this.die = function () {
+    console.log("You have slain the " + this.name + "!");
+  }
+  
+  this.animateHP = function () {
+    //createjs.Tween.get(hpBar, {loop: false}).to({scaleX:(energy/maxEnergy)}, 1000);
+  }
 }
 
 Player.prototype = new Combatant();
 Nightmare.prototype = new Combatant();
 
-/*A function to simulate rolling "Dungeons & Dragons" style dice. 
+function startTurn(attackType)
+{
+  player.attack(nightmare);
+  nightmare.attack(player);
+}
+
+/*An object to simulate rolling "Dungeons & Dragons" style dice. 
  * This lets us build more a normalized random function through the use of multiple rolls
  */
 function dice(numberOfDice, numberOfSides, bonusModifier)

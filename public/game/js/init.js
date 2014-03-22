@@ -97,22 +97,33 @@ function initEncounterView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(areaView);});
   
-  monsterhp = new createjs.Text("ENCOUNTER VIEW, BRO!", "bold 24px Arial", "#000000");
-  monsterhp.maxWidth = 1000;
-  monsterhp.textAlign = "center";
-  monsterhp.x = bgCanvas.width / 2;
-  monsterhp.y = bgCanvas.height / 4;
+  var textContainer = new createjs.Container();
+  
+  playerhp = new createjs.Text("Energy: ", "bold 24px Arial", "#000000");
+  playerhp.maxWidth = 1000;
+  playerhp.textAlign = "left";
+  playerhp.x = 10;
+  playerhp.y = 300;
+  
+  hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
+  hpBar.setTransform(100, 300);
+  hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
+  hpBarEmpty.setTransform(100, 300);
+  
+  //createjs.Tween.get(hpBar, {loop: true}).to({scaleX:0}, 2000).to({scaleX:1}, 2000);
+  
+  textContainer.addChild(playerhp, hpBarEmpty, hpBar);
   
   initMenuView();
   
-  player = new Player();
-  nightmare = new Nightmare();
+  player = new Player("Pico", 1, 15);
+  nightmare = new Nightmare("Big Snake", 1, 10, 1, 1);
   nightmare.sprite = new createjs.Bitmap(preload.getResult("testMonster"));
   nightmare.sprite.x = bgCanvas.width / 2 - nightmare.sprite.getBounds().width / 2;
   nightmare.sprite.y = 100;
   createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   
-  encounterView.addChild(background, monsterhp, backButton, combatMenu, nightmare.sprite);
+  encounterView.addChild(background, textContainer, backButton, combatMenu, nightmare.sprite);
 }
  
 function initMenuView()
@@ -131,7 +142,7 @@ function initMenuView()
   //Temporary fix. I don't know if I can use the same object, or create the children via some function
   attack1Button = new createjs.Bitmap(preload.getResult("attackButton1"));
   attack1Button.setTransform(0, 340, 1, 1);
-  attack1Button.on("click", function() {player.attack(nightmare); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
+  attack1Button.on("click", function() {startTurn("attack1"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
   
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
   attack2Button.setTransform(0, 510, 1, 1);
