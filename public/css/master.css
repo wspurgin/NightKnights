@@ -30,12 +30,6 @@ label
   color: white;
 }
 
-form ul
-{
-  list-style-type: none;
-  padding-left: 0px;
-}
-
 .infobox
 {
   border-style: solid;
@@ -51,6 +45,25 @@ form ul
   display: block;
 }
 
+.infobox input[type="text"], input[type="email"], input[type="password"]
+{
+  float:right;
+  margin-left: auto;
+  margin-right: 0px;
+}
+
+.infobox form ul
+{
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.infobox form li
+{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .infocaption
 {
   margin-bottom: 0px;
@@ -59,7 +72,7 @@ form ul
 
 .center
 {
-  width: 30%;
+  width: 20%;
   display: block;
   margin-left: auto;
   margin-right: auto;
