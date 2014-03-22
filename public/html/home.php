@@ -10,6 +10,8 @@
 
   <?php include("modules/navbar.html"); ?>
 
+  <p>Content Goes Here</p>
+
   <?php include("modules/copyright.html"); ?>
 
 </body>
