@@ -3,36 +3,38 @@
 //To learn Canvas.js
 
 var canvas; //Will be linked to the canvas in our index.html page
-var stage; //Is the equivalent of stage in AS3; we'll add "children" to it
+var bgStage; //Is the equivalent of stage in AS3; we'll add "children" to it
  
 var loadingText;
-  
- 
+
 var totalLoaded;
 
 //[Views]
-var TitleView = new createjs.Container();
-var WorldView = new createjs.Container();
-var AreaView = new createjs.Container();
-var EncounterView = new createjs.Container();
+var worldView = new createjs.Container();
+var areaView = new createjs.Container();
+var encounterView = new createjs.Container();
 
 function main()
 {
-  canvas = document.getElementById("backgroundCanvas");
-  stage = new createjs.Stage(canvas);
+  bgCanvas = document.getElementById("backgroundCanvas");
+  bgStage = new createjs.Stage(bgCanvas);
+  bgStage.mouseEventsEnabled = true;
+  bgStage.enableMouseOver();
+  
+  
   loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
-  loadingText.x = canvas.width / 2;
-  loadingText.y = canvas.height / 2;
-  stage.mouseEventsEnabled = true;
-  stage.addChild(loadingText);
-  stage.update();   //update the stage to show text
+  loadingText.x = bgCanvas.width / 2;
+  loadingText.y = bgCanvas.height / 2;
+  bgStage.addChild(loadingText);
+  bgStage.update();   //update the stage to show text
   
   //Declare all of the images up front, and give each one a unique id
   manifest = [
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
-            {src:"backgrounds/WorldMap.png", id:"worldMap"},
+            {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
+            {src:"backgrounds/ForestMap.png", id:"forestMap"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
         ];
   
@@ -45,7 +47,7 @@ function main()
   
   //Set the FPS of the game and link the stage to it.
   createjs.Ticker.setFPS(60);
-  createjs.Ticker.addEventListener("tick", stage);
+  createjs.Ticker.addEventListener("tick", bgStage);
 }
 
 //This function lets us follow the progress of the loading operation.
@@ -53,15 +55,17 @@ function main()
 function updateLoading(event)
 {
   loadingText.text = "Loading " + (preload.progress*100|0) + "%"
-  stage.update();
+  bgStage.update();
 }
 
 //What gets called when we're done loading.  
 function doneLoading(event) 
 {
   //Remove the loading text.
-  stage.removeChildAt(0);
-  worldView();
+  bgStage.removeChildAt(0);
+  initWorldView();
+  initForestView();
+  switchTo(worldView);
 }
 
 //What gets called each time we load something.
@@ -75,9 +79,8 @@ function handleFileLoad(event) {
     }
 }
  
-function worldView()
+function initWorldView()
 {
- stage.enableMouseOver();
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
  var stageSelect = new createjs.Container();
  
@@ -96,6 +99,7 @@ function worldView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
+  forest.on("click", function() {switchTo(areaView);});
   
   var mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
@@ -110,9 +114,46 @@ function worldView()
   castle.on("rollout", stageOut);
   
   stageSelect.addChild(forest, mountain, castle);  
+  
+  worldView.addChild(worldMap, stageSelect);
+}
 
-  stage.addChild(worldMap, stageSelect);
-  stage.update();
+function initForestView()
+{
+  forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
+  
+  //This is here temporarily for testing purposes.
+   var stageSelectSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "default": [0],
+        "highlighted": [1, 3, "highlighted"]
+      },
+        "images": [preload.getResult("stageSelectSprites")],
+        "frames": {width:50, height:50, count:4}
+  });
+  
+  var forest = new createjs.Sprite(stageSelectSheet, "default");
+  forest.setTransform(130, 230);
+  forest.framerate = 10;
+  forest.on("rollover", stageOver);
+  forest.on("rollout", stageOut);
+  forest.on("click", function() {switchTo(worldView);});
+  
+  filler = new createjs.Text("AREA VIEW, YO!", "bold 24px Arial", "#000000");
+  filler.maxWidth = 1000;
+  filler.textAlign = "center";
+  filler.x = bgCanvas.width / 2;
+  filler.y = bgCanvas.height / 2;
+  
+  areaView.addChild(forestMap, forest, filler);
+}
+
+function switchTo(view)
+{
+  bgStage.removeChildAt(0);
+  bgStage.addChild(view);
+  bgStage.update();
 }
 
 function stageOver(event) {
