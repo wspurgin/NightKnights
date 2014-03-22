@@ -1,4 +1,9 @@
 
+/* init.js
+ * Author: Anthony Cloudy
+ * Houses the code for initializing the views.
+ */
+
 function initWorldView()
 {
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
@@ -155,3 +160,15 @@ function initMenuView()
   
   combatMenu.addChild(attackButton, magicButton);
 }
+
+function stageOver(event) {
+    this.gotoAndPlay("highlighted");
+}
+
+function stageOut(event) {
+    this.gotoAndPlay("default");
+}
+
+
+
+

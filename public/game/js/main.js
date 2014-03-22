@@ -1,13 +1,12 @@
-//Following a tutorial at 
-//http://code.tutsplus.com/tutorials/learn-createjs-by-building-an-html5-pong-game--active-11845
-//To learn Canvas.js
 
+/* main.js
+ * Author: Anthony Cloudy
+ * Hosts the main control for the game, as well as the startup code
+ */
+
+//[Canvas and View]
 var canvas; //Will be linked to the canvas in our index.html page
-var stage; //Is the equivalent of stage in AS3; we'll add "children" to it
- 
-var loadingText;
-
-var totalLoaded;
+var stage; //A collection of things to be rendered; we'll add "children" to it that we want to render.
 
 //[Views and Containers]
 var worldView = new createjs.Container();
@@ -17,19 +16,21 @@ var combatMenu = new createjs.Container();
 var attackMenu = new createjs.Container();
 var magicMenu = new createjs.Container();
 
+//[Miscellaneous]
+var loadingText;
+
 function main()
 {
   bgCanvas = document.getElementById("backgroundCanvas");
-  stage = new createjs.Stage(bgCanvas);
+  stage = new createjs.Stage(bgCanvas); //Set the backgroundCanvas as where we're going to render things
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
-  
   
   loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
-  loadingText.y = bgCanvas.height / 4;
+  loadingText.y = bgCanvas.height / 4; //The game area is half of the canvas' height
   stage.addChild(loadingText);
   stage.update();   //update the stage to show text
   
@@ -102,10 +103,3 @@ function switchTo(view)
   stage.update();
 }
 
-function stageOver(event) {
-    this.gotoAndPlay("highlighted");
-}
-
-function stageOut(event) {
-    this.gotoAndPlay("default");
-}
