@@ -97,11 +97,11 @@ function initEncounterView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(areaView);});
   
-  filler = new createjs.Text("ENCOUNTER VIEW, BRO!", "bold 24px Arial", "#000000");
-  filler.maxWidth = 1000;
-  filler.textAlign = "center";
-  filler.x = bgCanvas.width / 2;
-  filler.y = bgCanvas.height / 4;
+  monsterhp = new createjs.Text("ENCOUNTER VIEW, BRO!", "bold 24px Arial", "#000000");
+  monsterhp.maxWidth = 1000;
+  monsterhp.textAlign = "center";
+  monsterhp.x = bgCanvas.width / 2;
+  monsterhp.y = bgCanvas.height / 4;
   
   initMenuView();
   
@@ -112,7 +112,7 @@ function initEncounterView()
   nightmare.sprite.y = 100;
   createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   
-  encounterView.addChild(background, filler, backButton, combatMenu, nightmare.sprite);
+  encounterView.addChild(background, monsterhp, backButton, combatMenu, nightmare.sprite);
 }
  
 function initMenuView()
@@ -120,48 +120,48 @@ function initMenuView()
    //These buttons are really ugly right now, but the code is solid.
   attackButton = new createjs.Bitmap(preload.getResult("attackButton"));
   attackButton.setTransform(0, 350, 2, 2);
-  attackButton.on("click", function() {encounterView.removeChildAt(3); encounterView.addChild(attackMenu);});
+  attackButton.on("click", function() {encounterView.removeChild(combatMenu); encounterView.addChild(attackMenu);});
   
   magicButton = new createjs.Bitmap(preload.getResult("magicButton"));
   magicButton.setTransform(bgCanvas.width / 2, 350, 2, 2);
-  magicButton.on("click", function() {encounterView.removeChildAt(3); encounterView.addChild(magicMenu);});
+  magicButton.on("click", function() {encounterView.removeChild(combatMenu); encounterView.addChild(magicMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
   //Temporary fix. I don't know if I can use the same object, or create the children via some function
   attack1Button = new createjs.Bitmap(preload.getResult("attackButton1"));
   attack1Button.setTransform(0, 340, 1, 1);
-  attack1Button.on("click", function() {console.log("Attack1"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  attack1Button.on("click", function() {player.attack(nightmare); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
   
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
   attack2Button.setTransform(0, 510, 1, 1);
-  attack2Button.on("click", function() {console.log("Attack2"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  attack2Button.on("click", function() {console.log("Attack2"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
   
   attack3Button = new createjs.Bitmap(preload.getResult("attackButton3"));
   attack3Button.setTransform(bgCanvas.width / 2, 340, 1, 1);
-  attack3Button.on("click", function() {console.log("Attack3"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  attack3Button.on("click", function() {console.log("Attack3"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
   
   attack4Button = new createjs.Bitmap(preload.getResult("attackButton4"));
   attack4Button.setTransform(bgCanvas.width / 2, 510, 1, 1);
-  attack4Button.on("click", function() {console.log("Attack4"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  attack4Button.on("click", function() {console.log("Attack4"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
   
   attackMenu.addChild(attack1Button, attack2Button, attack3Button, attack4Button);
   
   magic1Button = new createjs.Bitmap(preload.getResult("magicButton1"));
   magic1Button.setTransform(0, 340, 1, 1);
-  magic1Button.on("click", function() {console.log("Magic1"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  magic1Button.on("click", function() {console.log("Magic1"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
   
   magic2Button = new createjs.Bitmap(preload.getResult("magicButton2"));
   magic2Button.setTransform(0, 510, 1, 1);
-  magic2Button.on("click", function() {console.log("Magic2"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  magic2Button.on("click", function() {console.log("Magic2"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
   
   magic3Button = new createjs.Bitmap(preload.getResult("magicButton3"));
   magic3Button.setTransform(bgCanvas.width / 2, 340, 1, 1);
-  magic3Button.on("click", function() {console.log("Magic3"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  magic3Button.on("click", function() {console.log("Magic3"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
   
   magic4Button = new createjs.Bitmap(preload.getResult("magicButton4"));
   magic4Button.setTransform(bgCanvas.width / 2, 510, 1, 1);
-  magic4Button.on("click", function() {console.log("Magic4"); encounterView.removeChildAt(3); encounterView.addChild(combatMenu);});
+  magic4Button.on("click", function() {console.log("Magic4"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
   
   magicMenu.addChild(magic1Button, magic2Button, magic3Button, magic4Button);
   

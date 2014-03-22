@@ -30,6 +30,7 @@ function Combatant()
     if (this.energy <= 0) {
       this.isAlive = false;
     }
+    console.log("Took " + damage + " and has " + this.energy + " left.");
   }
 }
 
