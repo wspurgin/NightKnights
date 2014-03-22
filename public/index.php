@@ -1,9 +1,11 @@
 <html>
-    <head>
-        <title>NightKnights!</title>
-    </head>
+<head>
+  <title>NightKnights!</title>
+
+  <meta http-equiv="Refresh" content="0; url=/html/login.php" />
+</head>
 <body>
-    <p>Your virtual host is working, it seems! :3</p>
+  <a href="/html/login.php"><p>Click here if you aren't automatically redirected.</p></a>
 </body>
 </html>
 
