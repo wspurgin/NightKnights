@@ -3,32 +3,35 @@
 //To learn Canvas.js
 
 var canvas; //Will be linked to the canvas in our index.html page
-var bgStage; //Is the equivalent of stage in AS3; we'll add "children" to it
+var stage; //Is the equivalent of stage in AS3; we'll add "children" to it
  
 var loadingText;
 
 var totalLoaded;
 
-//[Views]
+//[Views and Containers]
 var worldView = new createjs.Container();
 var areaView = new createjs.Container();
 var encounterView = new createjs.Container();
+var combatMenu = new createjs.Container();
+var attackMenu = new createjs.Container();
+var spellMenu = new createjs.Container();
 
 function main()
 {
   bgCanvas = document.getElementById("backgroundCanvas");
-  bgStage = new createjs.Stage(bgCanvas);
-  bgStage.mouseEventsEnabled = true;
-  bgStage.enableMouseOver();
+  stage = new createjs.Stage(bgCanvas);
+  stage.mouseEventsEnabled = true;
+  stage.enableMouseOver();
   
   
   loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
-  loadingText.y = bgCanvas.height / 2;
-  bgStage.addChild(loadingText);
-  bgStage.update();   //update the stage to show text
+  loadingText.y = bgCanvas.height / 4;
+  stage.addChild(loadingText);
+  stage.update();   //update the stage to show text
   
   //Declare all of the images up front, and give each one a unique id
   manifest = [
@@ -36,6 +39,9 @@ function main()
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
             {src:"backgrounds/ForestMap.png", id:"forestMap"},
             {src:"sprites/back.png", id:"backButton"},
+            {src:"sprites/Button.png", id:"button"},
+            {src:"sprites/AttackButton.png", id:"attackButton"},
+            {src:"sprites/MagicButton.png", id:"magicButton"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
         ];
   
@@ -48,7 +54,7 @@ function main()
   
   //Set the FPS of the game and link the stage to it.
   createjs.Ticker.setFPS(60);
-  createjs.Ticker.addEventListener("tick", bgStage);
+  createjs.Ticker.addEventListener("tick", stage);
 }
 
 //This function lets us follow the progress of the loading operation.
@@ -56,14 +62,14 @@ function main()
 function updateLoading(event)
 {
   loadingText.text = "Loading " + (preload.progress*100|0) + "%"
-  bgStage.update();
+  stage.update();
 }
 
 //What gets called when we're done loading.  
 function doneLoading(event) 
 {
   //Remove the loading text.
-  bgStage.removeChildAt(0);
+  stage.removeChildAt(0);
   initWorldView();
   initForestView();
   initEncounterView();
@@ -150,7 +156,7 @@ function initForestView()
   filler.maxWidth = 1000;
   filler.textAlign = "center";
   filler.x = bgCanvas.width / 2;
-  filler.y = bgCanvas.height / 2;
+  filler.y = bgCanvas.height / 4;
   
   areaView.addChild(forestMap, forest, filler, backButton);
 }
@@ -178,16 +184,27 @@ function initEncounterView()
   filler.maxWidth = 1000;
   filler.textAlign = "center";
   filler.x = bgCanvas.width / 2;
-  filler.y = bgCanvas.height / 2;
+  filler.y = bgCanvas.height / 4;
   
-  encounterView.addChild(background, filler, backButton);
+  //These buttons are really ugly right now, but the code is solid.
+  attackButton = new createjs.Bitmap(preload.getResult("attackButton"));
+  attackButton.setTransform(0, 350, 2, 2);
+  attackButton.on("click", function() {console.log("Attack")});
+  
+  magicButton = new createjs.Bitmap(preload.getResult("magicButton"));
+  magicButton.setTransform(bgCanvas.width / 2, 350, 2, 2);
+  magicButton.on("click", function() {console.log("Magic")});
+  
+  combatMenu.addChild(attackButton, magicButton);
+  
+  encounterView.addChild(background, filler, backButton, combatMenu);
 }
 
 function switchTo(view)
 {
-  bgStage.removeChildAt(0);
-  bgStage.addChild(view);
-  bgStage.update();
+  stage.removeChildAt(0);
+  stage.addChild(view);
+  stage.update();
 }
 
 function stageOver(event) {
