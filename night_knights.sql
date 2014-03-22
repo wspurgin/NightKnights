@@ -156,7 +156,7 @@ CREATE TABLE Inventories(
 
 INSERT INTO `Users` (`id`, `username`, `email`, `password`)
 VALUES
-    (1, 'picoriley', 'acloudy@smu.edu', '$2y$10$eGtIfbkb9Ou11VdEzhi2p.WbeOw/8a8d5ON9mnFZtQKalSCmOiuP.');
+    (1, 'picoriley', 'acloudy@smu.edu', '$2y$10$ewAtLrK7Xojl.fj2330hGumzMCJfR35vn4e7sbNee9Wlvm30yFzvO');
 
 
 INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
