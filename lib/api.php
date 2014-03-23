@@ -145,16 +145,21 @@ Class Api
 		{
 			$body = $app->request->getBody();
 			$user = json_decode($body);
+			if(empty($user))
+				throw new Exception("Invlaid json '$body'", 1);
+
+			$passwd = new Password($user->password);
 			$sql = "INSERT INTO `Users`(`email`, `username`, `password`) VALUES (:email, :username, :password)";
 			$stmt = $this->db->prepare($sql);
 			$stmt->bindParam(":email", $user->email);
 			$stmt->bindParam(":username", $user->username);
-			$stmt->bindParam(":password", new Password($user->password));
+			$stmt->bindParam(":password", $passwd);
 			$stmt->execute();
 
-			$user_id = $this->db->getLastInsertId();
+			$user_id = $this->db->lastInsertId();
 
 			$sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
+			$stmt = $this->db->prepare($sql);
 			$stmt->bindParam(":user_id", $user_id);
 			$stmt->bindParam(":username", $user->username);
 			$stmt->execute();
@@ -185,7 +190,7 @@ Class Api
 		{
 			$app->log->error($e->getMessage());
 			// add message while debugging
-			$app->halt(500, json_encode('['.$e->getMessage().']'));
+			$app->halt(500, $e);
 		}
 		echo json_encode($response);
 	}
