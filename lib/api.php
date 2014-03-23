@@ -194,4 +194,42 @@ Class Api
 		}
 		echo json_encode($response);
 	}
+
+	public function getAcitveUserFights()
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		if (!$this->session())
+			$app->halt(404);
+		try
+		{
+			$sql = "SELECT * FROM `World_Fights` WHERE `character_id`=:id AND `active`=1";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":id", $_SESSION['user_id']);
+			$stmt->execute();
+
+			$fights = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+			$response['success'] = true;
+			$response['fights'] = $fights;
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
 }
