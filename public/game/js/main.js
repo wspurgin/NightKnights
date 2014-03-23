@@ -51,6 +51,10 @@ function main()
             {src:"sprites/MagicButton2.png", id:"magicButton2"},
             {src:"sprites/MagicButton3.png", id:"magicButton3"},
             {src:"sprites/MagicButton4.png", id:"magicButton4"},
+            {src:"sprites/hpBar.png", id:"hpBar"},
+            {src:"sprites/hpBarEmpty.png", id:"hpBarEmpty"},
+            {src:"sprites/hpBarSmall.png", id:"hpBarSmall"},
+            {src:"sprites/hpBarEmptySmall.png", id:"hpBarEmptySmall"},
             {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
             
