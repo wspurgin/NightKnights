@@ -97,7 +97,7 @@ Class Api
 					$_SESSION['username'] = $user->username;
 					$response['success'] = true;
 					$response['message'] = "$user->username logged in successfully";
-					$response['session'] = $_SESSION;
+					$response['request'] = $_SESSION;
 				}
 			}
 		}
@@ -143,12 +143,49 @@ Class Api
 		$response = array();
 		try
 		{
-			#code goes here
+			$body = $app->request->getBody();
+			$user = json_decode($body);
+			$sql = "INSERT INTO `Users`(`email`, `username`, `password`) VALUES (:email, :username, :password)";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":email", $user->email);
+			$stmt->bindParam(":username", $user->username);
+			$stmt->bindParam(":password", new Password($user->password));
+			$stmt->execute();
+
+			$user_id = $this->db->getLastInsertId();
+
+			$sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
+			$stmt->bindParam(":user_id", $user_id);
+			$stmt->bindParam(":username", $user->username);
+			$stmt->execute();
+
+			newSession(md5(SALT.$user->username));
+			$_SESSION['user_id'] = $user_id;
+			$_SESSION['username'] = $user->username;
+			$response['success'] = true;
+			$response['message'] = "$user->username created successfully, now logged in.";
+			$response['request'] = $_SESSION;
+
 		}
 		catch(PDOException $e)
 		{
+			$response['success'] = false;
 			$app->log->error($e->getMessage());
-			$app->halt(500);
+			if($e->getCode() == 23505)
+				$response['message'] = "Username already exists";
+			else
+			{
+				// while still debugging
+				$response['message'] = $e->getMessage();
+				// $response['message'] = "Errors occured";
+			}
+
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, json_encode('['.$e->getMessage().']'));
 		}
 		echo json_encode($response);
 	}

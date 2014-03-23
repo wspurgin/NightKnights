@@ -36,9 +36,11 @@ function getSession($set_guest=true)
 }
 
 // this function will destory any active sessions
+// and delete any site-cookies that are already set
 function newSession($name)
 {
-    $_COOKIE = array();
+    if(isset($_COOKIE))
+        unset($_COOKIE);
     if(isset($_SESSION))
         destroySession();
 
