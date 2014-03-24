@@ -8,6 +8,7 @@ session_cache_limiter(false);
 
 $app = new \Slim\Slim();
 $app->log->setEnabled(true);
+$app->contentType('application/json');
 
 // get all the bootstraped routes from config
 foreach ($ROUTES as $route) {
