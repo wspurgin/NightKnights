@@ -498,4 +498,48 @@ Class Api
 		}
 		echo json_encode($response);
 	}
+	
+	public function createInventoryItem($id)
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		if (!$this->session())
+			$app->halt(404);
+		try
+		{
+			$body = $app->request->getBody();
+			$itemAdd = json_decode($body);
+			if(empty($itemAdd))
+				throw new Exception("Invlaid json '$body'", 1);
+
+			$sql = "INSERT INTO Inventories(item_id, character_id) VALUES (:item_id, :id)";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":item_id", $itemAdd->item_id);
+			$stmt->bindParam(":id", $id);
+			$stmt->execute();
+
+			$fights = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$username = $_SESSION['username'];
+			$response['success'] = true;
+			$response['message'] = "$username has a new item in inventory!";
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
 }

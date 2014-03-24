@@ -22,5 +22,6 @@ $ROUTES = array(
 	new Route('/areas', Route::GET, array($api, 'getAreas')),
 	new Route('/characters/:id', Route::GET, array($api, 'getCharacter')),
 	new Route('/characters/:id/inventory', Route::GET, array($api, 'getCharacterInventory')),
-	new Route('/bosses', Route::GET, array($api, 'getBosses'))
+	new Route('/bosses', Route::GET, array($api, 'getBosses')),
+	new Route('/characters/:id/inventory', Route::POST, array($api, 'createInventoryItem'))
 );
