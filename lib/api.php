@@ -499,6 +499,9 @@ Class Api
 		echo json_encode($response);
 	}
 	
+	/**
+	*	JSON needs item_id key and value
+	*/
 	public function createInventoryItem($id)
 	{
 		$app = \Slim\Slim::getInstance();
@@ -518,7 +521,57 @@ Class Api
 			$stmt->bindParam(":id", $id);
 			$stmt->execute();
 
-			$fights = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$inventoryResponse = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$username = $_SESSION['username'];
+			$response['success'] = true;
+			$response['message'] = "$username has a new item in inventory!";
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
+	
+	/**
+	* 	PUT (ADD) experience
+	*	JSON needs experience key and value of experience to be added
+	*/
+	public function updateCharacterExperience($id)
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		//if (!$this->session())
+		//	$app->halt(404);
+		try
+		{
+			$body = $app->request->getBody();
+			$expAdd = json_decode($body);
+			if(empty($expAdd))
+				throw new Exception("Invlaid json '$body'", 1);
+
+			$sql = "UPDATE Characters 
+				SET experience = experience + :exp 
+				WHERE Characters.id = :id";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":exp", $expAdd->experience);
+			$stmt->bindParam(":id", $id);
+			$stmt->execute();
+
+			$experienceResponse = $stmt->fetchAll(PDO::FETCH_CLASS);
 			$username = $_SESSION['username'];
 			$response['success'] = true;
 			$response['message'] = "$username has a new item in inventory!";
