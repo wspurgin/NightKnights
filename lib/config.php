@@ -19,5 +19,6 @@ $ROUTES = array(
 	new Route('/fights', Route::POST, array($api, 'createFight')),
 	new Route('/areas/:id/monsters', Route::GET, array($api, 'getAreaMonsters')),
 	new Route('/items', Route::GET, array($api, 'getItems')),
-	new Route('/areas', Route::GET, array($api, 'getAreas'))
+	new Route('/areas', Route::GET, array($api, 'getAreas')),
+	new Route('/characters/:id', Route::GET, array($api, 'getCharacter'))
 );
