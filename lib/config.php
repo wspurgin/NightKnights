@@ -20,5 +20,6 @@ $ROUTES = array(
 	new Route('/areas/:id/monsters', Route::GET, array($api, 'getAreaMonsters')),
 	new Route('/items', Route::GET, array($api, 'getItems')),
 	new Route('/areas', Route::GET, array($api, 'getAreas')),
-	new Route('/characters/:id', Route::GET, array($api, 'getCharacter'))
+	new Route('/characters/:id', Route::GET, array($api, 'getCharacter')),
+	new Route('/characters/:id/inventory', Route::GET, array($api, 'getCharacterInventory'))
 );

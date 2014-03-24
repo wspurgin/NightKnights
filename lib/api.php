@@ -415,4 +415,44 @@ Class Api
 		}
 		echo json_encode($response);
 	}
+
+	public function getCharacterInventory($id)
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		try
+		{
+			$sql = "SELECT Items.name, attack_stat, defense_stat, 
+					magic_stat, classification, img_url
+				FROM Characters 
+				INNER JOIN Inventories ON Characters.id = Inventories.character_id
+				INNER JOIN Items ON Inventories.item_id = Items.id
+				WHERE Characters.id=:id";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":id", $id);
+			$stmt->execute();
+			$character = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+			$response['success'] = true;
+			$response['inventory'] = $character;
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
 }
