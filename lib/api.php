@@ -455,4 +455,47 @@ Class Api
 		}
 		echo json_encode($response);
 	}
+	
+	/**
+	*	Get ACTIVE world bosses
+	*	active = 1
+	*/
+	public function getBosses()
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		try
+		{
+			$sql = "SELECT Monsters.name, img_url, damage_done, boss_health, 
+				boss_attack, boss_defense, boss_magic, achievable_item_id 
+				FROM World_Fights 
+				INNER JOIN World_Bosses ON World_Fights.boss_id = World_Bosses.id
+				INNER JOIN Monsters ON World_Bosses.monster_id = Monsters.id
+				Where World_Fights.active = 1";
+			$stmt = $this->db->prepare($sql);
+			$stmt->execute();
+			$bosses = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+			$response['success'] = true;
+			$response["bosses"] = $bosses;
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
 }
