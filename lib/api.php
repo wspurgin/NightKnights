@@ -277,6 +277,39 @@ Class Api
 		echo json_encode($response);
 	}
 
+	public function getItems()
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		try
+		{
+			$sql = "SELECT * FROM `Items`";
+			$stmt = $this->db->query($sql);
+
+			$items = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$response['success'] = true;
+			$response['items'] = $items;
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
+
 	public function getAreaMonsters($id)
 	{
 		$app = \Slim\Slim::getInstance();
