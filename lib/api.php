@@ -596,6 +596,49 @@ Class Api
 		echo json_encode($response);
 	}
 
+	public function updateCharacterEnergy($id)
+	{
+		$app = \Slim\Slim::getInstance();
+		$response = array();
+		if(!$this->session())
+			$app->halt(404);
+		try
+		{
+			$body = $app->request->getBody();
+			$addtional = json_decode($body);
+			if(empty($addtional))
+				throw new Exception("Invlaid json '$body'", 1);
+
+			$sql = "UPDATE `Characters` SET `energy`=`energy`+:energy
+			WHERE `id`=:id";
+			$stmt = $this->db->prepare($sql);
+			$stmt->bindParam(":energy", $addtional->energy);
+			$stmt->bindParam(":id", $id);
+			$stmt->execute();
+
+			$response['success'] = true;
+			$response['message'] = "Succesfully added $addtional->energy to $id";
+		}
+		catch(PDOException $e)
+		{
+			$app->log->error($e->getMessage());
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(404, json_encode($response));
+		}
+		catch(Exception $e)
+		{
+			$app->log->error($e->getMessage());
+			// add message while debugging
+			$app->halt(500, $e);
+		}
+		echo json_encode($response);
+	}
+
 	public function getLeaderboard()
 	{
 		$app = \Slim\Slim::getInstance();
