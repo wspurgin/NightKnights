@@ -51,7 +51,7 @@ function Player(name, level, energy)
     
   this.die = function () {
     console.log("The nightmare sucks the last of your energy, and you pass out.");
-    //switchTo(worldView);
+    endCombat(false);
   }
   
   this.animateHP = function () {
@@ -59,7 +59,7 @@ function Player(name, level, energy)
   }
 }
 
-function Nightmare(name, level, energy, attackStat, defenceStat)
+function Nightmare(name, level, energy, attackStat, defenceStat, spriteName)
 {
   this.sprite;
   
@@ -69,13 +69,13 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   this.energy = energy;
   this.maxEnergy = energy;
   
-  this.attackDice = new dice(2, 6, attackStat);
+  this.attackDice = new dice(2, 3, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);
   
   this.initSprite = function (spriteName) {
     nightmare.sprite = new createjs.Bitmap(preload.getResult(spriteName));
     nightmare.sprite.x = bgCanvas.width / 2;
-    nightmare.sprite.y = bgCanvas.height / 4;
+    nightmare.sprite.y = bgCanvas.height / 2;
     //Tell the sprite to calculate its canvas position from the center of the sprite.
     nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
     nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
@@ -86,8 +86,7 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   this.die = function () {
     console.log("You have slain the " + this.name + "!");
     this.isDead = true;
-    
-    //switchTo(areaView);
+    endCombat(true);
   }
   
   this.animateHP = function () {
