@@ -21,20 +21,25 @@ var loadingText;
 
 function main()
 {
+  //Grab the canvas from the DOM. We draw on this instead of rendering to the DOM
   bgCanvas = document.getElementById("backgroundCanvas");
-  stage = new createjs.Stage(bgCanvas); //Set the backgroundCanvas as where we're going to render things
+  //Set the backgroundCanvas as where we're going to render things
+  stage = new createjs.Stage(bgCanvas); 
+  //These lines let us use mouse events, which are disabled by default.
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
   
+  //This is the loading text that we'll update later.
   loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
   loadingText.y = bgCanvas.height / 4; //The game area is half of the canvas' height
   stage.addChild(loadingText);
-  stage.update();   //update the stage to show text
+  stage.update();   //Update the stage to show the text we just added.
   
-  //Declare all of the images up front, and give each one a unique id
+  //Declare all of the resources up front, and give each one a unique id so that we can call it later.
+  //This is all done in the background, so none of the images or sounds are rendered yet.
   manifest = [
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
@@ -60,10 +65,12 @@ function main()
             
         ];
   
+  //This is the preloader, which lets us load the images beforehand and keeps track of all of the resources.
   preload = new createjs.LoadQueue();
   preload.installPlugin(createjs.Sound);
-  preload.addEventListener("complete", doneLoading); // add an event listener for when load is completed
+  //Add event listeners for when events are fired during and after the loading process.
   preload.addEventListener("progress", updateLoading);
+  preload.addEventListener("complete", doneLoading); 
   preload.loadManifest(manifest);
 
   
@@ -87,22 +94,13 @@ function doneLoading(event)
   stage.removeChildAt(0);
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
+  initSpriteSheets();
   initWorldView();
   initForestView();
   initEncounterView();
   initMenuView();
+  //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
-}
-
-//What gets called each time we load something.
-function handleFileLoad(event) {
-    var item = event.item; // A reference to the item that was passed in to the LoadQueue
-    var type = item.type;
-
-    // Add any images to the page body.
-    if (type == createjs.LoadQueue.IMAGE) {
-    document.body.appendChild(event.result);
-    }
 }
  
 function switchTo(view)

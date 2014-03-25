@@ -76,8 +76,10 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
     nightmare.sprite = new createjs.Bitmap(preload.getResult(spriteName));
     nightmare.sprite.x = bgCanvas.width / 2;
     nightmare.sprite.y = bgCanvas.height / 4;
+    //Tell the sprite to calculate its canvas position from the center of the sprite.
     nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
     nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
+    //Idle animation. This is what makes the nightmare bob up and down.
     createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:160}, 1000).to({y:170}, 1000).to({y:180}, 1000).to({y:170}, 1000);
   }
   

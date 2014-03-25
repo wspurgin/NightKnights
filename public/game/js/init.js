@@ -8,16 +8,6 @@ function initWorldView()
 {
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
  var stageSelect = new createjs.Container();
- 
- var stageSelectSheet = new createjs.SpriteSheet({
-    "animations":
-      {
-        "default": [0],
-        "highlighted": [1, 3, "highlighted"]
-      },
-        "images": [preload.getResult("stageSelectSprites")],
-        "frames": {width:50, height:50, count:4}
-  });
   
   var forest = new createjs.Sprite(stageSelectSheet, "default");
   forest.setTransform(130, 230);
@@ -47,17 +37,6 @@ function initForestView()
 {
   forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
-  //This is here temporarily for testing purposes.
-   var stageSelectSheet = new createjs.SpriteSheet({
-    "animations":
-      {
-        "default": [0],
-        "highlighted": [1, 3, "highlighted"]
-      },
-        "images": [preload.getResult("stageSelectSprites")],
-        "frames": {width:50, height:50, count:4}
-  });
-  
   var forest = new createjs.Sprite(stageSelectSheet, "default");
   forest.setTransform(130, 230);
   forest.framerate = 10;
@@ -80,15 +59,6 @@ function initForestView()
 
 function initEncounterView()
 {
-   var backgroundSheet = new createjs.SpriteSheet({
-    "animations":
-      {
-        "normal": [0]
-      },
-        "images": [preload.getResult("bgSprites")],
-        "frames": {width:255, height:112}
-  });
-  
   var background = new createjs.Sprite(backgroundSheet, "normal");
   background.scaleX = 3;
   background.scaleY = 3;
