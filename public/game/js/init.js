@@ -63,7 +63,7 @@ function initForestView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  forest.on("click", function() {switchTo(encounterView);});
+  forest.on("click", function() {initEncounter(); switchTo(encounterView);});
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
@@ -97,6 +97,17 @@ function initEncounterView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(areaView);});
   
+  encounterView.addChild(background, backButton);
+}
+ 
+//This function initializes the actual entities in the encounter, not the view itself
+function initEncounter()
+{
+  if(encounterView.children.length === 5){
+    encounterView.removeChildAt(4);
+    encounterView.removeChildAt(3);
+    encounterView.removeChildAt(2);
+  }
   var textContainer = new createjs.Container();
   
   playerhp = new createjs.Text("Energy: ", "bold 24px Arial", "#000000");
@@ -117,23 +128,16 @@ function initEncounterView()
   
   textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall);
   
-  initMenuView();
-  
   player = new Player("Pico", 1, 15);
   nightmare = new Nightmare("Big Snake", 1, 10, 1, 1);
-  nightmare.sprite = new createjs.Bitmap(preload.getResult("testMonster"));
-  nightmare.sprite.x = bgCanvas.width / 2;
-  nightmare.sprite.y = bgCanvas.height / 4;
-  nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
-  nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
-  createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:160}, 1000).to({y:170}, 1000).to({y:180}, 1000).to({y:170}, 1000);
+  nightmare.initSprite("testMonster");
   
-  encounterView.addChild(background, textContainer, backButton, combatMenu, nightmare.sprite);
+  encounterView.addChild(textContainer, combatMenu, nightmare.sprite);
 }
  
 function initMenuView()
 {
-   //These buttons are really ugly right now, but the code is solid.
+   //These buttons are really ugly right now, but the code works well enough to get to testing.
   attackButton = new createjs.Bitmap(preload.getResult("attackButton"));
   attackButton.setTransform(0, 350, 2, 2);
   attackButton.on("click", function() {encounterView.removeChild(combatMenu); encounterView.addChild(attackMenu);});

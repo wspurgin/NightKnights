@@ -72,6 +72,15 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   this.attackDice = new dice(2, 6, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);
   
+  this.initSprite = function (spriteName) {
+    nightmare.sprite = new createjs.Bitmap(preload.getResult(spriteName));
+    nightmare.sprite.x = bgCanvas.width / 2;
+    nightmare.sprite.y = bgCanvas.height / 4;
+    nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
+    nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
+    createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:160}, 1000).to({y:170}, 1000).to({y:180}, 1000).to({y:170}, 1000);
+  }
+  
   this.die = function () {
     console.log("You have slain the " + this.name + "!");
     this.isDead = true;
@@ -95,7 +104,13 @@ Nightmare.prototype = new Combatant();
 function startTurn(attackType)
 {
   player.attack(nightmare);
-  
+}
+
+function endCombat(playerWon)
+{
+  if (playerWon){
+    
+  }
 }
 
 /*An object to simulate rolling "Dungeons & Dragons" style dice. 

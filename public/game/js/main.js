@@ -85,9 +85,12 @@ function doneLoading(event)
 {
   //Remove the loading text.
   stage.removeChildAt(0);
+  
+  //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initWorldView();
   initForestView();
   initEncounterView();
+  initMenuView();
   switchTo(worldView);
 }
 
