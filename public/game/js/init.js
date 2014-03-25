@@ -133,7 +133,7 @@ function initMenuView()
   attack1Button.setTransform(0, 0, 1, 1);
   attack1Button.on("click", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
   
-  /*
+  /* Removed until implemented, they're just too dang ugly!
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
   attack2Button.setTransform(0, 170, 1, 1);
   attack2Button.on("click", function() {console.log("Attack2"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
