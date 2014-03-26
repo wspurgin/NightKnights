@@ -85,6 +85,10 @@ function initEncounterView()
   hpBarEmptySmall = new createjs.Bitmap(preload.getResult("hpBarEmptySmall"));
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
+  fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
+  fadeToBlack.alpha = 0;
+
+  
   textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall);
   
   encounterView.addChild(background, backButton, textContainer);
@@ -105,12 +109,13 @@ function initEncounter()
   menuStage.addChild(menuView);
   menuStage.update();
   
-  encounterView.addChild(nightmare.sprite);
+  encounterView.addChild(nightmare.sprite, fadeToBlack);
 }
 
 //Removes the sprites that were used for the encounter to ready for another battle.
 function encounterCleanup()
 {
+  fadeToBlack.alpha = 0;
   encounterView.removeChild(nightmare.sprite);
   menuStage.removeChild(menuView);
   menuStage.update();
@@ -125,7 +130,7 @@ function initMenuView()
   
   magicButton = new createjs.Bitmap(preload.getResult("magicButton"));
   magicButton.setTransform(menuCanvas.width / 2, 0, 2, 2);
-  magicButton.on("click", function() {swapMenu(combatMenu, magicMenu);});
+  magicButton.on("click", function() {swapMenu(combatMenu, attackMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   

@@ -39,6 +39,7 @@ function Combatant()
 function Player(name, level, energy)
 {
   //this.weapon;
+  this.isDead = false;
   this.name = name;
   this.level = level;
   this.energy = energy;
@@ -51,11 +52,15 @@ function Player(name, level, energy)
     
   this.die = function () {
     console.log("The nightmare sucks the last of your energy, and you pass out.");
-    endCombat(false);
+    this.isDead = true;
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBar, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000);
+    createjs.Tween.get(hpBar).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
+      if(player.isDead){
+        createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
+      }
+    });
   }
 }
 
@@ -86,13 +91,12 @@ function Nightmare(name, level, energy, attackStat, defenceStat, spriteName)
   this.die = function () {
     console.log("You have slain the " + this.name + "!");
     this.isDead = true;
-    endCombat(true);
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBarSmall, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
+    createjs.Tween.get(hpBarSmall).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
       if(nightmare.isDead)
-        createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750);
+        createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750).call(endCombat, [true]);
       else
         nightmare.attack(player);
     });
@@ -112,6 +116,11 @@ function endCombat(playerWon)
   if (playerWon){
     
   }
+  else {
+    encounterCleanup();
+    switchTo(worldView);
+  }
+  
 }
 
 /*An object to simulate rolling "Dungeons & Dragons" style dice. 

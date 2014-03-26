@@ -67,6 +67,7 @@ function main()
             {src:"sprites/hpBarSmall.png", id:"hpBarSmall"},
             {src:"sprites/hpBarEmptySmall.png", id:"hpBarEmptySmall"},
             {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
+            {src:"backgrounds/BlackBG.png", id:"blackBG"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
             
         ];
