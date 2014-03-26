@@ -15,6 +15,16 @@ function initSpriteSheets () {
         "images": [preload.getResult("stageSelectSprites")],
         "frames": {width:50, height:50, count:4}
   });
+  
+  nightmareSelectSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "default": [0],
+        "highlighted": [1, 3, "highlighted"]
+      },
+        "images": [preload.getResult("monsterSelectSprites")],
+        "frames": {width:50, height:50, count:4}
+  });
  
   backgroundSheet = new createjs.SpriteSheet({
     "animations":

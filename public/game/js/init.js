@@ -37,7 +37,7 @@ function initForestView()
 {
   forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
-  var forest = new createjs.Sprite(stageSelectSheet, "default");
+  var forest = new createjs.Sprite(nightmareSelectSheet, "default");
   forest.setTransform(230, 230);
   forest.framerate = 10;
   forest.on("rollover", stageOver);

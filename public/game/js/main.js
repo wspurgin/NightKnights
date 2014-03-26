@@ -63,7 +63,8 @@ function main()
             {src:"sprites/Chest.png", id:"treasureChest"},
             {src:"sprites/LootPlaceholder.png", id:"loot"},
             {src:"backgrounds/BlackBG.png", id:"blackBG"},
-            {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
+            {src:"sprites/stageSelect.png", id:"stageSelectSprites"},
+            {src:"sprites/monsterSelect.png", id:"monsterSelectSprites"}
             
         ];
   
