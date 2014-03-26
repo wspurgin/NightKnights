@@ -143,20 +143,12 @@ function encounterCleanup()
  
 function initMenuView()
 {
-   //These buttons are really ugly right now, but the code works well enough to get to testing.
-  attackButton = new createjs.Bitmap(preload.getResult("attackButton"));
-  attackButton.setTransform(0, 0, 2, 2);
-  attackButton.on("click", function() {swapMenu(combatMenu, attackMenu);});
-  
-  magicButton = new createjs.Bitmap(preload.getResult("magicButton"));
-  magicButton.setTransform(menuCanvas.width / 2, 0, 2, 2);
-  magicButton.on("click", function() {swapMenu(combatMenu, attackMenu);});
+  attackButton = buttonFactory(0, 0, 2, 2, "button", "Attack", function() {swapMenu(combatMenu, attackMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 2, 2, "button", "Magic", function() {swapMenu(combatMenu, attackMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
-  attack1Button = new createjs.Bitmap(preload.getResult("attackButton1"));
-  attack1Button.setTransform(0, 0, 1, 1);
-  attack1Button.on("click", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
+  normalAttackButton = buttonFactory(0, 0, 2, 2, "button", "Attack!", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
   
   /* Removed until implemented, they're just too dang ugly!
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
@@ -190,22 +182,22 @@ function initMenuView()
   magic4Button.on("click", function() {console.log("Magic4"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});*/
   
   //magicMenu.addChild(magic1Button, magic2Button, magic3Button, magic4Button);
-  attackMenu.addChild(attack1Button);
+  attackMenu.addChild(normalAttackButton);
   menuView.addChild(combatMenu);
 }
 
 
-function buttonMaker(x, y, imageName, buttonText, clickEvent)
+function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, clickEvent)
 {
   var buttonContainer = new createjs.Container();
   
   this.button = new createjs.Bitmap(preload.getResult(imageName));
-  this.button.setTransform(x, y, 2, 2);
+  this.button.setTransform(x, y, scaleX, scaleY);
   this.button.on("click", clickEvent);
   
   
   this.text = new createjs.Text(buttonText, "32px VT323", "#000000");
-  this.text.setTransform(x, y, 2, 2);
+  this.text.setTransform(x, y, scaleX, scaleY);
   this.text.textAlign = "center";
   this.text.textBaseline = "middle";
   this.text.x += (this.button.getBounds().width / 2) * this.button.scaleX;
@@ -238,10 +230,6 @@ function stageOut(event) {
     this.gotoAndPlay("lockedDefault");
   else
     this.gotoAndPlay("default");
-}
-
-function tweenFinish(tween) {
-    //nightmare = tween._target;
 }
         
 function openChest(event) {

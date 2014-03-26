@@ -19,14 +19,10 @@ function Combatant()
   //[Functions]
   this.attack = function (victim) {
     var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
-    if (netDamage < 0){
-      netDamage = 0;
+    if (netDamage <= 0)
       console.log(victim.name + " dodged " + this.name + "'s attack!");
-    }
-    if (netDamage)
+    else 
       victim.hurt(netDamage);
-    else
-      console.log("NRNRNRNR");
   }
   
   this.hurt = function (damage) {
