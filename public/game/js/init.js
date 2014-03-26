@@ -143,12 +143,12 @@ function encounterCleanup()
  
 function initMenuView()
 {
-  attackButton = buttonFactory(0, 0, 2, 2, "button", "Attack", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 2, 2, "button", "Magic", function() {swapMenu(combatMenu, attackMenu);});
+  attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "60px", function() {swapMenu(combatMenu, attackMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "60px", function() {swapMenu(combatMenu, attackMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
-  normalAttackButton = buttonFactory(0, 0, 2, 2, "button", "Attack!", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
+  normalAttackButton = buttonFactory(0, 0, 2, 2, "button", "Attack!", "24px", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
   
   /* Removed until implemented, they're just too dang ugly!
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
@@ -187,7 +187,7 @@ function initMenuView()
 }
 
 
-function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, clickEvent)
+function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, clickEvent)
 {
   var buttonContainer = new createjs.Container();
   
@@ -196,7 +196,7 @@ function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, clickEvent)
   this.button.on("click", clickEvent);
   
   
-  this.text = new createjs.Text(buttonText, "32px VT323", "#000000");
+  this.text = new createjs.Text(buttonText, textSize + " VT323", "#000000");
   this.text.setTransform(x, y, scaleX, scaleY);
   this.text.textAlign = "center";
   this.text.textBaseline = "middle";
