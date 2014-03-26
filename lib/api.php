@@ -76,10 +76,12 @@ Class Api
 	* with keys corresspoinding to the values to plug into the statment
 	* and their values the value of that arg. If the args are not
 	* named, i.e. normal indexes, then no key is assumed
+	* @param fetch_all is a boolean, default true, for whether all
+	* results should be returned. If false, only first result will be returned
 	*
 	* @return returns fetchAll(PDO::FETCH_CLASS) from the statment
 	*/
-	public function query($sql, $args)
+	public function query($sql, $args, $fetch_all=true)
 	{
 		$stmt = $this->db->prepare($sql);
 		foreach ($args as $key => $value)
@@ -90,13 +92,11 @@ Class Api
 				$stmt->bindParam($key, $value);	
 		}
 		$stmt->execute();
-		$rows = $stmt->fetchAll(PDO::FETCH_CLASS);
 		
-		# If only one object in return, return object.
-		if (count($rows) == 1)
-			return $rows[0];
-		else
-			return $rows; # return all objects
+		if($fetch_all)
+			return $stmt->fetchAll(PDO::FETCH_CLASS);
+		else # only fetch 1st object (good for queries getting only 1 row)
+			return $stmt->fetch(PDO::FETCH_CLASS);
 	}
 
 	public function loginUser()
@@ -112,7 +112,11 @@ Class Api
 				
 			$sql = "SELECT * FROM `Users` WHERE `email`=:email";
 
-			$user = $this->query($sql, array(":email" => $login->email));
+			$user = $this->query(
+				$sql,
+				array(":email" => $login->email),
+				false # to get only 1 row (as this should only match 1 row)
+			);
 			if(empty($user))
 				$app->halt(404);
 			else
@@ -162,10 +166,11 @@ Class Api
 			try
 			{
 				$sql = "SELECT `username`, `email` FROM `Users` WHERE `id`=:id";
-				$stmt = $this->db->prepare($sql);
-				$stmt->bindParam(":id", $_SESSION['user_id']);
-				$stmt->execute();
-				$user = $stmt->fetchObject();
+				$user = $stmt->query(
+					$sql,
+					array(":id" => $_SESSION['user_id']),
+					false # to get only 1 row (as this should only match 1 row)
+				);
 				if(empty($user))
 					$app->halt(404);
 			}
@@ -203,19 +208,22 @@ Class Api
 
 			$passwd = new Password($user->password);
 			$sql = "INSERT INTO `Users`(`email`, `username`, `password`) VALUES (:email, :username, :password)";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":email", $user->email);
-			$stmt->bindParam(":username", $user->username);
-			$stmt->bindParam(":password", $passwd);
-			$stmt->execute();
+			$args = array(
+				":email" 	=> $user->email,
+				":username" => $user->username,
+				":password"	=> $passwd
+			);
+
+			$this->query($sql, $args);
 
 			$user_id = $this->db->lastInsertId();
 
 			$sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":user_id", $user_id);
-			$stmt->bindParam(":username", $user->username);
-			$stmt->execute();
+			$args = array(
+				":user_id" 	=> $user_id,
+				":username" => $user->username
+			);
+			$this->query($sql, $args);
 
 			newSession(md5(SALT.$user->username));
 			$_SESSION['user_id'] = $user_id;
