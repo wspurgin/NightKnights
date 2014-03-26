@@ -195,9 +195,21 @@ function initMenuView()
 }
 
 
-function button()
+function buttonMaker(imageName, buttonText, clickEvent)
 {
+  var buttonContainer = new createjs.Container();
   
+  this.button = new createjs.Bitmap(preload.getResult(imageName));
+  this.button.on("click", clickEvent);
+  
+  this.text = new createjs.Text(buttonText, "24px VT323", "#000000");
+  this.text.textAlign = "center";
+  this.text.textBaseline = "middle";
+  this.text.x = this.button.x + this.button.getBounds().width / 2;
+  this.text.y = this.button.y + this.button.getBounds().height / 2;
+  
+  buttonContainer.addChild(button, text);
+  return buttonContainer;
 }
 
 /* Helper functions for the initialized components.
