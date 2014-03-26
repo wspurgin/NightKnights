@@ -143,8 +143,8 @@ function encounterCleanup()
  
 function initMenuView()
 {
-  attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "60px", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "60px", function() {swapMenu(combatMenu, attackMenu);});
+  attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "80px", function() {swapMenu(combatMenu, attackMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "80px", function() {swapMenu(combatMenu, attackMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
@@ -236,6 +236,7 @@ function openChest(event) {
   treasureChest.gotoAndPlay("open");
   encounterView.addChild(loot);
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
+    loot.y += 20;
     encounterCleanup();
     switchTo(areaView);
   });
