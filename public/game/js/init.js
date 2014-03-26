@@ -21,12 +21,20 @@ function initWorldView()
   mountain.framerate = 10;
   mountain.on("rollover", stageOver);
   mountain.on("rollout", stageOut);
+  if (player.level < 5){
+    mountain.locked = true;
+    mountain.gotoAndPlay("lockedDefault");
+  }
   
   var castle = new createjs.Sprite(stageSelectSheet, "default");
   castle.setTransform(600, 240);
   castle.framerate = 10;
   castle.on("rollover", stageOver);
   castle.on("rollout", stageOut);
+  if (player.level < 10){
+    castle.locked = true;
+    castle.gotoAndPlay("lockedDefault");
+  }
   
   stageSelect.addChild(forest, mountain, castle);  
   
@@ -112,7 +120,6 @@ function initEncounter()
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
-  player = new Player("Pico", 1, 15);
   nightmare = new Nightmare("Big Snake", 1, 10, 1, 1);
   nightmare.initSprite("testMonster");
   
@@ -187,6 +194,16 @@ function initMenuView()
   menuView.addChild(combatMenu);
 }
 
+
+function button()
+{
+  
+}
+
+/* Helper functions for the initialized components.
+ * This includes some of the more complicated onClick event functions.
+ */
+
 function swapMenu(oldView, newView){
   menuView.removeChild(oldView); 
   menuView.addChild(newView);
@@ -194,10 +211,16 @@ function swapMenu(oldView, newView){
 }
 
 function stageOver(event) {
+    if(this.locked)
+    this.gotoAndPlay("lockedHighlighted");
+  else
     this.gotoAndPlay("highlighted");
 }
 
 function stageOut(event) {
+  if(this.locked)
+    this.gotoAndPlay("lockedDefault");
+  else
     this.gotoAndPlay("default");
 }
 

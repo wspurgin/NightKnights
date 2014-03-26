@@ -10,10 +10,13 @@ function initSpriteSheets () {
     "animations":
       {
         "default": [0],
-        "highlighted": [1, 3, "highlighted"]
+        "highlighted": [1, 3, "highlighted"],
+        "lockedDefault": [4],
+        "lockedHighlighted": [5, 7, "lockedHighlighted"]
+        
       },
         "images": [preload.getResult("stageSelectSprites")],
-        "frames": {width:50, height:50, count:4}
+        "frames": {width:50, height:50, count:8}
   });
   
   nightmareSelectSheet = new createjs.SpriteSheet({
