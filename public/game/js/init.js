@@ -38,7 +38,7 @@ function initForestView()
   forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
   var forest = new createjs.Sprite(stageSelectSheet, "default");
-  forest.setTransform(130, 230);
+  forest.setTransform(230, 230);
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
@@ -48,18 +48,12 @@ function initForestView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(worldView);});
   
-  filler = new createjs.Text("AREA VIEW, YO!", "bold 24px Arial", "#000000");
-  filler.maxWidth = 1000;
-  filler.textAlign = "center";
-  filler.x = bgCanvas.width / 2;
-  filler.y = bgCanvas.height / 2;
-  
-  areaView.addChild(forestMap, forest, filler, backButton);
+  areaView.addChild(forestMap, forest, backButton);
 }
 
 function initEncounterView()
 {
-  var background = new createjs.Sprite(backgroundSheet, "normal");
+  var background = new createjs.Sprite(backgroundSheet, "forest");
   background.scaleX = 3;
   background.scaleY = 3;
   
