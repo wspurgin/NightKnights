@@ -90,7 +90,13 @@ Class Api
 				$stmt->bindParam($key, $value);	
 		}
 		$stmt->execute();
-		return $stmt->fetchAll(PDO::FETCH_CLASS);
+		$rows = $stmt->fetchAll(PDO::FETCH_CLASS);
+		
+		# If only one object in return, return object.
+		if (count($rows) == 1)
+			return $rows[0];
+		else
+			return $rows; # return all objects
 	}
 
 	public function loginUser()
@@ -101,12 +107,12 @@ Class Api
 		{
 			$body = $app->request->getBody();
 			$login = json_decode($body);
+			if(empty($login))
+				throw new Exception("Invalid json: '$body'", 1);
+				
 			$sql = "SELECT * FROM `Users` WHERE `email`=:email";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":email", $login->email);
-			$stmt->execute();
 
-			$user = $stmt->fetchObject();
+			$user = $this->query($sql, array(":email" => $login->email));
 			if(empty($user))
 				$app->halt(404);
 			else
@@ -127,9 +133,21 @@ Class Api
 		}
 		catch(PDOException $e)
 		{
+			$response['success'] = false;
 			$app->log->error($e->getMessage());
-			$app->halt(500);
-			// echo $e->getMessage();
+			$response['message'] = $e->getMessage();
+
+			$app->halt(404, json_encode($response));
+
+		}
+		catch(Exception $e)
+		{
+			$response['success'] = false;
+			$app->log->error($e->getMessage());
+			$response['message'] = $e->getMessage().$e->getLine();
+			
+			// add message while debugging
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -150,14 +168,25 @@ Class Api
 				$user = $stmt->fetchObject();
 				if(empty($user))
 					$app->halt(404);
-				else
-					echo json_encode($user);
 			}
 			catch(PDOException $e)
 			{
 				$app->log->error($e->getMessage());
-				$app->halt(500);
+				$response['success'] = false;
+
+				// while still debugging
+				$response['message'] = $e->getMessage();
+				// $response['message'] = "Errors occured";
+				
+				$app->halt(404, json_encode($response));
 			}
+			catch(Exception $e)
+			{
+				$app->log->error($e->getMessage());
+				// add message while debugging
+				$app->halt(500, $e);
+			}
+			echo json_encode($user);
 		}
 	}
 
