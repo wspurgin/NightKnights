@@ -19,10 +19,14 @@ function Combatant()
   //[Functions]
   this.attack = function (victim) {
     var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
-    if (netDamage < 0)
+    if (netDamage < 0){
       netDamage = 0;
+      console.log(victim.name + " dodged " + this.name + "'s attack!");
+    }
     if (netDamage)
       victim.hurt(netDamage);
+    else
+      console.log("NRNRNRNR");
   }
   
   this.hurt = function (damage) {
@@ -118,6 +122,7 @@ function endCombat(playerWon)
   }
   else {
     encounterCleanup();
+    areaView.removeChildAt(2); //Remove the monsters from the area.
     switchTo(worldView);
   }
   

@@ -35,8 +35,21 @@ function main()
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
   
+   WebFontConfig = {
+    google: { families: [ 'VT323::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+  
   //This is the loading text that we'll update later.
-  loadingText = new createjs.Text("Loading", "bold 24px Arial", "#000000");
+  loadingText = new createjs.Text("Loading", "48px VT323", "#000000");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
