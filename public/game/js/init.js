@@ -14,7 +14,7 @@ function initWorldView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  forest.on("click", function() {switchTo(areaView);});
+  forest.on("click", function() {areaView.addChild(initNightmaresList()); switchTo(areaView);});
   
   var mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
@@ -37,6 +37,15 @@ function initForestView()
 {
   var forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
+  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  backButton.setTransform(10, 10);
+  backButton.on("click", function() {areaView.removeChildAt(2); switchTo(worldView);});
+  
+  areaView.addChild(forestMap, backButton);
+}
+
+function initNightmaresList()
+{
   var nightmaresList = new createjs.Container();
   
   for (var i = 0; i < 3; i++){
@@ -49,12 +58,7 @@ function initForestView()
     
     nightmaresList.addChild(nightmareSelection);
   }
-  
-  backButton = new createjs.Bitmap(preload.getResult("backButton"));
-  backButton.setTransform(10, 10);
-  backButton.on("click", function() {switchTo(worldView);});
-  
-  areaView.addChild(forestMap, nightmaresList, backButton);
+  return nightmaresList;
 }
 
 function initEncounterView()
@@ -62,10 +66,6 @@ function initEncounterView()
   var background = new createjs.Sprite(backgroundSheet, "forest");
   background.scaleX = 3;
   background.scaleY = 3;
-  
-  backButton = new createjs.Bitmap(preload.getResult("backButton"));
-  backButton.setTransform(10, 10);
-  backButton.on("click", function() {switchTo(areaView); encounterCleanup();});
   
   textContainer = new createjs.Container();
   
@@ -101,7 +101,7 @@ function initEncounterView()
   
   textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
   
-  encounterView.addChild(background, backButton, textContainer);
+  encounterView.addChild(background, textContainer);
 }
  
 //This function initializes the actual entities in the encounter, not the view itself
