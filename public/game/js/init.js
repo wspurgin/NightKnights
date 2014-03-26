@@ -85,11 +85,21 @@ function initEncounterView()
   hpBarEmptySmall = new createjs.Bitmap(preload.getResult("hpBarEmptySmall"));
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
+  treasureChest = new createjs.Sprite(treasureSheet, "closed");
+  treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
+  treasureChest.framerate = 10;
+  treasureChest.on("click", openChest);
+  treasureChest.alpha = 0;
+  
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
   fadeToBlack.alpha = 0;
+  
+  loot = new createjs.Bitmap(preload.getResult("loot"));
+  loot.setTransform(bgCanvas.width / 2 - 25, bgCanvas.height / 2 - 25);
+  loot.alpha = 0;
 
   
-  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall);
+  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
   
   encounterView.addChild(background, backButton, textContainer);
 }
@@ -116,6 +126,9 @@ function initEncounter()
 function encounterCleanup()
 {
   fadeToBlack.alpha = 0;
+  treasureChest.alpha = 0;
+  treasureChest.gotoAndPlay("closed");
+  encounterView.removeChild(loot);
   encounterView.removeChild(nightmare.sprite);
   menuStage.removeChild(menuView);
   menuStage.update();
@@ -192,4 +205,12 @@ function tweenFinish(tween) {
     //nightmare = tween._target;
 }
         
+function openChest(event) {
+  treasureChest.gotoAndPlay("open");
+  encounterView.addChild(loot);
+  createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
+    encounterCleanup();
+    switchTo(areaView);
+  });
+}
 

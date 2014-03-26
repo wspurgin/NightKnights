@@ -114,7 +114,7 @@ function startTurn(attackType)
 function endCombat(playerWon)
 {
   if (playerWon){
-    
+    createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
   }
   else {
     encounterCleanup();
