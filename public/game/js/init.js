@@ -35,20 +35,26 @@ function initWorldView()
 
 function initForestView()
 {
-  forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
+  var forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
-  var forest = new createjs.Sprite(nightmareSelectSheet, "default");
-  forest.setTransform(230, 230);
-  forest.framerate = 10;
-  forest.on("rollover", stageOver);
-  forest.on("rollout", stageOut);
-  forest.on("click", function() {initEncounter(); switchTo(encounterView);});
+  var nightmaresList = new createjs.Container();
+  
+  for (var i = 0; i < 3; i++){
+    var nightmareSelection = new createjs.Sprite(nightmareSelectSheet, "default");
+    nightmareSelection.setTransform(Math.floor((Math.random()*500) + 100), Math.floor((Math.random()*180) + 100));
+    nightmareSelection.framerate = 10;
+    nightmareSelection.on("rollover", stageOver);
+    nightmareSelection.on("rollout", stageOut);
+    nightmareSelection.on("click", function() {nightmaresList.removeChild(this); initEncounter(); switchTo(encounterView);});
+    
+    nightmaresList.addChild(nightmareSelection);
+  }
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(worldView);});
   
-  areaView.addChild(forestMap, forest, backButton);
+  areaView.addChild(forestMap, nightmaresList, backButton);
 }
 
 function initEncounterView()
