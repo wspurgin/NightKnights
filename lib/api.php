@@ -70,6 +70,29 @@ Class Api
 		return clone $this;
 	}
 
+	/**
+	* @param sql is the sql statment
+	* @param args is an associative array
+	* with keys corresspoinding to the values to plug into the statment
+	* and their values the value of that arg. If the args are not
+	* named, i.e. normal indexes, then no key is assumed
+	*
+	* @return returns fetchAll(PDO::FETCH_CLASS) from the statment
+	*/
+	public function query($sql, $args)
+	{
+		$stmt = $this->db->prepare($sql);
+		foreach ($args as $key => $value)
+		{
+			if(is_int($key))
+				$stmt->bindParam($value);
+			else
+				$stmt->bindParam($key, $value);	
+		}
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_CLASS);
+	}
+
 	public function loginUser()
 	{
 		$app = \Slim\Slim::getInstance();
@@ -429,10 +452,8 @@ Class Api
 				INNER JOIN Inventories ON Characters.id = Inventories.character_id
 				INNER JOIN Items ON Inventories.item_id = Items.id
 				WHERE Characters.id=:id";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
-			$character = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+			$character = $this->query($sql, array(":id" => $id));
 
 			$response['success'] = true;
 			$response['inventory'] = $character;
