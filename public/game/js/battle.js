@@ -39,6 +39,7 @@ function Combatant()
 function Player(name, level, energy)
 {
   //this.weapon;
+  this.isDead = false;
   this.name = name;
   this.level = level;
   this.energy = energy;
@@ -51,15 +52,19 @@ function Player(name, level, energy)
     
   this.die = function () {
     console.log("The nightmare sucks the last of your energy, and you pass out.");
-    //switchTo(worldView);
+    this.isDead = true;
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBar, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000);
+    createjs.Tween.get(hpBar).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
+      if(player.isDead){
+        createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
+      }
+    });
   }
 }
 
-function Nightmare(name, level, energy, attackStat, defenceStat)
+function Nightmare(name, level, energy, attackStat, defenceStat, spriteName)
 {
   this.sprite;
   
@@ -69,13 +74,13 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   this.energy = energy;
   this.maxEnergy = energy;
   
-  this.attackDice = new dice(2, 6, attackStat);
+  this.attackDice = new dice(2, 3, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);
   
   this.initSprite = function (spriteName) {
     nightmare.sprite = new createjs.Bitmap(preload.getResult(spriteName));
     nightmare.sprite.x = bgCanvas.width / 2;
-    nightmare.sprite.y = bgCanvas.height / 4;
+    nightmare.sprite.y = bgCanvas.height / 2;
     //Tell the sprite to calculate its canvas position from the center of the sprite.
     nightmare.sprite.regX = nightmare.sprite.getBounds().width / 2;
     nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
@@ -86,14 +91,12 @@ function Nightmare(name, level, energy, attackStat, defenceStat)
   this.die = function () {
     console.log("You have slain the " + this.name + "!");
     this.isDead = true;
-    
-    //switchTo(areaView);
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBarSmall, {loop: false}).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
+    createjs.Tween.get(hpBarSmall).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
       if(nightmare.isDead)
-        createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750);
+        createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750).call(endCombat, [true]);
       else
         nightmare.attack(player);
     });
@@ -111,8 +114,13 @@ function startTurn(attackType)
 function endCombat(playerWon)
 {
   if (playerWon){
-    
+    createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
   }
+  else {
+    encounterCleanup();
+    switchTo(worldView);
+  }
+  
 }
 
 /*An object to simulate rolling "Dungeons & Dragons" style dice. 

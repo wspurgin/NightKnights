@@ -38,7 +38,7 @@ function initForestView()
   forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   
   var forest = new createjs.Sprite(stageSelectSheet, "default");
-  forest.setTransform(130, 230);
+  forest.setTransform(230, 230);
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
@@ -48,37 +48,20 @@ function initForestView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(worldView);});
   
-  filler = new createjs.Text("AREA VIEW, YO!", "bold 24px Arial", "#000000");
-  filler.maxWidth = 1000;
-  filler.textAlign = "center";
-  filler.x = bgCanvas.width / 2;
-  filler.y = bgCanvas.height / 4;
-  
-  areaView.addChild(forestMap, forest, filler, backButton);
+  areaView.addChild(forestMap, forest, backButton);
 }
 
 function initEncounterView()
 {
-  var background = new createjs.Sprite(backgroundSheet, "normal");
+  var background = new createjs.Sprite(backgroundSheet, "forest");
   background.scaleX = 3;
   background.scaleY = 3;
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
-  backButton.on("click", function() {switchTo(areaView);});
+  backButton.on("click", function() {switchTo(areaView); encounterCleanup();});
   
-  encounterView.addChild(background, backButton);
-}
- 
-//This function initializes the actual entities in the encounter, not the view itself
-function initEncounter()
-{
-  if(encounterView.children.length === 5){
-    encounterView.removeChildAt(4);
-    encounterView.removeChildAt(3);
-    encounterView.removeChildAt(2);
-  }
-  var textContainer = new createjs.Container();
+  textContainer = new createjs.Container();
   
   playerhp = new createjs.Text("Energy: ", "bold 24px Arial", "#000000");
   playerhp.maxWidth = 1000;
@@ -87,75 +70,121 @@ function initEncounter()
   playerhp.y = 300;
   
   hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
-  hpBar.setTransform(100, 300);
+  hpBar.setTransform(100, 300, 1, 1);
   hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
-  hpBarEmpty.setTransform(100, 300);
+  hpBarEmpty.setTransform(100, 300, 1, 1);
   
   hpBarSmall = new createjs.Bitmap(preload.getResult("hpBarSmall"));
-  hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50);
+  hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall = new createjs.Bitmap(preload.getResult("hpBarEmptySmall"));
-  hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50);
+  hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
-  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall);
+  treasureChest = new createjs.Sprite(treasureSheet, "closed");
+  treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
+  treasureChest.framerate = 10;
+  treasureChest.on("click", openChest);
+  treasureChest.alpha = 0;
+  
+  fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
+  fadeToBlack.alpha = 0;
+  
+  loot = new createjs.Bitmap(preload.getResult("loot"));
+  loot.setTransform(bgCanvas.width / 2 - 25, bgCanvas.height / 2 - 25);
+  loot.alpha = 0;
+
+  
+  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
+  
+  encounterView.addChild(background, backButton, textContainer);
+}
+ 
+//This function initializes the actual entities in the encounter, not the view itself
+function initEncounter()
+{ 
+  hpBar.setTransform(100, 300, 1, 1);
+  hpBarEmpty.setTransform(100, 300, 1, 1);
+  hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
+  hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
   player = new Player("Pico", 1, 15);
   nightmare = new Nightmare("Big Snake", 1, 10, 1, 1);
   nightmare.initSprite("testMonster");
   
-  encounterView.addChild(textContainer, combatMenu, nightmare.sprite);
+  menuStage.addChild(menuView);
+  menuStage.update();
+  
+  encounterView.addChild(nightmare.sprite, fadeToBlack);
+}
+
+//Removes the sprites that were used for the encounter to ready for another battle.
+function encounterCleanup()
+{
+  fadeToBlack.alpha = 0;
+  treasureChest.alpha = 0;
+  treasureChest.gotoAndPlay("closed");
+  encounterView.removeChild(loot);
+  encounterView.removeChild(nightmare.sprite);
+  menuStage.removeChild(menuView);
+  menuStage.update();
 }
  
 function initMenuView()
 {
    //These buttons are really ugly right now, but the code works well enough to get to testing.
   attackButton = new createjs.Bitmap(preload.getResult("attackButton"));
-  attackButton.setTransform(0, 350, 2, 2);
-  attackButton.on("click", function() {encounterView.removeChild(combatMenu); encounterView.addChild(attackMenu);});
+  attackButton.setTransform(0, 0, 2, 2);
+  attackButton.on("click", function() {swapMenu(combatMenu, attackMenu);});
   
   magicButton = new createjs.Bitmap(preload.getResult("magicButton"));
-  magicButton.setTransform(bgCanvas.width / 2, 350, 2, 2);
-  magicButton.on("click", function() {encounterView.removeChild(combatMenu); encounterView.addChild(magicMenu);});
+  magicButton.setTransform(menuCanvas.width / 2, 0, 2, 2);
+  magicButton.on("click", function() {swapMenu(combatMenu, attackMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
-  //Temporary fix. I don't know if I can use the same object, or create the children via some function
   attack1Button = new createjs.Bitmap(preload.getResult("attackButton1"));
-  attack1Button.setTransform(0, 340, 1, 1);
-  attack1Button.on("click", function() {startTurn("attack1"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
+  attack1Button.setTransform(0, 0, 1, 1);
+  attack1Button.on("click", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
   
+  /* Removed until implemented, they're just too dang ugly!
   attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
-  attack2Button.setTransform(0, 510, 1, 1);
-  attack2Button.on("click", function() {console.log("Attack2"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
+  attack2Button.setTransform(0, 170, 1, 1);
+  attack2Button.on("click", function() {console.log("Attack2"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
   
   attack3Button = new createjs.Bitmap(preload.getResult("attackButton3"));
-  attack3Button.setTransform(bgCanvas.width / 2, 340, 1, 1);
-  attack3Button.on("click", function() {console.log("Attack3"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
+  attack3Button.setTransform(menuCanvas.width / 2, 0, 1, 1);
+  attack3Button.on("click", function() {console.log("Attack3"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
   
   attack4Button = new createjs.Bitmap(preload.getResult("attackButton4"));
-  attack4Button.setTransform(bgCanvas.width / 2, 510, 1, 1);
-  attack4Button.on("click", function() {console.log("Attack4"); encounterView.removeChild(attackMenu); encounterView.addChild(combatMenu);});
+  attack4Button.setTransform(menuCanvas.width / 2, 170, 1, 1);
+  attack4Button.on("click", function() {console.log("Attack4"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
   
   attackMenu.addChild(attack1Button, attack2Button, attack3Button, attack4Button);
   
   magic1Button = new createjs.Bitmap(preload.getResult("magicButton1"));
-  magic1Button.setTransform(0, 340, 1, 1);
-  magic1Button.on("click", function() {console.log("Magic1"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
+  magic1Button.setTransform(0, 0, 1, 1);
+  magic1Button.on("click", function() {console.log("Magic1"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
   
   magic2Button = new createjs.Bitmap(preload.getResult("magicButton2"));
-  magic2Button.setTransform(0, 510, 1, 1);
-  magic2Button.on("click", function() {console.log("Magic2"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
+  magic2Button.setTransform(0, 170, 1, 1);
+  magic2Button.on("click", function() {console.log("Magic2"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
   
   magic3Button = new createjs.Bitmap(preload.getResult("magicButton3"));
-  magic3Button.setTransform(bgCanvas.width / 2, 340, 1, 1);
-  magic3Button.on("click", function() {console.log("Magic3"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
+  magic3Button.setTransform(menuCanvas.width / 2, 0, 1, 1);
+  magic3Button.on("click", function() {console.log("Magic3"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
   
   magic4Button = new createjs.Bitmap(preload.getResult("magicButton4"));
-  magic4Button.setTransform(bgCanvas.width / 2, 510, 1, 1);
-  magic4Button.on("click", function() {console.log("Magic4"); encounterView.removeChild(magicMenu); encounterView.addChild(combatMenu);});
+  magic4Button.setTransform(menuCanvas.width / 2, 170, 1, 1);
+  magic4Button.on("click", function() {console.log("Magic4"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});*/
   
-  magicMenu.addChild(magic1Button, magic2Button, magic3Button, magic4Button);
-  
-  combatMenu.addChild(attackButton, magicButton);
+  //magicMenu.addChild(magic1Button, magic2Button, magic3Button, magic4Button);
+  attackMenu.addChild(attack1Button);
+  menuView.addChild(combatMenu);
+}
+
+function swapMenu(oldView, newView){
+  menuView.removeChild(oldView); 
+  menuView.addChild(newView);
+  menuStage.update();
 }
 
 function stageOver(event) {
@@ -170,4 +199,12 @@ function tweenFinish(tween) {
     //nightmare = tween._target;
 }
         
+function openChest(event) {
+  treasureChest.gotoAndPlay("open");
+  encounterView.addChild(loot);
+  createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
+    encounterCleanup();
+    switchTo(areaView);
+  });
+}
 

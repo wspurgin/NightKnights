@@ -7,11 +7,13 @@
 //[Canvas and View]
 var canvas; //Will be linked to the canvas in our index.html page
 var stage; //A collection of things to be rendered; we'll add "children" to it that we want to render.
+var menuStage;
 
 //[Views and Containers]
 var worldView = new createjs.Container();
 var areaView = new createjs.Container();
 var encounterView = new createjs.Container();
+var menuView = new createjs.Container();
 var combatMenu = new createjs.Container();
 var attackMenu = new createjs.Container();
 var magicMenu = new createjs.Container();
@@ -25,6 +27,10 @@ function main()
   bgCanvas = document.getElementById("backgroundCanvas");
   //Set the backgroundCanvas as where we're going to render things
   stage = new createjs.Stage(bgCanvas); 
+  
+  menuCanvas = document.getElementById("menuCanvas");
+  menuStage = new createjs.Stage(menuCanvas); 
+  
   //These lines let us use mouse events, which are disabled by default.
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
@@ -34,7 +40,7 @@ function main()
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
-  loadingText.y = bgCanvas.height / 4; //The game area is half of the canvas' height
+  loadingText.y = bgCanvas.height / 2; //The game area is half of the canvas' height
   stage.addChild(loadingText);
   stage.update();   //Update the stage to show the text we just added.
   
@@ -48,19 +54,15 @@ function main()
             {src:"sprites/Button.png", id:"button"},
             {src:"sprites/AttackButton.png", id:"attackButton"},
             {src:"sprites/AttackButton1.png", id:"attackButton1"},
-            {src:"sprites/AttackButton2.png", id:"attackButton2"},
-            {src:"sprites/AttackButton3.png", id:"attackButton3"},
-            {src:"sprites/AttackButton4.png", id:"attackButton4"},
             {src:"sprites/MagicButton.png", id:"magicButton"},
-            {src:"sprites/MagicButton1.png", id:"magicButton1"},
-            {src:"sprites/MagicButton2.png", id:"magicButton2"},
-            {src:"sprites/MagicButton3.png", id:"magicButton3"},
-            {src:"sprites/MagicButton4.png", id:"magicButton4"},
             {src:"sprites/hpBar.png", id:"hpBar"},
             {src:"sprites/hpBarEmpty.png", id:"hpBarEmpty"},
             {src:"sprites/hpBarSmall.png", id:"hpBarSmall"},
             {src:"sprites/hpBarEmptySmall.png", id:"hpBarEmptySmall"},
             {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
+            {src:"sprites/Chest.png", id:"treasureChest"},
+            {src:"sprites/LootPlaceholder.png", id:"loot"},
+            {src:"backgrounds/BlackBG.png", id:"blackBG"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"}
             
         ];
@@ -95,10 +97,10 @@ function doneLoading(event)
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
+  initMenuView();
   initWorldView();
   initForestView();
   initEncounterView();
-  initMenuView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
 }

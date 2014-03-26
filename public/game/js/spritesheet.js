@@ -19,9 +19,20 @@ function initSpriteSheets () {
   backgroundSheet = new createjs.SpriteSheet({
     "animations":
       {
-        "normal": [0]
+        "plain": [0],
+        "forest": [2]
       },
         "images": [preload.getResult("bgSprites")],
-        "frames": {width:255, height:112}
+        "frames": {width:257, height:112}
+  });
+  
+  treasureSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "closed": [0],
+        "open": [1]
+      },
+        "images": [preload.getResult("treasureChest")],
+        "frames": {width:150, height:150}
   });
 }
