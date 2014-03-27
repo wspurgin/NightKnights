@@ -39,8 +39,8 @@ Class Api
 	public function session()
 	{
 		$goodSession = true;
-		getSession(false); // false for disabling guest sessions
-
+		if(!getSession(false)) // false for disabling guest sessions
+			return false;
 		// validate session if validation is required
 		if (isset($session_validation))
 		{
@@ -81,22 +81,47 @@ Class Api
 	*
 	* @return returns fetchAll(PDO::FETCH_CLASS) from the statment
 	*/
-	public function query($sql, $args, $fetch_all=true)
+	public function query($sql, $args=array())
 	{
 		$stmt = $this->db->prepare($sql);
 		foreach ($args as $key => $value)
 		{
+			
 			if(is_int($key))
-				$stmt->bindParam($value);
+				$stmt->bindValue($value);
 			else
-				$stmt->bindParam($key, $value);	
+				$stmt->bindValue($key, $value);	
 		}
 		$stmt->execute();
-		
+
+		return $stmt;
+	}
+
+	public function insert($sql, $args=array())
+	{
+		$stmt = $this->query($sql, $args);
+		return $this->db->lastInsertId();	
+	}
+
+	public function select($sql, $args=array(), $fetch_all=true)
+	{
+		$stmt = $this->query($sql, $args);
 		if($fetch_all)
 			return $stmt->fetchAll(PDO::FETCH_CLASS);
 		else # only fetch 1st object (good for queries getting only 1 row)
-			return $stmt->fetch(PDO::FETCH_CLASS);
+			return $stmt->fetch(PDO::FETCH_OBJ);
+	}
+
+	public function update($sql, $args=array())
+	{
+		$stmt = $this->query($sql, $args);
+		return true;
+	}
+
+	public function delete($sql, $args=array())
+	{
+		$stmt = $this->query($sql, $args);
+		return true;
 	}
 
 	public function loginUser()
@@ -166,7 +191,7 @@ Class Api
 			try
 			{
 				$sql = "SELECT `username`, `email` FROM `Users` WHERE `id`=:id";
-				$user = $stmt->query(
+				$user = $this->query(
 					$sql,
 					array(":id" => $_SESSION['user_id']),
 					false # to get only 1 row (as this should only match 1 row)
@@ -188,8 +213,13 @@ Class Api
 			catch(Exception $e)
 			{
 				$app->log->error($e->getMessage());
-				// add message while debugging
-				$app->halt(500, $e);
+				$response['success'] = false;
+
+				// while still debugging
+				$response['message'] = $e->getMessage();
+				// $response['message'] = "Errors occured";
+				
+				$app->halt(500, json_encode($response));
 			}
 			echo json_encode($user);
 		}
@@ -213,17 +243,16 @@ Class Api
 				":username" => $user->username,
 				":password"	=> $passwd
 			);
+			
 
-			$this->query($sql, $args);
-
-			$user_id = $this->db->lastInsertId();
+			$user_id = $this->insert($sql, $args);
 
 			$sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
 			$args = array(
 				":user_id" 	=> $user_id,
 				":username" => $user->username
 			);
-			$this->query($sql, $args);
+			$this->insert($sql, $args);
 
 			newSession(md5(SALT.$user->username));
 			$_SESSION['user_id'] = $user_id;
@@ -237,21 +266,26 @@ Class Api
 		{
 			$response['success'] = false;
 			$app->log->error($e->getMessage());
-			if($e->getCode() == 23505)
-				$response['message'] = "Username already exists";
+			if($e->getCode() == 23000)
+				$response['message'] = "Username or email already exists";
 			else
 			{
 				// while still debugging
 				$response['message'] = $e->getMessage();
 				// $response['message'] = "Errors occured";
 			}
-
+			$app->halt(404, json_encode($response));
 		}
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -265,11 +299,8 @@ Class Api
 		try
 		{
 			$sql = "SELECT * FROM `World_Fights` WHERE `character_id`=:id AND `active`=1";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":id", $_SESSION['user_id']);
-			$stmt->execute();
 
-			$fights = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$fights = $this->query($sql, array(":id" => $_SESSION['user_id']));
 
 			$response['success'] = true;
 			$response['fights'] = $fights;
@@ -288,8 +319,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -308,12 +344,12 @@ Class Api
 				throw new Exception("Invlaid json '$body'", 1);
 
 			$sql = "INSERT INTO `World_Fights`(`boss_id`, `character_id`) VALUES (:boss_id, :id)";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":boss_id", $fight->boss_id);
-			$stmt->bindParam(":id", $_SESSION['user_id']);
-			$stmt->execute();
+			$args = array(
+				":boss_id" => $fight->boss_id,
+				":id" => $_SESSION['user_id']	
+			);
+			$this->insert($sql, $args);
 
-			$fights = $stmt->fetchAll(PDO::FETCH_CLASS);
 			$username = $_SESSION['username'];
 			$response['success'] = true;
 			$response['message'] = "$username has a new fight!";
@@ -332,8 +368,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -345,9 +386,7 @@ Class Api
 		try
 		{
 			$sql = "SELECT * FROM `Items`";
-			$stmt = $this->db->query($sql);
-
-			$items = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$items = $this->query($sql);
 			$response['success'] = true;
 			$response['items'] = $items;
 		}
@@ -365,8 +404,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -379,11 +423,8 @@ Class Api
 		{
 			$sql = "SELECT * FROM `Monsters` m INNER JOIN `Areas_Monsters` a
 			ON (m.`id`=a.`monster_id`) WHERE a.`area_id`=:id";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
-			$monsters = $stmt->fetchAll(PDO::FETCH_CLASS);
 
+			$monsters = $this->query($sql, array(":id" => $id));
 			$response['success'] = true;
 			$response['monsters'] = $monsters;
 		}
@@ -401,8 +442,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -414,12 +460,10 @@ Class Api
 		try
 		{
 			$sql = "SELECT name, img_url FROM `Areas`";
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute();
-			$areas = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$areas = $this->query($sql);
 
 			$response['success'] = true;
-			$response["areas"] = $areas;
+			$response['areas'] = $areas;
 		}
 		catch(PDOException $e)
 		{
@@ -435,8 +479,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -449,11 +498,8 @@ Class Api
 		{
 			$sql = "SELECT name, energy, experience, level FROM `Characters`
 				WHERE Characters.id=:id";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
-			$character = $stmt->fetchAll(PDO::FETCH_CLASS);
 
+			$character = $this->query($sql, array(":id" => $id), false);
 			$response['success'] = true;
 			$response['character'] = $character;
 		}
@@ -471,8 +517,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -509,8 +560,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -531,9 +587,7 @@ Class Api
 				INNER JOIN World_Bosses ON World_Fights.boss_id = World_Bosses.id
 				INNER JOIN Monsters ON World_Bosses.monster_id = Monsters.id
 				Where World_Fights.active = 1";
-			$stmt = $this->db->prepare($sql);
-			$stmt->execute();
-			$bosses = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$bosses = $this->query($sql);
 
 			$response['success'] = true;
 			$response["bosses"] = $bosses;
@@ -552,8 +606,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -575,12 +634,13 @@ Class Api
 				throw new Exception("Invlaid json '$body'", 1);
 
 			$sql = "INSERT INTO Inventories(item_id, character_id) VALUES (:item_id, :id)";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":item_id", $itemAdd->item_id);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
+			$args = array(
+				":item_id" => $itemAdd->item_id,
+				":id" => $id
+			);
 
-			$inventoryResponse = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$this->insert($sql, $args);
+
 			$username = $_SESSION['username'];
 			$response['success'] = true;
 			$response['message'] = "$username has a new item in inventory!";
@@ -599,8 +659,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -625,12 +690,13 @@ Class Api
 			$sql = "UPDATE Characters 
 				SET experience = experience + :exp 
 				WHERE Characters.id = :id";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":exp", $expAdd->experience);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
+			$args = array(
+				":exp" => $expAdd->experience,
+				":id" => $id
+			);
 
-			$experienceResponse = $stmt->fetchAll(PDO::FETCH_CLASS);
+			$this->update($sql, $args);
+
 			$username = $_SESSION['username'];
 			$response['success'] = true;
 			$response['message'] = "$username has a new item in inventory!";
@@ -649,8 +715,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -670,13 +741,15 @@ Class Api
 
 			$sql = "UPDATE `Characters` SET `energy`=`energy`+:energy
 			WHERE `id`=:id";
-			$stmt = $this->db->prepare($sql);
-			$stmt->bindParam(":energy", $addtional->energy);
-			$stmt->bindParam(":id", $id);
-			$stmt->execute();
+			$args = array(
+				":energy" => $addtional->energy,
+				":id" => $id
+			);
+			$this->update($sql, $args);
 
+			$name = $_SESSION['username'];
 			$response['success'] = true;
-			$response['message'] = "Succesfully added $addtional->energy to $id";
+			$response['message'] = "Succesfully added $addtional->energy to $name";
 		}
 		catch(PDOException $e)
 		{
@@ -692,8 +765,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
@@ -707,9 +785,8 @@ Class Api
 		try
 		{
 			$sql = "SELECT * FROM `Characters` ORDER BY `experience` DESC";
-			$stmt = $this->db->query($sql);
+			$leaderboad = $this->query($sql);
 
-			$leaderboad = $stmt->fetchAll(PDO::FETCH_CLASS);
 			$response['success'] = true;
 			$response['leaderboad'] = $leaderboad;
 		}
@@ -727,8 +804,13 @@ Class Api
 		catch(Exception $e)
 		{
 			$app->log->error($e->getMessage());
-			// add message while debugging
-			$app->halt(500, $e);
+			$response['success'] = false;
+
+			// while still debugging
+			$response['message'] = $e->getMessage();
+			// $response['message'] = "Errors occured";
+			
+			$app->halt(500, json_encode($response));
 		}
 		echo json_encode($response);
 	}
