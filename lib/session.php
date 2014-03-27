@@ -33,6 +33,7 @@ function getSession($set_guest=true)
         }
         $_SESSION['last_access'] = time();
     }
+    return true;
 }
 
 // this function will destory any active sessions
