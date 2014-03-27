@@ -3,11 +3,11 @@
 * NightKnights Api Class
 * 
 * @author Will Spurgin
-* Refactroing branch
 */
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../init.php');
+require_once('db.php');
 require_once('password.php');
 require_once('session.php');
 
@@ -17,22 +17,6 @@ Class Api
 	private $db;
 
 	private $session_validation;
-
-	private function getConnection()
-	{
-	    $dbhost = DB_HOST;
-	    $dbname = DB_NAME;
-	    $dbuser = DB_USER;
-	    $dbpass = DB_PASS;
-
-	    $dbset = "mysql:host=$dbhost;dbname=$dbname;";
-
-	    $connection = new PDO($dbset, $dbuser, $dbpass);
-	    $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-	    $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-	    return $connection;		
-	}
 
 	// function for getting session (though disabling guest sessions)
 	// and validating the session.
@@ -61,67 +45,18 @@ Class Api
 
 	public function __construct($session_validation=NULL)
 	{
-		$this->db = $this->getConnection();
+		$dbhost = DB_HOST;
+	    $dbname = DB_NAME;
+	    $dbuser = DB_USER;
+	    $dbpass = DB_PASS;
+
+		$this->db = new Db($dbhost, $dbname, $dbuser, $dbpass);
 		$this->session_validation = $session_validation;
 	}
 
 	public function __clone()
 	{
 		return clone $this;
-	}
-
-	/**
-	* @param sql is the sql statment
-	* @param args is an associative array
-	* with keys corresspoinding to the values to plug into the statment
-	* and their values the value of that arg. If the args are not
-	* named, i.e. normal indexes, then no key is assumed
-	* @param fetch_all is a boolean, default true, for whether all
-	* results should be returned. If false, only first result will be returned
-	*
-	* @return returns fetchAll(PDO::FETCH_CLASS) from the statment
-	*/
-	public function query($sql, $args=array())
-	{
-		$stmt = $this->db->prepare($sql);
-		foreach ($args as $key => $value)
-		{
-			
-			if(is_int($key))
-				$stmt->bindValue($value);
-			else
-				$stmt->bindValue($key, $value);	
-		}
-		$stmt->execute();
-
-		return $stmt;
-	}
-
-	public function insert($sql, $args=array())
-	{
-		$stmt = $this->query($sql, $args);
-		return $this->db->lastInsertId();	
-	}
-
-	public function select($sql, $args=array(), $fetch_all=true)
-	{
-		$stmt = $this->query($sql, $args);
-		if($fetch_all)
-			return $stmt->fetchAll(PDO::FETCH_CLASS);
-		else # only fetch 1st object (good for queries getting only 1 row)
-			return $stmt->fetch(PDO::FETCH_OBJ);
-	}
-
-	public function update($sql, $args=array())
-	{
-		$stmt = $this->query($sql, $args);
-		return true;
-	}
-
-	public function delete($sql, $args=array())
-	{
-		$stmt = $this->query($sql, $args);
-		return true;
 	}
 
 	public function loginUser()
@@ -137,7 +72,7 @@ Class Api
 				
 			$sql = "SELECT * FROM `Users` WHERE `email`=:email";
 
-			$user = $this->query(
+			$user = $this->db->select(
 				$sql,
 				array(":email" => $login->email),
 				false # to get only 1 row (as this should only match 1 row)
@@ -191,7 +126,7 @@ Class Api
 			try
 			{
 				$sql = "SELECT `username`, `email` FROM `Users` WHERE `id`=:id";
-				$user = $this->query(
+				$user = $this->db->select(
 					$sql,
 					array(":id" => $_SESSION['user_id']),
 					false # to get only 1 row (as this should only match 1 row)
@@ -245,14 +180,14 @@ Class Api
 			);
 			
 
-			$user_id = $this->insert($sql, $args);
+			$user_id = $this->db->insert($sql, $args);
 
 			$sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
 			$args = array(
 				":user_id" 	=> $user_id,
 				":username" => $user->username
 			);
-			$this->insert($sql, $args);
+			$this->db->insert($sql, $args);
 
 			newSession(md5(SALT.$user->username));
 			$_SESSION['user_id'] = $user_id;
@@ -300,7 +235,7 @@ Class Api
 		{
 			$sql = "SELECT * FROM `World_Fights` WHERE `character_id`=:id AND `active`=1";
 
-			$fights = $this->query($sql, array(":id" => $_SESSION['user_id']));
+			$fights = $this->db->select($sql, array(":id" => $_SESSION['user_id']));
 
 			$response['success'] = true;
 			$response['fights'] = $fights;
@@ -348,7 +283,7 @@ Class Api
 				":boss_id" => $fight->boss_id,
 				":id" => $_SESSION['user_id']	
 			);
-			$this->insert($sql, $args);
+			$this->db->insert($sql, $args);
 
 			$username = $_SESSION['username'];
 			$response['success'] = true;
@@ -386,7 +321,7 @@ Class Api
 		try
 		{
 			$sql = "SELECT * FROM `Items`";
-			$items = $this->query($sql);
+			$items = $this->db->select($sql);
 			$response['success'] = true;
 			$response['items'] = $items;
 		}
@@ -424,7 +359,7 @@ Class Api
 			$sql = "SELECT * FROM `Monsters` m INNER JOIN `Areas_Monsters` a
 			ON (m.`id`=a.`monster_id`) WHERE a.`area_id`=:id";
 
-			$monsters = $this->query($sql, array(":id" => $id));
+			$monsters = $this->db->select($sql, array(":id" => $id));
 			$response['success'] = true;
 			$response['monsters'] = $monsters;
 		}
@@ -460,7 +395,7 @@ Class Api
 		try
 		{
 			$sql = "SELECT name, img_url FROM `Areas`";
-			$areas = $this->query($sql);
+			$areas = $this->db->select($sql);
 
 			$response['success'] = true;
 			$response['areas'] = $areas;
@@ -499,7 +434,7 @@ Class Api
 			$sql = "SELECT name, energy, experience, level FROM `Characters`
 				WHERE Characters.id=:id";
 
-			$character = $this->query($sql, array(":id" => $id), false);
+			$character = $this->db->select($sql, array(":id" => $id), false);
 			$response['success'] = true;
 			$response['character'] = $character;
 		}
@@ -541,7 +476,7 @@ Class Api
 				INNER JOIN Items ON Inventories.item_id = Items.id
 				WHERE Characters.id=:id";
 
-			$character = $this->query($sql, array(":id" => $id));
+			$character = $this->db->select($sql, array(":id" => $id));
 
 			$response['success'] = true;
 			$response['inventory'] = $character;
@@ -587,7 +522,7 @@ Class Api
 				INNER JOIN World_Bosses ON World_Fights.boss_id = World_Bosses.id
 				INNER JOIN Monsters ON World_Bosses.monster_id = Monsters.id
 				Where World_Fights.active = 1";
-			$bosses = $this->query($sql);
+			$bosses = $this->db->select($sql);
 
 			$response['success'] = true;
 			$response["bosses"] = $bosses;
@@ -639,7 +574,7 @@ Class Api
 				":id" => $id
 			);
 
-			$this->insert($sql, $args);
+			$this->db->insert($sql, $args);
 
 			$username = $_SESSION['username'];
 			$response['success'] = true;
@@ -695,7 +630,7 @@ Class Api
 				":id" => $id
 			);
 
-			$this->update($sql, $args);
+			$this->db->update($sql, $args);
 
 			$username = $_SESSION['username'];
 			$response['success'] = true;
@@ -745,7 +680,7 @@ Class Api
 				":energy" => $addtional->energy,
 				":id" => $id
 			);
-			$this->update($sql, $args);
+			$this->db->update($sql, $args);
 
 			$name = $_SESSION['username'];
 			$response['success'] = true;
@@ -785,7 +720,7 @@ Class Api
 		try
 		{
 			$sql = "SELECT * FROM `Characters` ORDER BY `experience` DESC";
-			$leaderboad = $this->query($sql);
+			$leaderboad = $this->db->select($sql);
 
 			$response['success'] = true;
 			$response['leaderboad'] = $leaderboad;
