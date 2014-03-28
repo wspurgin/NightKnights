@@ -35,6 +35,7 @@ function main()
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
   
+  //Grabbing the web font from google
    WebFontConfig = {
     google: { families: [ 'VT323::latin' ] }
   };
