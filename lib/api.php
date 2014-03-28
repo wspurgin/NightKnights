@@ -613,8 +613,8 @@ Class Api
 	{
 		$app = \Slim\Slim::getInstance();
 		$response = array();
-		//if (!$this->session())
-		//	$app->halt(404);
+		if (!$this->session())
+			$app->halt(404);
 		try
 		{
 			$body = $app->request->getBody();
@@ -632,9 +632,8 @@ Class Api
 
 			$this->db->update($sql, $args);
 
-			$username = $_SESSION['username'];
 			$response['success'] = true;
-			$response['message'] = "$username has a new item in inventory!";
+			$response['message'] = "character $id has a new more experience!";
 		}
 		catch(PDOException $e)
 		{
