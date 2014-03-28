@@ -64,13 +64,12 @@ function Player(name, level, energy)
   }
 }
 
-function Nightmare(name, level, energy, attackStat, defenceStat, spriteName)
+function Nightmare(name, energy, attackStat, defenceStat, spriteName)
 {
   this.sprite;
   
   this.isDead = false;
   this.name = name;
-  this.level = level;
   this.energy = energy;
   this.maxEnergy = energy;
   
