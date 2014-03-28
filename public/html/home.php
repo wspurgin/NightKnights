@@ -10,11 +10,10 @@
 <body>
 
   <?php include("modules/navbar.html"); ?>
-  <div class="spacer"></div>
 
 
   <div class="twocol" id="homewrapper">
-    <div id="homeleft">
+    <div class="left" id="homeleft">
 
       <p class="infocaption">Knight Stats</p>
       <div id="knightstats" class="infobox">
@@ -23,7 +22,6 @@
         <p>Experience: Z</p>
         <p>To Next: YYZ</p>
         <p>Rank: 9001</p>
-        
       </div>
 
       <p class="infocaption">Current Weapon</p>
@@ -36,14 +34,15 @@
       </div>
     </div>
 
-    <p class="infocaption">Current Worldbosses</p>
-    <div class="infobox" id="worldbosses">
-      
+    <div class="right" id="homeright">
+      <p class="infocaption">Current Worldbosses</p>
+      <div class="infobox" id="worldbosses">
+        <p>This some content</p>
+      </div>
     </div>
   </div>
 
 
-  <div class="spacer"></div>
   <?php include("modules/copyright.html"); ?>
 
 </body>
