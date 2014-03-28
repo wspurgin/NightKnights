@@ -115,7 +115,7 @@ function endCombat(playerWon)
 {
   if (playerWon){
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
-    player.maxEnergy = energy;
+    player.maxEnergy = player.energy;
   }
   else {
     encounterCleanup();
