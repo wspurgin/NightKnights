@@ -15,14 +15,91 @@
   <div class="test"></div>
 
   <div class="twocol" id="leaderwrapper">
+
     <div class="left" id="topten">
-      <p>LEFT</p>
+      <p class="infocaption">Top Ten Knights</p>
+      <div class="infobox">
+        <table class="infotable">
+              <thead>
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Level</th>
+                  <th scope="col">Experience</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                  <td>Marf</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
     </div>
 
     <div class="right" id="myrank">
-      <p>RIGHT</p>
+      <p class="infocaption">My Ranking</p>
     </div>
-  </div>
+
+  </div>  <!--This is the end of div #leaderwrapper-->
 
   <div class="test"></div>
 
