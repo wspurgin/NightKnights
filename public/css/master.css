@@ -58,14 +58,10 @@ body
 {
   text-align: center;
   border-collapse: collapse;
+  width: 100%;
 }
 
-.infotable thead, .infotable th
-{
-  
-}
-
-.infotable td
+.infotable td, .infotable th
 {
   border: 1px solid white;
 }
@@ -81,7 +77,7 @@ body
 .twocol /*Two-Column Layout (needs .left or .right as well)*/
 {
   display: block;
-  height: 100px;
+  overflow: auto;
 }
 
 .twocol > div
