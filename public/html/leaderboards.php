@@ -11,8 +11,8 @@
 <body>
 
   <?php include("modules/navbar.html"); ?>
+  <div class="spacer"></div>
 
-  <div class="test"></div>
 
   <div class="twocol" id="leaderwrapper">
 
@@ -170,8 +170,8 @@
 
   </div>  <!--This is the end of div #leaderwrapper-->
 
-  <div class="test"></div>
 
+  <div class="spacer"></div>
   <?php include("modules/copyright.html"); ?>
 
 </body>
