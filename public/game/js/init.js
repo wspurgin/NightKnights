@@ -143,46 +143,23 @@ function encounterCleanup()
  
 function initMenuView()
 {
-  attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "80px", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "80px", function() {swapMenu(combatMenu, attackMenu);});
+  attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Melee", "80px", function() {swapMenu(combatMenu, attackMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "80px", function() {swapMenu(combatMenu, magicMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
-  normalAttackButton = buttonFactory(0, 0, 2, 2, "button", "Attack!", "24px", function() {startTurn("attack1"); swapMenu(attackMenu, combatMenu);});
+  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "80px", function() {startTurn("attack"); swapMenu(attackMenu, combatMenu);});
+  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Power\nStrike", "80px", function() {startTurn("powerStrike"); swapMenu(attackMenu, combatMenu);});
+  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Earth\nSplitter", "80px", function() {startTurn("earthSplitter"); swapMenu(attackMenu, combatMenu);});
+  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Armageddon", "80px", function() {startTurn("armageddon"); swapMenu(attackMenu, combatMenu);});
   
-  /* Removed until implemented, they're just too dang ugly!
-  attack2Button = new createjs.Bitmap(preload.getResult("attackButton2"));
-  attack2Button.setTransform(0, 170, 1, 1);
-  attack2Button.on("click", function() {console.log("Attack2"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
+  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "Fireball", "80px", function() {startTurn("fireball"); swapMenu(magicMenu, combatMenu);});
+  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Blizzard", "80px", function() {startTurn("blizzard"); swapMenu(magicMenu, combatMenu);});
+  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Thunder\nBlast", "80px", function() {startTurn("thunderBlast"); swapMenu(magicMenu, combatMenu);});
+  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Cosmic\nRay", "80px", function() {startTurn("cosmicRay"); swapMenu(magicMenu, combatMenu);});
   
-  attack3Button = new createjs.Bitmap(preload.getResult("attackButton3"));
-  attack3Button.setTransform(menuCanvas.width / 2, 0, 1, 1);
-  attack3Button.on("click", function() {console.log("Attack3"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
-  
-  attack4Button = new createjs.Bitmap(preload.getResult("attackButton4"));
-  attack4Button.setTransform(menuCanvas.width / 2, 170, 1, 1);
-  attack4Button.on("click", function() {console.log("Attack4"); menuView.removeChild(attackMenu); menuView.addChild(combatMenu);});
-  
-  attackMenu.addChild(attack1Button, attack2Button, attack3Button, attack4Button);
-  
-  magic1Button = new createjs.Bitmap(preload.getResult("magicButton1"));
-  magic1Button.setTransform(0, 0, 1, 1);
-  magic1Button.on("click", function() {console.log("Magic1"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
-  
-  magic2Button = new createjs.Bitmap(preload.getResult("magicButton2"));
-  magic2Button.setTransform(0, 170, 1, 1);
-  magic2Button.on("click", function() {console.log("Magic2"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
-  
-  magic3Button = new createjs.Bitmap(preload.getResult("magicButton3"));
-  magic3Button.setTransform(menuCanvas.width / 2, 0, 1, 1);
-  magic3Button.on("click", function() {console.log("Magic3"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});
-  
-  magic4Button = new createjs.Bitmap(preload.getResult("magicButton4"));
-  magic4Button.setTransform(menuCanvas.width / 2, 170, 1, 1);
-  magic4Button.on("click", function() {console.log("Magic4"); menuView.removeChild(magicMenu); menuView.addChild(combatMenu);});*/
-  
-  //magicMenu.addChild(magic1Button, magic2Button, magic3Button, magic4Button);
-  attackMenu.addChild(normalAttackButton);
+  magicMenu.addChild(normalMagicButton, blizzardButton, thunderBlastButton, cosmicRayButton);
+  attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);
   menuView.addChild(combatMenu);
 }
 
