@@ -3,8 +3,10 @@
 <head>
   <title>Night Knights - Login</title>
   
-  <link rel="stylesheet" type="text/css" href="../css/login.css">
   <?php include("modules/commonHead.html"); ?>
+
+  <link rel="stylesheet" type="text/css" href="../css/login.css">
+  <script type="text/javascript" src = "../js/login.js" ></script>
 </head>
 
 <body>
