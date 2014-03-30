@@ -33,11 +33,8 @@ $(document).ready(function() {
             },
 
             success: function(data) {
-                console.log($(this));
-                console.log(data);
-
                 if (data.success) {
-                    // window.location.replace('home.php');
+                    window.location.replace('home.php');
                     console.log(data.message);
                 } else {
                     // credintials were bad, reset the form:
