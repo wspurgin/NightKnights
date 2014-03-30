@@ -22,25 +22,8 @@ Class Api
     // and validating the session.
     public function session()
     {
-        $goodSession = true;
-        if(!getSession(false)) // false for disabling guest sessions
-            return false;
-        // validate session if validation is required
-        if (isset($session_validation))
-        {
-            foreach ($session_validation as $key => $validator)
-            {
-                if (is_array($validator))
-                    $goodSession = validateSession($validator["key"], $validator["value"]);
-                else
-                    $goodSession = validateSession($validator);
-
-                // if the session is invalid
-                if (!$goodSession)
-                    return false;
-            }
-        }
-        return $goodSession;
+        // 'false' for disabling guest sessions
+        return _session($this->session_validation, false);
     }
 
     public function __construct($session_validation=NULL)
@@ -51,7 +34,7 @@ Class Api
         $dbpass = DB_PASS;
 
         $this->db = new Db($dbhost, $dbname, $dbuser, $dbpass);
-        $this->session_validation = $session_validation;
+        $this->session_validation = (array)$session_validation;
     }
 
     public function __clone()

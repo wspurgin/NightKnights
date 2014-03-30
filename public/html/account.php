@@ -1,3 +1,4 @@
+<?php require_once('validate.php'); ?>
 <!doctype html>
 <html lang="en">
 <head>
