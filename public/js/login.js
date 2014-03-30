@@ -3,52 +3,51 @@
   account creation and login.
   */
 
-  $(document).ready(function() {
+$(document).ready(function() {
 
-    $('#loginform').submit(function() {
+    $('#loginform').submit(function(event) {
+        event.preventDefault();
+        //setup information from form (validation happens at form-level, not here)
 
-      //setup information from form (validation happens at form-level, not here)
-      var info = {
-        'email':$('#loginEmail').val(),
-        'password':$('#loginPassword').val()
-      };
+        data = formToJSON($(this));
+        var form = $(this);
+        $.ajax({
+            url: '/api/login',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
 
-      info = JSON.stringify(info);    //stringify the information
-      info = info.replace(/"/g, "'"); //replace " with ' so things don't hiccup
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // credintials were bad, reset the form:
+                    form[0].reset();
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(data)
+                    alert("Errors occured during your request. Please try again.");
+                };
+            },
 
-      var testinfo = {
-        'email':'ebusbee@smu.edu',
-        'password':'marflebark'
-      };
+            success: function(data) {
+                console.log($(this));
+                console.log(data);
 
-      testinfo = JSON.stringify(testinfo);
-      //testinfo = testinfo.replace(/"/g, "'");
+                if (data.success) {
+                    // window.location.replace('home.php');
+                    console.log(data.message);
+                } else {
+                    // credintials were bad, reset the form:
+                    form[0].reset();
+                    alert(data.message);
+                };
+            }
 
-      $.ajax({
-        url: '../api/login',
-        type: 'POST',
-        data: testinfo,
-        dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
-
-        error: function(text) {
-          console.log('error, sent:');
-          console.log(testinfo);
-          console.log('responseText:');
-          console.log(text.responseText);
-          console.log('statusText:');
-          console.log(text.statusText);
-          alert('AJAX call unsuccessful. See console for details before closing this window.');
-        },
-
-        success: function (data) {
-            alert('AJAX call was successful.');
-            //TODO: session logic
-            //window.location.replace('home.php');
-          }
-          
         }); //end of AJAX call
 
     }); //end of #loginform.submit()
 
-  }); //end of document.ready()
+}); //end of document.ready()
