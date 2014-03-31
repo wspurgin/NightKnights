@@ -20,7 +20,10 @@ function Combatant()
   this.attack = function (victim) {
     var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
     if (netDamage <= 0)
+    {
       console.log(victim.name + " dodged " + this.name + "'s attack!");
+      victim.animateHP();
+    }
     else 
       victim.hurt(netDamage);
   }
@@ -107,6 +110,8 @@ Nightmare.prototype = new Combatant();
 
 function startTurn(attackType)
 {
+  console.log("Player HP: " + player.energy + "/" + player.maxEnergy);
+  console.log("Nightmare HP: " + nightmare.energy + "/" + nightmare.maxEnergy);
   player.attack(nightmare);
 }
 
@@ -120,6 +125,9 @@ function endCombat(playerWon)
     encounterCleanup();
     areaView.removeChildAt(2); //Remove the monsters from the area.
     switchTo(worldView);
+    player.energy = 15;
+    player.maxEnergy = 15;
+    player.isDead = false;
   }
   
 }
