@@ -100,6 +100,38 @@ Class Api
         echo json_encode($response);
     }
 
+    public function logoutUser()
+    {
+        $app = \Slim\Slim::getInstance();
+        if (!$this->session())
+            $app->halt(404);
+        try
+        {
+            destroySession();
+            $response['success'] = true;
+            $response['message'] = "User logged out.";
+        }
+        catch(PDOException $e)
+        {
+            $response['success'] = false;
+            $app->log->error($e->getMessage());
+            $response['message'] = $e->getMessage();
+
+            $app->halt(404, json_encode($response));
+
+        }
+        catch(Exception $e)
+        {
+            $response['success'] = false;
+            $app->log->error($e->getMessage());
+            $response['message'] = $e->getMessage();
+            
+            // add message while debugging
+            $app->halt(404, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
     public function getCurrentUser()
     {
         $app = \Slim\Slim::getInstance();

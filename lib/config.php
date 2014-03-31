@@ -14,6 +14,7 @@ Example route
 $ROUTES = array(
     new Route('/user', Route::GET, array($api, 'getCurrentUser')),
     new Route('/login', Route::POST, array($api, 'loginUser')),
+    new Route('/logout', Route::GET, array($api, 'logoutUser')),
     new Route('/users', Route::POST, array($api, 'createUser')),
     new Route('/fights', Route::GET, array($api, 'getAcitveUserFights')),
     new Route('/fights', Route::POST, array($api, 'createFight')),
