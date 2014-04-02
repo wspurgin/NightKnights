@@ -64,7 +64,7 @@ Class Api
                 throw new Exception("Invalid Credentials", 1);
             else
             {
-                $check = !Password::check($user->password, $login->password);
+                $check = Password::check($user->password, $login->password);
                 if(!$check)
                     throw new Exception("Invalid Credentials", 1);
                 else
