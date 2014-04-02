@@ -739,7 +739,7 @@ Class Api
             $leaderboad = $this->db->select($sql);
 
             $response['success'] = true;
-            $response['leaderboad'] = $leaderboad;
+            $response['leaderboard'] = $leaderboad;
         }
         catch(PDOException $e)
         {
