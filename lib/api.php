@@ -186,7 +186,8 @@ Class Api
             $user = json_decode($body);
             if(empty($user))
                 throw new Exception("Invlaid json '$body'", 1);
-
+            if($user->username == '' || $user->email == '' || $user->password == '')
+                throw new Exception("Invalid Account Information");
             $passwd = new Password($user->password);
             $sql = "INSERT INTO `Users`(`email`, `username`, `password`) VALUES (:email, :username, :password)";
             $args = array(
@@ -738,7 +739,7 @@ Class Api
             $leaderboad = $this->db->select($sql);
 
             $response['success'] = true;
-            $response['leaderboad'] = $leaderboad;
+            $response['leaderboard'] = $leaderboad;
         }
         catch(PDOException $e)
         {
