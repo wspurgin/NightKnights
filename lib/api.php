@@ -493,10 +493,10 @@ Class Api
                 INNER JOIN Items ON Inventories.item_id = Items.id
                 WHERE Characters.id=:id";
 
-            $character = $this->db->select($sql, array(":id" => $id));
+            $inventory = $this->db->select($sql, array(":id" => $id));
 
             $response['success'] = true;
-            $response['inventory'] = $character;
+            $response['inventory'] = $inventory;
         }
         catch(PDOException $e)
         {

@@ -12,13 +12,16 @@ class Route
     public $url;
     public $callable;
 
-    //enum stuff
-    const GET = 0;
-    const POST = 1;
-    const PUT = 2;
-    const DELETE = 3;
-    
-    private $typeArray = array(Route::GET, Route::POST, Route::PUT, Route::DELETE);
+
+	//enum stuff
+	const GET = 0;
+	const POST = 1;
+	const PUT = 2;
+	const DELETE = 3;
+	const PATCH = 4;
+	
+	private $typeArray = array(Route::GET, Route::POST, Route::PUT, Route::DELETE, Route::PATCH);
+
 
     function __construct($url, $type, $callable)
     {
