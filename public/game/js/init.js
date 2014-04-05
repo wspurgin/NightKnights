@@ -190,7 +190,7 @@ function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, cl
   
   this.button = new createjs.Bitmap(preload.getResult(imageName));
   this.button.setTransform(x, y, scaleX, scaleY);
-  this.button.on("click", clickEvent);
+  this.button.on("click", function(){ if (!menuLocked){clickEvent();}});
   
   
   this.text = new createjs.Text(buttonText, textSize + " VT323", "#000000");

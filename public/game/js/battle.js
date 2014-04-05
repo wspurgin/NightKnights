@@ -6,6 +6,7 @@
 
 var player;
 var nightmare;
+var menuLocked;
 
 function Combatant()
 {
@@ -63,6 +64,7 @@ function Player(name, level, energy)
       if(player.isDead){
         createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
       }
+    menuLocked = false;
     });
   }
 }
@@ -115,6 +117,7 @@ Nightmare.prototype = new Combatant();
 
 function startTurn(attackType)
 {
+  menuLocked = true;
   console.log("Player HP: " + player.energy + "/" + player.maxEnergy);
   console.log("Nightmare HP: " + nightmare.energy + "/" + nightmare.maxEnergy);
   player.attack(nightmare);
