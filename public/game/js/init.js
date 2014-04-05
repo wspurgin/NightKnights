@@ -120,7 +120,7 @@ function initEncounter()
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
-  nightmare = new Nightmare("Big Snake", 10, 1, 1);
+  nightmare = new Nightmare("Big Snake", 50, 5, 5);
   nightmare.initSprite("testMonster");
   
   menuStage.addChild(menuView);

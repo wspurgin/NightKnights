@@ -49,8 +49,8 @@ function Player(name, level, energy)
   this.maxEnergy = energy;
   
   //Hardcoded until I implement weapons.
-  this.attackDice = new dice(2,6);
-  this.defenceDice = new dice(1,4);
+  this.attackDice = new dice(2,15,3);
+  this.defenceDice = new dice(1,4,5);
   
     
   this.die = function () {
@@ -76,7 +76,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   this.energy = energy;
   this.maxEnergy = energy;
   
-  this.attackDice = new dice(2, 3, attackStat);
+  this.attackDice = new dice(2, 10, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);
   
   this.initSprite = function (spriteName) {
@@ -115,18 +115,25 @@ function startTurn(attackType)
   player.attack(nightmare);
 }
 
+
+/*A function to control the logic of ending the battle.
+ * We check to see who won, then take care of the results depending on who won.
+ */
 function endCombat(playerWon)
 {
   if (playerWon){
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
     player.maxEnergy = player.energy;
+    if(saveBattleResults(getExpFromNightmare(nightmare))){
+      levelUp();
+    }
   }
   else {
     encounterCleanup();
     areaView.removeChildAt(2); //Remove the monsters from the area.
     switchTo(worldView);
-    player.energy = 15;
-    player.maxEnergy = 15;
+    player.energy = 250;
+    player.maxEnergy = 250;
     player.isDead = false;
   }
   

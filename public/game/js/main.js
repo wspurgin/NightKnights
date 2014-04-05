@@ -109,7 +109,7 @@ function doneLoading(event)
   stage.removeChildAt(0);
   
   //Create the player object. This is where we would use the data we got from the DB.
-  player = new Player("Pico", 1, 15);
+  player = new Player("Pico", 1, 250);
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
@@ -128,3 +128,8 @@ function switchTo(view)
   stage.update();
 }
 
+function levelUp()
+{
+  
+}
+  
