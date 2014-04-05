@@ -143,6 +143,7 @@ function endCombat(playerWon)
     player.energy = 250;
     player.maxEnergy = 250;
     player.isDead = false;
+    menuLocked = false;
   }
   
 }

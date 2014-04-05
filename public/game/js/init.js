@@ -236,6 +236,7 @@ function openChest(event) {
     loot.y += 20;
     encounterCleanup();
     switchTo(areaView);
+    menuLocked = false;
   });
 }
 
