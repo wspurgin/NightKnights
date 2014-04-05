@@ -64,6 +64,7 @@ function main()
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
             {src:"backgrounds/ForestMap.png", id:"forestMap"},
+            {src:"backgrounds/MountainMap.png", id:"mountainMap"},
             {src:"sprites/back.png", id:"backButton"},
             {src:"sprites/Button.png", id:"button"},
             {src:"sprites/bigButton.png", id:"bigButton"},
@@ -115,7 +116,7 @@ function doneLoading(event)
   initSpriteSheets();
   initMenuView();
   initWorldView();
-  initForestView();
+  initAreaViews();
   initEncounterView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);

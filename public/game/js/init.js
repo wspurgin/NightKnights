@@ -14,13 +14,14 @@ function initWorldView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  forest.on("click", function() {areaView.addChild(initNightmaresList()); switchTo(areaView);});
+  forest.on("click", function() {areaView.addChildAt(forestMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
   
   var mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
   mountain.framerate = 10;
   mountain.on("rollover", stageOver);
   mountain.on("rollout", stageOut);
+  mountain.on("click", function() {areaView.addChildAt(mountainMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
   if (player.level < 5){
     mountain.locked = true;
     mountain.gotoAndPlay("lockedDefault");
@@ -41,15 +42,16 @@ function initWorldView()
   worldView.addChild(worldMap, stageSelect);
 }
 
-function initForestView()
+function initAreaViews()
 {
-  var forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
+  forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
+  mountainMap = new createjs.Bitmap(preload.getResult("mountainMap"));
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
-  backButton.on("click", function() {areaView.removeChildAt(2); switchTo(worldView);});
+  backButton.on("click", function() {areaView.removeChildAt(2); areaView.removeChildAt(0); switchTo(worldView);}); //Remove the Monsters, then the background.
   
-  areaView.addChild(forestMap, backButton);
+  areaView.addChild(backButton);
 }
 
 function initNightmaresList()
