@@ -35,7 +35,7 @@ function Combatant()
       this.die();
     }
     console.log(this.name + " took " + damage + " damage and has " + this.energy + " left.");
-    this.animateHP();
+    this.animateHP(damage);
   }
 }
 
@@ -95,7 +95,12 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
     this.isDead = true;
   }
   
-  this.animateHP = function () {
+  this.animateHP = function (damage) {
+    nightmareDamageText.text = (-1 * damage);
+    createjs.Tween.get(nightmareDamageText).to({alpha: 1, y: nightmareDamageText.y - 20}, 1000).call(function(){
+    nightmareDamageText.y += 20;
+    nightmareDamageText.alpha = 0;
+    });
     createjs.Tween.get(hpBarSmall).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
       if(nightmare.isDead)
         createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750).call(endCombat, [true]);

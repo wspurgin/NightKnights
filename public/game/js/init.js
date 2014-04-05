@@ -98,6 +98,11 @@ function initEncounterView()
   playerhp.x = 10;
   playerhp.y = 300;
   
+  nightmareDamageText = new createjs.Text("0", "80px VT323", "#FF0000");
+  nightmareDamageText.textAlign = "center";
+  nightmareDamageText.setTransform(bgCanvas.width /2, 100, 1, 1);
+  nightmareDamageText.alpha = 0;
+  
   hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
   hpBar.setTransform(100, 300, 1, 1);
   hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
@@ -141,7 +146,7 @@ function initEncounter()
   menuStage.addChild(menuView);
   menuStage.update();
   
-  encounterView.addChild(nightmare.sprite, fadeToBlack);
+  encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
 }
 
 //Removes the sprites that were used for the encounter to ready for another battle.
