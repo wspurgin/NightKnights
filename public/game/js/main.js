@@ -65,6 +65,7 @@ function main()
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
             {src:"backgrounds/ForestMap.png", id:"forestMap"},
             {src:"backgrounds/MountainMap.png", id:"mountainMap"},
+            {src:"backgrounds/CastleMap.png", id:"castleMap"},
             {src:"sprites/back.png", id:"backButton"},
             {src:"sprites/Button.png", id:"button"},
             {src:"sprites/bigButton.png", id:"bigButton"},

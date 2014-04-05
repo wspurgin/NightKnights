@@ -32,6 +32,7 @@ function initWorldView()
   castle.framerate = 10;
   castle.on("rollover", stageOver);
   castle.on("rollout", stageOut);
+  castle.on("click", function() {areaView.addChildAt(castleMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
   if (player.level < 10){
     castle.locked = true;
     castle.gotoAndPlay("lockedDefault");
@@ -46,6 +47,7 @@ function initAreaViews()
 {
   forestMap = new createjs.Bitmap(preload.getResult("forestMap"));
   mountainMap = new createjs.Bitmap(preload.getResult("mountainMap"));
+  castleMap = new createjs.Bitmap(preload.getResult("castleMap"));
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
