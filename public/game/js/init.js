@@ -9,30 +9,41 @@ function initWorldView()
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
  var stageSelect = new createjs.Container();
   
-  var forest = new createjs.Sprite(stageSelectSheet, "default");
+  forest = new createjs.Sprite(stageSelectSheet, "default");
   forest.setTransform(130, 230);
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
   forest.on("click", function() {areaView.addChildAt(forestMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
   
-  var mountain = new createjs.Sprite(stageSelectSheet, "default");
+  mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
   mountain.framerate = 10;
   mountain.on("rollover", stageOver);
   mountain.on("rollout", stageOut);
-  mountain.on("click", function() {areaView.addChildAt(mountainMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
+  mountain.on("click", function() {
+    if(!mountain.locked) {
+      areaView.addChildAt(mountainMap, 0); 
+      areaView.addChild(initNightmaresList()); 
+      switchTo(areaView);}
+
+  });
   if (player.level < 5){
     mountain.locked = true;
     mountain.gotoAndPlay("lockedDefault");
   }
   
-  var castle = new createjs.Sprite(stageSelectSheet, "default");
+  castle = new createjs.Sprite(stageSelectSheet, "default");
   castle.setTransform(600, 240);
   castle.framerate = 10;
   castle.on("rollover", stageOver);
   castle.on("rollout", stageOut);
-  castle.on("click", function() {areaView.addChildAt(castleMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
+  castle.on("click", function() {
+    if(!castle.locked) {
+      areaView.addChildAt(castleMap, 0); 
+      areaView.addChild(initNightmaresList()); 
+      switchTo(areaView);}
+  });
   if (player.level < 10){
     castle.locked = true;
     castle.gotoAndPlay("lockedDefault");
