@@ -490,7 +490,7 @@ Class Api
             $app->halt(404);
         try
         {
-            $sql = "SELECT Items.name, attack_stat, defense_stat, 
+            $sql = "SELECT Items.name, is_equipped, attack_stat, defense_stat, 
                     magic_stat, classification, img_url
                 FROM Characters 
                 INNER JOIN Inventories ON Characters.id = Inventories.character_id
@@ -600,6 +600,60 @@ Class Api
             $username = $_SESSION['username'];
             $response['success'] = true;
             $response['message'] = "$username has a new item in inventory!";
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
+    /**
+    *   JSON needs item_id key and value
+    */
+    public function equipItem()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        if (!$this->session())
+            $app->halt(404);
+        try
+        {
+            $body = $app->request->getBody();
+            $itemAdd = json_decode($body);
+            if(empty($itemAdd))
+                throw new Exception("Invlaid json '$body'", 1);
+
+            $sql = "UPDATE Inventories SET `is_equipped`=1
+            WHERE `item_id`=:item_id AND `character_id`=:id";
+            $args = array(
+                ":item_id" => $itemAdd->item_id,
+                ":id" => $_SESSION['user_id']
+            );
+
+            $this->db->update($sql, $args);
+
+            $username = $_SESSION['username'];
+            $response['success'] = true;
+            $response['message'] = "$username equiped an item in their inventory!";
         }
         catch(PDOException $e)
         {

@@ -25,6 +25,7 @@ $ROUTES = array(
     new Route('/character/inventory', Route::GET, array($api, 'getCharacterInventory')),
     new Route('/bosses', Route::GET, array($api, 'getBosses')),
     new Route('/character/inventory', Route::POST, array($api, 'createInventoryItem')),
+    new Route('/character/inventory', Route::PUT, array($api, 'equipItem')),
     new Route('/character/experience', Route::PUT, array($api, 'updateCharacterExperience')),
     new Route('/character/energy', Route::PUT, array($api, 'updateCharacterEnergy')),
     new Route('/leaderboard', Route::GET, array($api, 'getLeaderboard'))
