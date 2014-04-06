@@ -135,6 +135,7 @@ CREATE TABLE World_Fights(
 CREATE TABLE Inventories(
     `item_id` int(11) NOT NULL,
     `character_id` int(11) NOT NULL,
+    `is_equipped` tinyint(1) NOT NULL DEFAULT 0,
     
     CONSTRAINT pk_inventories_id 
     PRIMARY KEY (`item_id`, `character_id`),
