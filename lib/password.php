@@ -14,10 +14,7 @@ class Password
 
     public static function check($hashed_password, $unhashed_password)
     {
-        if ($hashed_password == password_hash($unhashed_password, PASSWORD_DEFAULT))
-            return true;
-        else
-            return false;
+        return password_verify($unhashed_password, $hashed_password);
     }
 
     public function __construct($str)
