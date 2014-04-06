@@ -21,11 +21,11 @@ $ROUTES = array(
     new Route('/areas/:id/monsters', Route::GET, array($api, 'getAreaMonsters')),
     new Route('/items', Route::GET, array($api, 'getItems')),
     new Route('/areas', Route::GET, array($api, 'getAreas')),
-    new Route('/characters/:id', Route::GET, array($api, 'getCharacter')),
-    new Route('/characters/:id/inventory', Route::GET, array($api, 'getCharacterInventory')),
+    new Route('/character/', Route::GET, array($api, 'getCharacter')),
+    new Route('/character/inventory', Route::GET, array($api, 'getCharacterInventory')),
     new Route('/bosses', Route::GET, array($api, 'getBosses')),
-    new Route('/characters/:id/inventory', Route::POST, array($api, 'createInventoryItem')),
-    new Route('/characters/:id/experience', Route::PUT, array($api, 'updateCharacterExperience')),
-    new Route('/characters/:id/energy', Route::PUT, array($api, 'updateCharacterEnergy')),
+    new Route('/character/inventory', Route::POST, array($api, 'createInventoryItem')),
+    new Route('/character/experience', Route::PUT, array($api, 'updateCharacterExperience')),
+    new Route('/character/energy', Route::PUT, array($api, 'updateCharacterEnergy')),
     new Route('/leaderboard', Route::GET, array($api, 'getLeaderboard'))
 );

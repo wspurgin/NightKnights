@@ -442,16 +442,18 @@ Class Api
         echo json_encode($response);
     }
     
-    public function getCharacter($id)
+    public function getCharacter()
     {
         $app = \Slim\Slim::getInstance();
         $response = array();
+        if (!$this->session())
+            $app->halt(404);
         try
         {
             $sql = "SELECT name, energy, experience, level FROM `Characters`
                 WHERE Characters.id=:id";
 
-            $character = $this->db->select($sql, array(":id" => $id), false);
+            $character = $this->db->select($sql, array(":id" => $_SESSION['user_id']), false);
             $response['success'] = true;
             $response['character'] = $character;
         }
@@ -480,10 +482,12 @@ Class Api
         echo json_encode($response);
     }
 
-    public function getCharacterInventory($id)
+    public function getCharacterInventory()
     {
         $app = \Slim\Slim::getInstance();
         $response = array();
+        if (!$this->session())
+            $app->halt(404);
         try
         {
             $sql = "SELECT Items.name, attack_stat, defense_stat, 
@@ -493,7 +497,7 @@ Class Api
                 INNER JOIN Items ON Inventories.item_id = Items.id
                 WHERE Characters.id=:id";
 
-            $inventory = $this->db->select($sql, array(":id" => $id));
+            $inventory = $this->db->select($sql, array(":id" => $_SESSION['user_id']));
 
             $response['success'] = true;
             $response['inventory'] = $inventory;
@@ -572,7 +576,7 @@ Class Api
     /**
     *   JSON needs item_id key and value
     */
-    public function createInventoryItem($id)
+    public function createInventoryItem()
     {
         $app = \Slim\Slim::getInstance();
         $response = array();
@@ -588,7 +592,7 @@ Class Api
             $sql = "INSERT INTO Inventories(item_id, character_id) VALUES (:item_id, :id)";
             $args = array(
                 ":item_id" => $itemAdd->item_id,
-                ":id" => $id
+                ":id" => $_SESSION['user_id']
             );
 
             $this->db->insert($sql, $args);
@@ -626,7 +630,7 @@ Class Api
     *   PUT (ADD) experience
     *   JSON needs experience key and value of experience to be added
     */
-    public function updateCharacterExperience($id)
+    public function updateCharacterExperience()
     {
         $app = \Slim\Slim::getInstance();
         $response = array();
@@ -644,7 +648,7 @@ Class Api
                 WHERE Characters.id = :id";
             $args = array(
                 ":exp" => $expAdd->experience,
-                ":id" => $id
+                ":id" => $_SESSION['user_id']
             );
 
             $this->db->update($sql, $args);
@@ -677,7 +681,7 @@ Class Api
         echo json_encode($response);
     }
 
-    public function updateCharacterEnergy($id)
+    public function updateCharacterEnergy()
     {
         $app = \Slim\Slim::getInstance();
         $response = array();
@@ -694,7 +698,7 @@ Class Api
             WHERE `id`=:id";
             $args = array(
                 ":energy" => $addtional->energy,
-                ":id" => $id
+                ":id" => $_SESSION['user_id']
             );
             $this->db->update($sql, $args);
 
