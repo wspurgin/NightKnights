@@ -163,4 +163,11 @@ INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
     (1, 'picoriley', 0, 0, 1);
 
+INSERT INTO `Areas` (`id`, `name`, `img_url`)
+VALUES
+    (1, 'Forest', '/game/backgrounds/ForestMap.png'),
+    (2, 'Mountain', '/game/backgrounds/MountainMap.png'),
+    (3, 'Castle', '/game/backgrounds/CastleMap.png');
+
+
 -- end of night-knights code
