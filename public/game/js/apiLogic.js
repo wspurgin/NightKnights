@@ -10,15 +10,6 @@
  */
 function saveBattleResults(experience)
 {
-  
+  player.experience += experience; //This property won't be used eventually. I'll remove it once we implement the real function call.
   return true; 
 }
-
-/*This function calculates the experience a monster will give you
- * upon its defeat. 
- */
-function getExpFromNightmare(nightmare)
-{
-  return nightmare.maxEnergy;
-}
-  
