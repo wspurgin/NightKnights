@@ -131,11 +131,13 @@ function switchTo(view)
   stage.update();
 }
 
-function levelUp()
+function levelUp(newLevel)
 {
-  player.level++;
-  console.log("LEVEL UP to " + player.level);
-  checkUnlocks();
+  if (player.level < newLevel) {
+    player.level = newLevel;
+    console.log("LEVEL UP to " + player.level);
+    checkUnlocks();
+  }
 }
 
 function checkUnlocks()
