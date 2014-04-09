@@ -183,12 +183,13 @@ END;;
 DELIMITER ;
 
 -- Triggers
+
 DELIMITER ;;
-CREATE TRIGGER `update_level` AFTER UPDATE ON `Characters`
+CREATE TRIGGER `update_level` BEFORE UPDATE ON `Characters`
  FOR EACH ROW BEGIN
-    IF(new.experience > old.experience)
+    IF(new.experience != old.experience)
     THEN
-        UPDATE Characters SET level=calculate_level(new.experience);
+        SET new.level=calculate_level(new.experience);
     END IF;
 END;;
 DELIMITER ;
