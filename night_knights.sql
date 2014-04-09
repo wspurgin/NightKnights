@@ -171,4 +171,15 @@ VALUES
     (3, 'Castle', '/game/backgrounds/CastleMap.png');
 
 
+-- Functions
+
+DELIMITER ;;
+CREATE FUNCTION `calculate_level`(v_exp INT) RETURNS int(11)
+BEGIN
+    DECLARE v_level INT;
+    SELECT FLOOR((SQRT(625+100*v_exp)-25)/50)+1 INTO v_level;
+    RETURN v_level;
+END;;
+DELIMITER ;
+
 -- end of night-knights code
