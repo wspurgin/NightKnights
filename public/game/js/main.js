@@ -20,6 +20,7 @@ var magicMenu = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
+var lockList = [];
 
 function main()
 {
@@ -111,7 +112,7 @@ function doneLoading(event)
   stage.removeChildAt(0);
   
   //Create the player object. This is where we would use the data we got from the DB.
-  player = new Player("Pico", 1, 250);
+  player = new Player("Pico", 1, 250, 0);
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
@@ -130,8 +131,22 @@ function switchTo(view)
   stage.update();
 }
 
-function levelUp()
+function levelUp(newLevel)
 {
-  
+  if (player.level < newLevel) {
+    player.level = newLevel;
+    console.log("LEVEL UP to " + player.level);
+    checkUnlocks();
+  }
+}
+
+function checkUnlocks()
+{
+  lockList.forEach(function(element, index, array) {
+    if (player.level >= element.lockLevel) {
+      element.locked = false;
+      element.unlock();
+    }
+  });
 }
   

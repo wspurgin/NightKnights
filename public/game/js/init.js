@@ -26,12 +26,20 @@ function initWorldView()
       areaView.addChildAt(mountainMap, 0); 
       areaView.addChild(initNightmaresList()); 
       switchTo(areaView);}
-
   });
+  mountain.lockLevel = 5;
   if (player.level < 5){
     mountain.locked = true;
     mountain.gotoAndPlay("lockedDefault");
   }
+  else {
+    mountain.locked = false;
+  }
+  mountain.unlock = function() {
+    mountain.gotoAndPlay("default");
+  };
+ 
+  lockList.push(mountain);
   
   castle = new createjs.Sprite(stageSelectSheet, "default");
   castle.setTransform(600, 240);
@@ -44,10 +52,19 @@ function initWorldView()
       areaView.addChild(initNightmaresList()); 
       switchTo(areaView);}
   });
-  if (player.level < 10){
+  castle.lockLevel = 10;
+  if (player.level < castle.lockLevel){
     castle.locked = true;
     castle.gotoAndPlay("lockedDefault");
   }
+  else {
+    castle.locked = false;
+  }
+  castle.unlock = function() {
+    castle.gotoAndPlay("default");
+  };
+  
+  lockList.push(castle);
   
   stageSelect.addChild(forest, mountain, castle);  
   
