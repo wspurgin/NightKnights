@@ -20,6 +20,7 @@ var magicMenu = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
+var lockList = [];
 
 function main()
 {
@@ -133,5 +134,15 @@ function switchTo(view)
 function levelUp()
 {
   
+}
+
+function checkUnlocks()
+{
+  lockList.forEach(function(element, index, array) {
+    if (player.level >= element.lockLevel) {
+      element.locked = false;
+      element.unlock();
+    }
+  });
 }
   
