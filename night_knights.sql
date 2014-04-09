@@ -182,4 +182,14 @@ BEGIN
 END;;
 DELIMITER ;
 
+-- Triggers
+
+CREATE TRIGGER `update_level` AFTER UPDATE ON `Characters`
+ FOR EACH ROW BEGIN
+    IF(new.experience > old.experience)
+    THEN
+        UPDATE Characters SET level=calculate_level(new.experience);
+    END IF;
+END
+
 -- end of night-knights code
