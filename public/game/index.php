@@ -16,10 +16,14 @@
         <script src="js/battle.js"></script>
         <script src="js/init.js"></script>
         <script src="js/main.js"></script>
-         
+        
+        <link rel="stylesheet" type="text/css" href="../css/home.css">
+        <?php include("../html/modules/commonHead.html"); ?>
     </head>
     <body onload="main();">
+      <?php include("../html/modules/navbar.html"); ?>
         <canvas id="backgroundCanvas" width="765" height="340"></canvas>
         <canvas id="menuCanvas" width="765" height="340"></canvas>
+      <?php include("../html/modules/copyright.html"); ?>
     </body>
 </html>
