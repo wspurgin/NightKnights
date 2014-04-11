@@ -171,6 +171,7 @@ function encounterCleanup()
 {
   fadeToBlack.alpha = 0;
   treasureChest.alpha = 0;
+  clearLog();
   treasureChest.gotoAndPlay("closed");
   encounterView.removeChild(loot);
   encounterView.removeChild(nightmare.sprite);

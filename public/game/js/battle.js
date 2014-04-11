@@ -22,7 +22,7 @@ function Combatant()
     var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
     if (netDamage <= 0)
     {
-      console.log(victim.name + " dodged " + this.name + "'s attack!");
+      log(victim.name + " dodged " + this.name + "'s attack!", "#0000FF");
       victim.animateHP();
     }
     else 
@@ -35,7 +35,7 @@ function Combatant()
       this.energy = 0;
       this.die();
     }
-    console.log(this.name + " took " + damage + " damage and has " + this.energy + " left.");
+    log(this.name + " took " + damage + " damage and has " + this.energy + " left.", "#00FF00");
     this.animateHP(damage);
   }
 }
@@ -56,7 +56,7 @@ function Player(name, level, energy, experience)
   
     
   this.die = function () {
-    console.log("The nightmare sucks the last of your energy, and you pass out.");
+    log("The nightmare sucks the last of your energy, and you pass out.");
     this.isDead = true;
   }
   
@@ -94,7 +94,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   }
   
   this.die = function () {
-    console.log("You have slain the " + this.name + "!");
+    log("You have slain the " + this.name + "!", "#FF0000");
     this.isDead = true;
   }
   
