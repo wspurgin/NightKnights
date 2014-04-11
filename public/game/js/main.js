@@ -8,6 +8,7 @@
 var canvas; //Will be linked to the canvas in our index.html page
 var stage; //A collection of things to be rendered; we'll add "children" to it that we want to render.
 var menuStage;
+var consoleStage;
 
 //[Views and Containers]
 var worldView = new createjs.Container();
@@ -51,7 +52,7 @@ function main()
   })();
   
   //This is the loading text that we'll update later.
-  loadingText = new createjs.Text("Loading", "48px VT323", "#000000");
+  loadingText = new createjs.Text("Loading", "48px VT323", "#FFFFFF");
   loadingText.maxWidth = 1000;
   loadingText.textAlign = "center";
   loadingText.x = bgCanvas.width / 2;
@@ -120,6 +121,7 @@ function doneLoading(event)
   initWorldView();
   initAreaViews();
   initEncounterView();
+  initConsole();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
 }
