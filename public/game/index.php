@@ -21,9 +21,15 @@
         <?php include("../html/modules/commonHead.html"); ?>
     </head>
     <body onload="main();">
+    
       <?php include("../html/modules/navbar.html"); ?>
+      
+      <div id="Canvases">
         <canvas id="backgroundCanvas" width="765" height="340"></canvas>
         <canvas id="menuCanvas" width="765" height="340"></canvas>
+      </div>
+      
       <?php include("../html/modules/copyright.html"); ?>
+      
     </body>
 </html>
