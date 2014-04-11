@@ -45,6 +45,10 @@ function saveBattleResults(results)
                     console.log("Player experience placed and level calculated");
                     console.log("data:" + data.level);
                     console.log(data.message);
+
+                    //successful api call
+                    player.level = data.level;
+
                 } else {
                     // errors occured
                     alert(data.message);
@@ -56,6 +60,6 @@ function saveBattleResults(results)
         }); //end of AJAX call
 
     //player.experience += experience; //This property won't be used eventually. I'll remove it once we implement the real function call.
-    player.experience += results; //This property won't be used eventually. I'll remove it once we implement the real function call.
-    return player.level + 1; //New level to level up to. Hard coded for the time being.
+    //player.experience += results; //This property won't be used eventually. I'll remove it once we implement the real function call.
+    //return player.level + 1; //New level to level up to. Hard coded for the time being.
 }
