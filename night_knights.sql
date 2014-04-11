@@ -170,6 +170,21 @@ VALUES
     (2, 'Mountain', '/game/backgrounds/MountainMap.png'),
     (3, 'Castle', '/game/backgrounds/CastleMap.png');
 
+INSERT INTO `Items` (`id`, `name`, `attack_stat`, `defense_stat`, `magic_stat`, `classification`, `img_url`)
+VALUES
+    (1, 'Iron Sword', 1, 0, 0, 'Weapon', 'Sword.png'),
+    (2, 'Iron Staff', 0, 0, 1, 'Weapon', 'Staff.png'),
+    (3, 'Steel Sword', 2, 1, 0, 'Weapon', 'SSword.png'),
+    (4, 'Steel Staff', 0, 1, 2, 'Weapon', 'SStaff.png'),
+    (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'SwordOfTruth.png'),
+    (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png');
+
+INSERT INTO `Monsters` (`id`, `name`, `attack_seed`, `defense_seed`, `magic_seed`, `health_seed`, `img_url`)
+VALUES
+    (1, 'Dragon', 1, 1, 1, 1, 'Dragon.png'),
+    (2, 'Dryad', 0, 0, 5, 3, 'Dryad.png'),
+    (3, 'Wolf', 5, 3, 0, 3, 'Wolf.png'),
+    (4, 'Beaver', 5, 3, 0, 3, 'Beaver.png');
 
 -- Functions
 
