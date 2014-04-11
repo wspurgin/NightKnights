@@ -42,6 +42,18 @@ Class Api
         return clone $this;
     }
 
+    public function string_gen($length=10)
+    {
+        try
+        {
+            return substr(md5(rand()), 0, $length);
+        }
+        catch (Exception $e)
+        {
+            throw $e;
+        }
+    }
+
     public function loginUser()
     {
         $app = \Slim\Slim::getInstance();
@@ -790,6 +802,58 @@ Class Api
         }
         echo json_encode($response);
     }
+
+    public function userPasswordReset()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+
+        try
+        {
+            $body = $app->request->getBody();
+            $user = json_decode($body);
+            if(empty($user))
+                throw new Exception("Invlaid json '$body'", 1);
+
+            $new_password = new Password($this->string_gen());
+
+            $sql = "UPDATE `Users` SET `password`=:password WHERE `email`=:email";
+            $args = array(
+                ":password" => $new_password,
+                ":email" => $user->email
+            );
+            
+            $this->db->update($sql, $args);
+
+            # BIG TODO::Implement emailing user with reset password.
+            
+            $response['success'] = true;
+            $response['message'] = "$user->email has a new password: '".$new_password->unhashed()."'";
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    } 
 
     public function getLeaderboard()
     {
