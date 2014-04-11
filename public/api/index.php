@@ -20,6 +20,8 @@ foreach ($ROUTES as $route) {
 		$app->put($route->url, $route->callable);
 	elseif ($route->type == Route::DELETE)
 		$app->delete($route->url, $route->callable);
+	elseif ($route->type == Route::PATCH)
+		$app->patch($route->url, $route->callable);
 	else
 		$app->log("Unsupported route type for '$route->type', on Route $route");
 }

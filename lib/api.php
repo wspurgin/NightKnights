@@ -713,7 +713,7 @@ Class Api
             $level = $this->db->select($sql, array(":id"=>$_SESSION['user_id']), false);
 
             $response['success'] = true;
-            $response['message'] = "character ".$_SESSION['username']." has a new more experience!";
+            $response['message'] = "character ".$_SESSION['username']." has more experience!";
             $response['level'] = $level->level; # gets the actual level
         }
         catch(PDOException $e)
