@@ -186,12 +186,12 @@ function initMenuView()
   
   combatMenu.addChild(attackButton, magicButton);
   
-  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "80px", function() {startTurn("attack"); swapMenu(attackMenu, combatMenu);});
-  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Power\nStrike", "80px", function() {startTurn("powerStrike"); swapMenu(attackMenu, combatMenu);});
-  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Earth\nSplitter", "80px", function() {startTurn("earthSplitter"); swapMenu(attackMenu, combatMenu);});
-  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Armageddon", "80px", function() {startTurn("armageddon"); swapMenu(attackMenu, combatMenu);});
+  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(attackMenu, combatMenu);});
+  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Light", "80px", function() {startTurn("Light"); swapMenu(attackMenu, combatMenu);});
+  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Medium", "80px", function() {startTurn("Medium"); swapMenu(attackMenu, combatMenu);});
+  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
   
-  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "Fireball", "80px", function() {startTurn("fireball"); swapMenu(magicMenu, combatMenu);});
+  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
   blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Blizzard", "80px", function() {startTurn("blizzard"); swapMenu(magicMenu, combatMenu);});
   thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Thunder\nBlast", "80px", function() {startTurn("thunderBlast"); swapMenu(magicMenu, combatMenu);});
   cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Cosmic\nRay", "80px", function() {startTurn("cosmicRay"); swapMenu(magicMenu, combatMenu);});
