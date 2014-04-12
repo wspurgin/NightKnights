@@ -123,13 +123,6 @@ function initEncounterView()
   nightmareDamageText.setTransform(bgCanvas.width /2, 100, 1, 1);
   nightmareDamageText.alpha = 0;
   
-  hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
-  hpBar.setTransform(100, 300, 1, 1);
-  hpBar.alpha = 0;
-  hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
-  hpBarEmpty.setTransform(100, 300, 1, 1);
-  hpBarEmpty.alpha = 0;
-  
   hpBarSmall = new createjs.Bitmap(preload.getResult("hpBarSmall"));
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall = new createjs.Bitmap(preload.getResult("hpBarEmptySmall"));
@@ -149,7 +142,7 @@ function initEncounterView()
   loot.alpha = 0;
 
   
-  textContainer.addChild(energy, playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
+  textContainer.addChild(energy, playerhp, hpBarEmptySmall, hpBarSmall, treasureChest);
   
   encounterView.addChild(background, textContainer);
 }
@@ -158,8 +151,6 @@ function initEncounterView()
 function initEncounter()
 { 
   playerhp.text = "x" + player.energy;
-  hpBar.setTransform(100, 300, 1, 1);
-  hpBarEmpty.setTransform(100, 300, 1, 1);
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   

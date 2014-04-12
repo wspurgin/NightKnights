@@ -17,10 +17,12 @@ function Combatant()
   this.attackDice;
   this.defenceDice;
   this.textColor;
+  this.attackMod = 1;
+  this.defenceMod = 1;
   
   //[Functions]
   this.attack = function (victim) {
-    var netDamage = this.attackDice.roll() - victim.defenceDice.roll();
+    var netDamage = parseInt(this.attackDice.roll() * this.attackMod) - parseInt(victim.defenceDice.roll() * victim.defenceMod);
     if (netDamage <= 0)
     {
       log(victim.name + " dodged " + this.name + "'s attack!", "#0000FF");
@@ -63,7 +65,7 @@ function Player(name, level, energy, experience)
     this.isDead = true;
   }
   
-  this.animateHP = function () {
+  this.animateHP = function (damage) {
     playerhp.text = "x" + this.energy;
     if(player.isDead)
       createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
@@ -121,6 +123,21 @@ Nightmare.prototype = new Combatant();
 function startTurn(attackType)
 {
   menuLocked = true;
+  if (attackType === "Light")
+  {
+    player.attackMod = 0.5;
+    player.defenceMod = 2;
+  }
+  else if (attackType === "Medium")
+  {
+    player.attackMod = 1;
+    player.defenceMod = 1;
+  }
+  else if (attackType === "Heavy")
+  {
+    player.attackMod = 2;
+    player.defenceMod = 0.5;
+  }
   player.attack(nightmare);
 }
 
