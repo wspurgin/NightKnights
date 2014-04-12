@@ -109,7 +109,7 @@ function initEncounterView()
   
   textContainer = new createjs.Container();
   
-  playerhp = new createjs.Text("x999", "70px VT323", "#000000");
+  playerhp = new createjs.Text("x", "70px VT323", "#000000");
   playerhp.maxWidth = 1000;
   playerhp.textAlign = "left";
   playerhp.x = 70;
@@ -157,6 +157,7 @@ function initEncounterView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initEncounter()
 { 
+  playerhp.text = "x" + player.energy;
   hpBar.setTransform(100, 300, 1, 1);
   hpBarEmpty.setTransform(100, 300, 1, 1);
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);

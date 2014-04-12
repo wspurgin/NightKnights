@@ -64,12 +64,10 @@ function Player(name, level, energy, experience)
   }
   
   this.animateHP = function () {
-    createjs.Tween.get(hpBar).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
-      if(player.isDead){
-        createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
-      }
+    playerhp.text = "x" + this.energy;
+    if(player.isDead)
+      createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
     menuLocked = false;
-    });
   }
 }
 
