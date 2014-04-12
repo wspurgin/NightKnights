@@ -80,7 +80,11 @@ function main()
             {src:"sprites/LootPlaceholder.png", id:"loot"},
             {src:"backgrounds/BlackBG.png", id:"blackBG"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"},
-            {src:"sprites/monsterSelect.png", id:"monsterSelectSprites"}
+            {src:"sprites/monsterSelect.png", id:"monsterSelectSprites"},
+            {src:"sprites/Energy.png", id:"energy"},
+            {src:"sprites/Attack.png", id:"attack"},
+            {src:"sprites/Defence.png", id:"defence"},
+            
             
         ];
   

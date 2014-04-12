@@ -109,11 +109,14 @@ function initEncounterView()
   
   textContainer = new createjs.Container();
   
-  playerhp = new createjs.Text("Energy: ", "bold 24px Arial", "#000000");
+  playerhp = new createjs.Text("x999", "70px VT323", "#000000");
   playerhp.maxWidth = 1000;
   playerhp.textAlign = "left";
-  playerhp.x = 10;
-  playerhp.y = 300;
+  playerhp.x = 70;
+  playerhp.y = 260;
+  
+  energy = new createjs.Bitmap(preload.getResult("energy"));
+  energy.setTransform(10, 270, 2, 2);
   
   nightmareDamageText = new createjs.Text("0", "80px VT323", "#FF0000");
   nightmareDamageText.textAlign = "center";
@@ -122,8 +125,10 @@ function initEncounterView()
   
   hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
   hpBar.setTransform(100, 300, 1, 1);
+  hpBar.alpha = 0;
   hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
   hpBarEmpty.setTransform(100, 300, 1, 1);
+  hpBarEmpty.alpha = 0;
   
   hpBarSmall = new createjs.Bitmap(preload.getResult("hpBarSmall"));
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
@@ -144,7 +149,7 @@ function initEncounterView()
   loot.alpha = 0;
 
   
-  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
+  textContainer.addChild(energy, playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
   
   encounterView.addChild(background, textContainer);
 }
