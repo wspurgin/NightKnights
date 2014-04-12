@@ -174,6 +174,7 @@ function encounterCleanup()
   encounterView.removeChild(nightmare.sprite);
   menuStage.removeChild(menuView);
   menuStage.update();
+  menuView.alpha = 1;
 }
  
 function initMenuView()

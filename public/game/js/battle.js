@@ -25,7 +25,7 @@ function Combatant()
     var netDamage = parseInt(this.attackDice.roll() * this.attackMod) - parseInt(victim.defenceDice.roll() * victim.defenceMod);
     if (netDamage <= 0)
     {
-      log(victim.name + " blocked " + this.name + "'s attack!", "#0000FF");
+      log(victim.name + " blocked " + this.name + "'s attack!", "#FF6600");
       victim.animateHP(0);
     }
     else 
@@ -61,6 +61,7 @@ function Player(name, level, energy, experience)
   
     
   this.die = function () {
+    menuStage.update();
     log("The nightmare sucks the last of your energy, and you pass out.", "#FF0000");
     this.isDead = true;
   }
@@ -68,8 +69,15 @@ function Player(name, level, energy, experience)
   this.animateHP = function (damage) {
     playerhp.text = "x" + this.energy;
     if(player.isDead)
+    {
       createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
-    menuLocked = false;
+    }
+    else
+    {
+      menuLocked = false;
+      menuView.alpha = 1;
+      menuStage.update();
+    }
   }
 }
 
@@ -123,6 +131,8 @@ Nightmare.prototype = new Combatant();
 function startTurn(attackType)
 {
   menuLocked = true;
+  menuView.alpha = .5;
+  menuStage.update();
   if (attackType === "Light")
   {
     player.attackMod = 0.5;
@@ -147,7 +157,10 @@ function startTurn(attackType)
  */
 function endCombat(playerWon)
 {
+  menuLocked = true;
+  menuView.alpha = .5;
   if (playerWon){
+    menuStage.update();
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
     player.maxEnergy = player.energy;
     levelUp(saveBattleResults(getExpFromNightmare(nightmare)));
@@ -159,9 +172,7 @@ function endCombat(playerWon)
     player.energy = 250;
     player.maxEnergy = 250;
     player.isDead = false;
-    menuLocked = false;
-  }
-  
+  }  
 }
 
 /*An object to simulate rolling "Dungeons & Dragons" style dice. 
