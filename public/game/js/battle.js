@@ -16,6 +16,7 @@ function Combatant()
   this.name;
   this.attackDice;
   this.defenceDice;
+  this.textColor;
   
   //[Functions]
   this.attack = function (victim) {
@@ -35,7 +36,8 @@ function Combatant()
       this.energy = 0;
       this.die();
     }
-    log(this.name + " took " + damage + " damage and has " + this.energy + " left.", "#00FF00");
+    if(!this.isDead)
+      log(this.name + " took " + damage + " damage and has " + this.energy + " left.", this.textColor);
     this.animateHP(damage);
   }
 }
@@ -43,6 +45,7 @@ function Combatant()
 function Player(name, level, energy, experience)
 {
   //this.weapon;
+  this.textColor = "#FF0000";
   this.isDead = false;
   this.name = name;
   this.level = level;
@@ -56,7 +59,7 @@ function Player(name, level, energy, experience)
   
     
   this.die = function () {
-    log("The nightmare sucks the last of your energy, and you pass out.");
+    log("The nightmare sucks the last of your energy, and you pass out.", "#FF0000");
     this.isDead = true;
   }
   
@@ -74,6 +77,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
 {
   this.sprite;
   
+  this.textColor = "#0000FF";
   this.isDead = false;
   this.name = name;
   this.energy = energy;
@@ -94,7 +98,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   }
   
   this.die = function () {
-    log("You have slain the " + this.name + "!", "#FF0000");
+    log("You have slain the " + this.name + "!", "#00FF00");
     this.isDead = true;
   }
   
@@ -119,8 +123,6 @@ Nightmare.prototype = new Combatant();
 function startTurn(attackType)
 {
   menuLocked = true;
-  console.log("Player HP: " + player.energy + "/" + player.maxEnergy);
-  console.log("Nightmare HP: " + nightmare.energy + "/" + nightmare.maxEnergy);
   player.attack(nightmare);
 }
 

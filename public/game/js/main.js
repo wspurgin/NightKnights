@@ -124,6 +124,7 @@ function doneLoading(event)
   initConsole();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
+  checkUnlocks();
 }
  
 function switchTo(view)
