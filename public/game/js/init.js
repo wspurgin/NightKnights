@@ -180,7 +180,7 @@ function encounterCleanup()
 function initMenuView()
 {
   attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Melee", "80px", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "80px", function() {swapMenu(combatMenu, magicMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Skills", "80px", function() {swapMenu(combatMenu, magicMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
@@ -190,9 +190,9 @@ function initMenuView()
   armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
   
   normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
-  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Blizzard", "80px", function() {startTurn("blizzard"); swapMenu(magicMenu, combatMenu);});
-  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Thunder\nBlast", "80px", function() {startTurn("thunderBlast"); swapMenu(magicMenu, combatMenu);});
-  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Cosmic\nRay", "80px", function() {startTurn("cosmicRay"); swapMenu(magicMenu, combatMenu);});
+  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Iron Skin", "80px", function() {startTurn("defSkill"); swapMenu(magicMenu, combatMenu);});
+  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Bezerk", "80px", function() {startTurn("attSkill"); swapMenu(magicMenu, combatMenu);});
+  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Overload", "80px", function() {startTurn("uberSkill"); swapMenu(magicMenu, combatMenu);});
   
   magicMenu.addChild(normalMagicButton, blizzardButton, thunderBlastButton, cosmicRayButton);
   attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);

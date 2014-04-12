@@ -7,6 +7,9 @@
 var player;
 var nightmare;
 var menuLocked;
+var defSkillCounter = 0;
+var attSkillCounter = 0;
+var uberSkillCounter = 0;
 
 function Combatant()
 {
@@ -130,6 +133,8 @@ Nightmare.prototype = new Combatant();
 
 function startTurn(attackType)
 {
+  player.attackMod = 1;
+  player.defenceMod = 1;
   menuLocked = true;
   menuView.alpha = .5;
   menuStage.update();
@@ -137,18 +142,54 @@ function startTurn(attackType)
   {
     player.attackMod = 0.5;
     player.defenceMod = 2;
+    player.attack(nightmare);
   }
   else if (attackType === "Medium")
   {
     player.attackMod = 1;
     player.defenceMod = 1;
+    player.attack(nightmare);
   }
   else if (attackType === "Heavy")
   {
     player.attackMod = 2;
     player.defenceMod = 0.5;
+    player.attack(nightmare);
   }
-  player.attack(nightmare);
+  else if (attackType === "defSkill")
+  {
+    defSkillCounter = 3;
+    log(player.name + "'s skin became tough!", "#6E00C9");
+    nightmare.attack(player);
+  }
+  else if (attackType === "attSkill")
+  {
+    attSkillCounter = 3;
+    log(player.name + " became enraged!", "#E8E800");
+    nightmare.attack(player);
+  }
+  else if (attackType === "uberSkill")
+  {
+    uberSkillCounter = 3;
+    log(player.name + " broke all limits!", "#7FFF00");
+    nightmare.attack(player);
+  }
+  if (defSkillCounter > 0)
+  {
+    defSkillCounter--;
+    player.defenceMod *= 2;
+  }
+  if (attSkillCounter > 0)
+  {
+    attSkillCounter--;
+    player.attackMod *= 2;
+  }
+  if (uberSkillCounter > 0)
+  {
+    uberSkillCounter--;
+    player.attackMod *= 2;
+    player.defenceMod *= 2;
+  }
 }
 
 
