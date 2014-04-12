@@ -25,8 +25,8 @@ function Combatant()
     var netDamage = parseInt(this.attackDice.roll() * this.attackMod) - parseInt(victim.defenceDice.roll() * victim.defenceMod);
     if (netDamage <= 0)
     {
-      log(victim.name + " dodged " + this.name + "'s attack!", "#0000FF");
-      victim.animateHP();
+      log(victim.name + " blocked " + this.name + "'s attack!", "#0000FF");
+      victim.animateHP(0);
     }
     else 
       victim.hurt(netDamage);

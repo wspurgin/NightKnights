@@ -41,7 +41,7 @@ function log(text, color)
   
   var newLine = textFactory(text, color, y);
   gameConsole.addChild(newLine);
-  if ((y + newLine.viewHeight) > 339){
+  if ((y + newLine.viewHeight) > 309){
     var missingHeight = gameConsole.getChildAt(0).viewHeight;
     y -= missingHeight;
     consoleHeight -= missingHeight;
