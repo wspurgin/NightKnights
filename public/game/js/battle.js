@@ -204,7 +204,7 @@ function endCombat(playerWon)
     menuStage.update();
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
     player.maxEnergy = player.energy;
-    levelUp(saveBattleResults(getExpFromNightmare(nightmare)));
+    saveBattleResults(getExpFromNightmare(nightmare));
   }
   else {
     encounterCleanup();

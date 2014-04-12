@@ -47,7 +47,7 @@ function saveBattleResults(results)
                     console.log(data.message);
 
                     //successful api call
-                    player.level = data.level;
+                    levelUp(data.level);
 
                 } else {
                     // errors occured
