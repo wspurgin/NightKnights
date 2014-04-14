@@ -870,13 +870,60 @@ Class Api
 
             // while still debugging
             $response['message'] = $e->getMessage();
-            $response['trace'] = $e->getTrace();
             // $response['message'] = "Errors occured";
             
             $app->halt(500, json_encode($response));
         }
         echo json_encode($response);
     } 
+
+    public function userChangePassword()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        if(!$this->session())
+            $app->halt(404);
+        try
+        {
+            $body = $app->request->getBody();
+            $user = json_decode($body);
+            if(empty($user))
+                throw new Exception("Invlaid json '$body'", 1);
+            $sql = "UPDATE `Users` SET password=:password WHERE `id`=:id";
+            $args = array(
+                ":password" => new Password($user->password),
+                ":id" => $_SESSION['user_id']
+            );
+            $this->db->update($sql, $args);
+
+            $response['success'] = true;
+            $response['message'] = "Password has been updated successfully";
+
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
 
     public function getLeaderboard()
     {

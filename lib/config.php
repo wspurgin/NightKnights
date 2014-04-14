@@ -29,5 +29,6 @@ $ROUTES = array(
     new Route('/character/inventory', Route::PUT, array($api, 'equipItem')),
     new Route('/character/experience', Route::PUT, array($api, 'updateCharacterExperience')),
     new Route('/character/energy', Route::PUT, array($api, 'updateCharacterEnergy')),
-    new Route('/leaderboard', Route::GET, array($api, 'getLeaderboard'))
+    new Route('/leaderboard', Route::GET, array($api, 'getLeaderboard')),
+    new Route('/user/password', Route::PATCH, array($api, 'userChangePassword'))
 );
