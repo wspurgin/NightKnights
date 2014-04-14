@@ -826,9 +826,31 @@ Class Api
             $this->db->update($sql, $args);
 
             # BIG TODO::Implement emailing user with reset password.
+            require_once('mailer.php');
+            $mailer = new Mailer(SMTP_HOST, SMTP_USER, SMTP_PASS);
+            $mailer->setGlobalSender('info@nightknights.com');
+            $mailer->setGlobalAlias('NightKnights Team');
+            $message = $mailer->message();
+
+            # Set email's content
+            $message->setSubject('Password Reset');
+            $message->setBody("You're password has been successfully reset. 
+                Here is you're new password: ".$new_password->unhashed());
+            $message->setTo($user->email, $user->email);
+
+            # send message
+            $result = $mailer->send($message);
             
-            $response['success'] = true;
-            $response['message'] = "$user->email has a new password: '".$new_password->unhashed()."'";
+            # result contains the number of reciepents
+            # of the sent the email or 0 (a.k.a false)
+            if($result)
+            {
+                $response['success'] = true;
+                $response['message'] = "An email has been sent to $user->email!";
+            }
+            else
+                throw new Exception("Email could not be sent to $user->email.", 1);
+                
         }
         catch(PDOException $e)
         {
@@ -848,6 +870,7 @@ Class Api
 
             // while still debugging
             $response['message'] = $e->getMessage();
+            $response['trace'] = $e->getTrace();
             // $response['message'] = "Errors occured";
             
             $app->halt(500, json_encode($response));
