@@ -109,21 +109,19 @@ function initEncounterView()
   
   textContainer = new createjs.Container();
   
-  playerhp = new createjs.Text("Energy: ", "bold 24px Arial", "#000000");
+  playerhp = new createjs.Text("x", "70px VT323", "#000000");
   playerhp.maxWidth = 1000;
   playerhp.textAlign = "left";
-  playerhp.x = 10;
-  playerhp.y = 300;
+  playerhp.x = 70;
+  playerhp.y = 260;
+  
+  energy = new createjs.Bitmap(preload.getResult("energy"));
+  energy.setTransform(10, 270, 2, 2);
   
   nightmareDamageText = new createjs.Text("0", "80px VT323", "#FF0000");
   nightmareDamageText.textAlign = "center";
   nightmareDamageText.setTransform(bgCanvas.width /2, 100, 1, 1);
   nightmareDamageText.alpha = 0;
-  
-  hpBar = new createjs.Bitmap(preload.getResult("hpBar"));
-  hpBar.setTransform(100, 300, 1, 1);
-  hpBarEmpty = new createjs.Bitmap(preload.getResult("hpBarEmpty"));
-  hpBarEmpty.setTransform(100, 300, 1, 1);
   
   hpBarSmall = new createjs.Bitmap(preload.getResult("hpBarSmall"));
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
@@ -144,7 +142,7 @@ function initEncounterView()
   loot.alpha = 0;
 
   
-  textContainer.addChild(playerhp, hpBarEmpty, hpBar, hpBarEmptySmall, hpBarSmall, treasureChest);
+  textContainer.addChild(energy, playerhp, hpBarEmptySmall, hpBarSmall, treasureChest);
   
   encounterView.addChild(background, textContainer);
 }
@@ -152,8 +150,7 @@ function initEncounterView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initEncounter()
 { 
-  hpBar.setTransform(100, 300, 1, 1);
-  hpBarEmpty.setTransform(100, 300, 1, 1);
+  playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
@@ -171,29 +168,31 @@ function encounterCleanup()
 {
   fadeToBlack.alpha = 0;
   treasureChest.alpha = 0;
+  clearLog();
   treasureChest.gotoAndPlay("closed");
   encounterView.removeChild(loot);
   encounterView.removeChild(nightmare.sprite);
   menuStage.removeChild(menuView);
   menuStage.update();
+  menuView.alpha = 1;
 }
  
 function initMenuView()
 {
   attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Melee", "80px", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Magic", "80px", function() {swapMenu(combatMenu, magicMenu);});
+  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Skills", "80px", function() {swapMenu(combatMenu, magicMenu);});
   
   combatMenu.addChild(attackButton, magicButton);
   
-  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Attack", "80px", function() {startTurn("attack"); swapMenu(attackMenu, combatMenu);});
-  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Power\nStrike", "80px", function() {startTurn("powerStrike"); swapMenu(attackMenu, combatMenu);});
-  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Earth\nSplitter", "80px", function() {startTurn("earthSplitter"); swapMenu(attackMenu, combatMenu);});
-  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Armageddon", "80px", function() {startTurn("armageddon"); swapMenu(attackMenu, combatMenu);});
+  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(attackMenu, combatMenu);});
+  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Light", "80px", function() {startTurn("Light"); swapMenu(attackMenu, combatMenu);});
+  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Medium", "80px", function() {startTurn("Medium"); swapMenu(attackMenu, combatMenu);});
+  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
   
-  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "Fireball", "80px", function() {startTurn("fireball"); swapMenu(magicMenu, combatMenu);});
-  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Blizzard", "80px", function() {startTurn("blizzard"); swapMenu(magicMenu, combatMenu);});
-  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Thunder\nBlast", "80px", function() {startTurn("thunderBlast"); swapMenu(magicMenu, combatMenu);});
-  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Cosmic\nRay", "80px", function() {startTurn("cosmicRay"); swapMenu(magicMenu, combatMenu);});
+  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
+  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Iron Skin", "80px", function() {startTurn("defSkill"); swapMenu(magicMenu, combatMenu);});
+  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Bezerk", "80px", function() {startTurn("attSkill"); swapMenu(magicMenu, combatMenu);});
+  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Overload", "80px", function() {startTurn("uberSkill"); swapMenu(magicMenu, combatMenu);});
   
   magicMenu.addChild(normalMagicButton, blizzardButton, thunderBlastButton, cosmicRayButton);
   attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);
