@@ -38,7 +38,7 @@ $(document).ready(function() {
 
                 success: function(data) {
                     if (data.success) {
-                        window.location.replace('login.php');
+                        window.location.replace('/');
                         console.log(data.message);
                     } else {
                         // credintials were bad, reset the form:

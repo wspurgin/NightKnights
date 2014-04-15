@@ -19,11 +19,11 @@
         <script src="js/main.js"></script>
         
         <link rel="stylesheet" type="text/css" href="../css/home.css">
-        <?php include("../html/modules/commonHead.html"); ?>
+        <?php include(__DIR__."/../modules/commonHead.html"); ?>
     </head>
     <body onload="main();">
     
-      <?php include("../html/modules/navbar.html"); ?>
+      <?php include(__DIR__."/../modules/navbar.html"); ?>
       
       <div id="Canvases">
         <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
@@ -32,7 +32,7 @@
         <canvas id="menuCanvas" width="765" height="340"></canvas>
       </div>
       
-      <?php include("../html/modules/copyright.html"); ?>
+      <?php include(__DIR__."/../modules/copyright.html"); ?>
       
     </body>
 </html>

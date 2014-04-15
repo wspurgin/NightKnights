@@ -4,7 +4,7 @@
 <head>
   <title>Night Knights - Home</title>
   
-  <link rel="stylesheet" type="text/css" href="../css/home.css">
+  <link rel="stylesheet" type="text/css" href="/css/home.css">
   <?php include("modules/commonHead.html"); ?>
 </head>
 
