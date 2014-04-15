@@ -85,6 +85,7 @@ Class Api
                     newSession(md5(SALT.$user->username));
                     $_SESSION['user_id'] = $user->id;
                     $_SESSION['username'] = $user->username;
+                    $_SESSION['email'] = $user->email;
                     $response['success'] = true;
                     $response['message'] = "$user->username logged in successfully";
                     $response['request'] = $_SESSION;
@@ -144,7 +145,16 @@ Class Api
         echo json_encode($response);
     }
 
-    public function getCurrentUser()
+    public function getSession()
+    {
+        $app = \Slim\Slim::getInstance();
+        if(!$this->session())
+            $app->halt(404);
+        else
+            echo json_encode((object)$_SESSION);
+    }
+
+    public function getCurrentCharacter()
     {
         $app = \Slim\Slim::getInstance();
         if (!$this->session())
@@ -153,7 +163,7 @@ Class Api
         {
             try
             {
-                $sql = "SELECT `username`, `email` FROM `Users` WHERE `id`=:id";
+                $sql = "SELECT * FROM `Characters` WHERE `id`=:id";
                 $user = $this->db->select(
                     $sql,
                     array(":id" => $_SESSION['user_id']),
@@ -889,7 +899,7 @@ Class Api
             $user = json_decode($body);
             if(empty($user))
                 throw new Exception("Invlaid json '$body'", 1);
-            $sql = "UPDATE `Users` SET password=:password WHERE `id`=:id";
+            $sql = "UPDATE `Users` SET `password`=:password WHERE `id`=:id";
             $args = array(
                 ":password" => new Password($user->password),
                 ":id" => $_SESSION['user_id']
@@ -909,6 +919,90 @@ Class Api
             $response['message'] = $e->getMessage();
             // $response['message'] = "Errors occured";
             
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
+    public function updateUserInfo()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        $username_is_set = false;
+        $email_is_set = false;
+        if(!$this->session())
+            $app->halt(404);
+        try
+        {
+            $body = $app->request->getBody();
+            $user = json_decode($body);
+            if(empty($user))
+                throw new Exception("Invlaid json '$body'", 1);
+
+            // Set locals
+            $sql = "UPDATE `Users` SET ";
+            $args = array(":id" => $_SESSION['user_id']);
+            $username_is_set = isset($user->username);
+            $email_is_set = isset($user->email);
+            
+            if($email_is_set)
+            {
+                $sql .= "`email`=:email";
+                $args[":email"] = $user->email;
+            }
+            if($username_is_set)
+            {
+                // if email was also set add comma
+                if($email_is_set)
+                    $sql .= ", `username`=:username";
+                else
+                    $sql .= "`username`=:username";
+                $args[":username"] = $user->username;
+            }
+            $sql .= " WHERE `id`=:id";
+
+            $this->db->update($sql, $args);
+
+            // Update session with new username, and new email
+            if($username_is_set)
+                $_SESSION['username'] = $user->username;
+            if($email_is_set)
+                $_SESSION['email'] = $user->email;
+
+            $response['success'] = true;
+            $response['message'] = "User updated successfully";
+        }
+        catch(PDOException $e)
+        {
+            $response['success'] = false;
+            $app->log->error($e->getMessage());
+            if($e->getCode() == 23000)
+            {
+                if($username_is_set && $email_is_set)
+                    $response['message'] = "Username or email already exists.";
+                elseif($username_is_set)
+                    $response['message'] = "Username already exists.";
+                else
+                    $response['message'] = "Email already exists.";
+            }
+            else
+            {
+                // while still debugging
+                $response['message'] = $e->getMessage();
+                // $response['message'] = "Errors occured";
+            }
+            $response['code'] = $e->getCode();
             $app->halt(404, json_encode($response));
         }
         catch(Exception $e)

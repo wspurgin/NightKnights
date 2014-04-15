@@ -12,7 +12,9 @@ Example route
 
 // Initalizing routes for application
 $ROUTES = array(
-    new Route('/user', Route::GET, array($api, 'getCurrentUser')),
+    new Route('/session', Route::GET, array($api, 'getSession')),
+    new Route('/character', Route::GET, array($api, 'getCurrentCharacter')),
+    new Route('/user', Route::PATCH, array($api, 'updateUserInfo')),
     new Route('/login', Route::POST, array($api, 'loginUser')),
     new Route('/logout', Route::GET, array($api, 'logoutUser')),
     new Route('/users', Route::POST, array($api, 'createUser')),
