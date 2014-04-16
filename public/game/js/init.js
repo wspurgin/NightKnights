@@ -16,21 +16,21 @@ function initStatsView()
   knight.setTransform(10, 10, 0.5, 0.5);    
   
   energyIcon = new createjs.Bitmap(preload.getResult("energy"));
-  energyIcon.setTransform(200, 70, 2, 2);
+  energyIcon.setTransform(200, 75, 2, 2);
   
   currentEnergy = new createjs.Text("x" + player.energy, "60px VT323", "#FFFFFF");
   currentEnergy.maxWidth = 1000;
   currentEnergy.textAlign = "left";
   currentEnergy.x = 270;
-  currentEnergy.y = 70;  
+  currentEnergy.y = 75;  
   
   levelText = new createjs.Text("Level: " + player.level, "60px VT323", "#FFFFFF");
   levelText.maxWidth = 1000;
   levelText.textAlign = "left";
   levelText.x = 500;
-  levelText.y = 70;  
+  levelText.y = 75;  
   
-  experienceText = new createjs.Text("Experience: " + player.experience + "/" + calculateNextLevel(), "60px VT323", "#FFFFFF");
+  experienceText = new createjs.Text("Exp: " + player.experience + "/" + calculateNextLevel(), "60px VT323", "#FFFFFF");
   experienceText.maxWidth = 1000;
   experienceText.textAlign = "left";
   experienceText.x = 200;
@@ -43,7 +43,8 @@ function updateStatsView()
 {
   currentEnergy.text = "x" + player.energy;
   levelText.text = "Level: " + player.level;
-  
+  experienceText.text = "Exp: " + player.experience + "/" + calculateNextLevel();
+  menuStage.update();
 }
 
 function initGameOverView()

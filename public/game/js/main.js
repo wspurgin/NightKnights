@@ -148,18 +148,21 @@ function switchTo(view)
 
 function switchToMenu(view)
 {
+  updateStatsView();
   menuStage.removeChildAt(0);
   menuStage.addChild(view);
   menuStage.update();
 }
 
-function levelUp(newLevel)
+function playerUpdate(updateObject)
 {
-  if (player.level < newLevel) {
-    player.level = newLevel;
+  player.experience = updateObject.experience;
+  if (player.level < updateObject.level) {
+    player.level = updateObject.level;
     console.log("LEVEL UP to " + player.level);
     checkUnlocks();
   }
+  updateStatsView();
 }
 
 function checkUnlocks()
