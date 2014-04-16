@@ -44,9 +44,10 @@ function saveBattleResults(results)
                     console.log("Player experience placed and level calculated");
                     console.log("data:" + data.level);
                     console.log(data.message);
+                    data.experience = 0;
 
                     //successful api call
-                    levelUp(data.level);
+                    playerUpdate(data);
 
                 } else {
                     // errors occured
@@ -65,7 +66,7 @@ function saveBattleResults(results)
 
 function getPlayerData()
 {
-    
+
 }
 
 /**
