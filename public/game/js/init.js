@@ -4,6 +4,20 @@
  * Houses the code for initializing the views.
  */
 
+function initStatsView()
+{
+  nameText = new createjs.Text("Name: " + player.name, "60px VT323", "#FFFFFF");
+  nameText.maxWidth = 1000;
+  nameText.textAlign = "left";
+  nameText.x = 200;
+  nameText.y = 10; //The game area is half of the canvas' height
+  
+  knight = new createjs.Bitmap(preload.getResult("knight"));
+  knight.setTransform(10, 10, 0.5, 0.5);
+  
+  statsView.addChild(nameText, knight);
+}
+
 function initGameOverView()
 {
   gameOverText = new createjs.Text("GAME OVER", "84px VT323", "#FFFFFF");
@@ -174,9 +188,7 @@ function initEncounter()
   nightmare = new Nightmare("Big Snake", 50, 5, 5);
   nightmare.initSprite("testMonster");
   
-  menuStage.addChild(menuView);
-  menuStage.update();
-  
+  switchToMenu(menuView); 
   encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
 }
 
@@ -189,8 +201,7 @@ function encounterCleanup()
   treasureChest.gotoAndPlay("closed");
   encounterView.removeChild(loot);
   encounterView.removeChild(nightmare.sprite);
-  menuStage.removeChild(menuView);
-  menuStage.update();
+  switchToMenu(statsView);
   menuView.alpha = 1;
 }
  
