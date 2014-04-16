@@ -42,9 +42,9 @@ function saveBattleResults(results)
             success: function(data) {
                 if (data.success) {
                     console.log("Player experience placed and level calculated");
-                    console.log("data:" + data.level);
+                    console.log("level:" + data.level);
+                    console.log("experience:" + data.experience);
                     console.log(data.message);
-                    data.experience = 0;
 
                     //successful api call
                     playerUpdate(data);

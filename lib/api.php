@@ -730,13 +730,14 @@ Class Api
             $this->db->update($sql, $args);
 
             // get current level
-            $sql = "SELECT level FROM Characters WHERE id=:id";
+            $sql = "SELECT experience, level FROM Characters WHERE id=:id";
 
-            $level = $this->db->select($sql, array(":id"=>$_SESSION['user_id']), false);
+            $data = $this->db->select($sql, array(":id"=>$_SESSION['user_id']), false);
 
             $response['success'] = true;
             $response['message'] = "character ".$_SESSION['username']." has more experience!";
-            $response['level'] = $level->level; # gets the actual level
+            $response['experience'] = $data->experience; 
+            $response['level'] = $data->level; # gets the actual level
         }
         catch(PDOException $e)
         {
