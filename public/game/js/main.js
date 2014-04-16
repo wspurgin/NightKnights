@@ -171,4 +171,10 @@ function checkUnlocks()
     }
   });
 }
+
+function calculateNextLevel()
+{
+  var x = player.level + 1;
+  return 25*x*(1+x);
+}
   

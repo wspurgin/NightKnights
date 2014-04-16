@@ -13,16 +13,16 @@ function initStatsView()
   nameText.y = 10; //The game area is half of the canvas' height
   
   knight = new createjs.Bitmap(preload.getResult("knight"));
-  knight.setTransform(10, 10, 0.5, 0.5);
+  knight.setTransform(10, 10, 0.5, 0.5);    
+  
+  energyIcon = new createjs.Bitmap(preload.getResult("energy"));
+  energyIcon.setTransform(200, 70, 2, 2);
   
   currentEnergy = new createjs.Text("x" + player.energy, "60px VT323", "#FFFFFF");
   currentEnergy.maxWidth = 1000;
   currentEnergy.textAlign = "left";
   currentEnergy.x = 270;
   currentEnergy.y = 70;  
-    
-  energyIcon = new createjs.Bitmap(preload.getResult("energy"));
-  energyIcon.setTransform(200, 70, 2, 2);
   
   levelText = new createjs.Text("Level: " + player.level, "60px VT323", "#FFFFFF");
   levelText.maxWidth = 1000;
@@ -30,11 +30,19 @@ function initStatsView()
   levelText.x = 500;
   levelText.y = 70;  
   
-  statsView.addChild(nameText, knight, energyIcon, currentEnergy, levelText);
+  experienceText = new createjs.Text("Experience: " + player.experience + "/" + calculateNextLevel(), "60px VT323", "#FFFFFF");
+  experienceText.maxWidth = 1000;
+  experienceText.textAlign = "left";
+  experienceText.x = 200;
+  experienceText.y = 140;  
+  
+  statsView.addChild(nameText, knight, energyIcon, currentEnergy, levelText, experienceText);
 }
 
 function updateStatsView()
 {
+  currentEnergy.text = "x" + player.energy;
+  levelText.text = "Level: " + player.level;
   
 }
 
