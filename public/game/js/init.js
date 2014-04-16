@@ -4,6 +4,23 @@
  * Houses the code for initializing the views.
  */
 
+function initGameOverView()
+{
+  gameOverText = new createjs.Text("GAME OVER", "84px VT323", "#FFFFFF");
+  gameOverText.maxWidth = 1000;
+  gameOverText.textAlign = "center";
+  gameOverText.x = bgCanvas.width / 2;
+  gameOverText.y = bgCanvas.height / 2; //The game area is half of the canvas' height
+  
+  moreEnergyText = new createjs.Text("Get some rest tonight and earn more energy!", "48px VT323", "#FFFFFF");
+  moreEnergyText.maxWidth = 765;
+  moreEnergyText.textAlign = "center";
+  moreEnergyText.x = bgCanvas.width / 2;
+  moreEnergyText.y = bgCanvas.height / 2 + 70; //The game area is half of the canvas' height
+  
+  gameOverView.addChild(gameOverText, moreEnergyText);
+}
+
 function initWorldView()
 {
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));

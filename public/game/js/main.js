@@ -18,6 +18,7 @@ var menuView = new createjs.Container();
 var combatMenu = new createjs.Container();
 var attackMenu = new createjs.Container();
 var magicMenu = new createjs.Container();
+var gameOverView = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
@@ -128,6 +129,7 @@ function doneLoading(event)
   initAreaViews();
   initEncounterView();
   initConsole();
+  initGameOverView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
   checkUnlocks();
