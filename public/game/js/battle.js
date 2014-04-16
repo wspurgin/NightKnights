@@ -209,7 +209,7 @@ function endCombat(playerWon)
   else {
     encounterCleanup();
     areaView.removeChildAt(2); //Remove the monsters from the area.
-    switchTo(worldView);
+    switchTo(gameOverView);
     player.energy = 250;
     player.maxEnergy = 250;
     player.isDead = false;

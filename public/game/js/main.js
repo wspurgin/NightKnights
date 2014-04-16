@@ -9,6 +9,7 @@ var canvas; //Will be linked to the canvas in our index.html page
 var stage; //A collection of things to be rendered; we'll add "children" to it that we want to render.
 var menuStage;
 var consoleStage;
+var player;
 
 //[Views and Containers]
 var worldView = new createjs.Container();
@@ -18,6 +19,8 @@ var menuView = new createjs.Container();
 var combatMenu = new createjs.Container();
 var attackMenu = new createjs.Container();
 var magicMenu = new createjs.Container();
+var gameOverView = new createjs.Container();
+var statsView = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
@@ -84,8 +87,8 @@ function main()
             {src:"sprites/Energy.png", id:"energy"},
             {src:"sprites/Attack.png", id:"attack"},
             {src:"sprites/Defence.png", id:"defence"},
-            
-            
+            {src:"sprites/Knight.png", id:"knight"},
+                        
         ];
   
   //This is the preloader, which lets us load the images beforehand and keeps track of all of the resources.
@@ -128,8 +131,11 @@ function doneLoading(event)
   initAreaViews();
   initEncounterView();
   initConsole();
+  initGameOverView();
+  initStatsView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   switchTo(worldView);
+  switchToMenu(statsView);
   checkUnlocks();
 }
  
@@ -138,6 +144,13 @@ function switchTo(view)
   stage.removeChildAt(0);
   stage.addChild(view);
   stage.update();
+}
+
+function switchToMenu(view)
+{
+  menuStage.removeChildAt(0);
+  menuStage.addChild(view);
+  menuStage.update();
 }
 
 function levelUp(newLevel)
@@ -157,5 +170,11 @@ function checkUnlocks()
       element.unlock();
     }
   });
+}
+
+function calculateNextLevel()
+{
+  var x = player.level + 1;
+  return 25*x*(1+x);
 }
   
