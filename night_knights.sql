@@ -179,12 +179,21 @@ VALUES
     (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'SwordOfTruth.png'),
     (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png');
 
+-- img guidelines: sprites/folder/name.png
+
 INSERT INTO `Monsters` (`id`, `name`, `attack_seed`, `defense_seed`, `magic_seed`, `health_seed`, `img_url`)
 VALUES
-    (1, 'Dragon', 1, 1, 1, 1, 'Dragon.png'),
-    (2, 'Dryad', 0, 0, 5, 3, 'Dryad.png'),
-    (3, 'Wolf', 5, 3, 0, 3, 'Wolf.png'),
-    (4, 'Beaver', 5, 3, 0, 3, 'Beaver.png');
+    (1, 'Dragon', 1, 1, 1, 1, '/sprites/Dragons/BigBlueDragon.png'),
+    (2, 'Unicorn', 0, 0, 5, 3, '/sprites/Beasts/Unicorn.png'),
+    (3, 'Gorilla', 5, 3, 0, 3, '/sprites/Beasts/Gorilla.png'),
+    (4, 'Beaver', 5, 3, 0, 3, '/sprites/Beasts/Beaver.png');
+
+INSERT INTO `Areas_Monsters` (`area_id`, `monster_id`)
+VALUES
+    (1,3),
+    (1,4),
+    (2,2),
+    (3,1);
 
 -- Functions
 
