@@ -134,9 +134,16 @@ function doneLoading(event)
   initGameOverView();
   initStatsView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
-  switchTo(worldView);
-  switchToMenu(statsView);
-  checkUnlocks();
+  if (player.energy <= 0)
+  {
+    switchTo(gameOverView);
+  }
+  else
+  {
+    switchTo(worldView);
+    switchToMenu(statsView);
+    checkUnlocks();
+  }
 }
  
 function switchTo(view)
