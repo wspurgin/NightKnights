@@ -66,7 +66,51 @@ function saveBattleResults(results)
 
 function getPlayerData()
 {
+    console.log("GETTING PLAYER DATA...");
 
+    character = {};
+
+    $.ajax({
+            url: '/api/character/',
+            type: 'GET',
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    form[0].reset();
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Character found");
+                    console.log("Character:", data);
+                    
+                    console.log(data.message);
+
+                    //successful api call
+
+                    character = data.character;
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                console.log(data);
+            }
+
+        }); //end of AJAX call
+    return character;
 }
 
 /**
@@ -76,7 +120,7 @@ function getAreas()
 {
     console.log("GETTING MONSTER INFO BY AREA...");
 
-    areas;
+    areas = {};
 
     $.ajax({
             url: '/api/areas',
