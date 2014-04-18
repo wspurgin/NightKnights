@@ -88,6 +88,7 @@ function main()
             {src:"sprites/Attack.png", id:"attack"},
             {src:"sprites/Defence.png", id:"defence"},
             {src:"sprites/Knight.png", id:"knight"},
+            {src:"sprites/Weapons.png", id:"weaponsSprites"},
                         
         ];
   

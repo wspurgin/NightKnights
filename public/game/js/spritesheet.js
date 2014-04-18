@@ -48,4 +48,57 @@ function initSpriteSheets () {
         "images": [preload.getResult("treasureChest")],
         "frames": {width:150, height:150}
   });
+  
+  weaponsSheet = new createjs.SpriteSheet({
+    "animations":
+      {
+        "sword0": [0],
+        "sword1": [1],
+        "sword2": [2],
+        "sword3": [3],
+        "sword4": [4],
+        "sword5": [5],
+        "sword6": [6],
+        "sword7": [7],
+        "sword8": [8],
+        "sword9": [9],
+        "sword10": [10],
+        "sword11": [11],
+        "sword12": [12],
+        "sword13": [13],
+        
+        "dagger0": [0 + 14],
+        "dagger1": [1 + 14],
+        "dagger2": [2 + 14],
+        "dagger3": [3 + 14],
+        "dagger4": [4 + 14],
+        "dagger5": [5 + 14],
+        "dagger6": [6 + 14],
+        "dagger7": [7 + 14],
+        "dagger8": [8 + 14],
+        "dagger9": [9 + 14],
+        "dagger10": [10 + 14],
+        "dagger11": [11 + 14],
+        "dagger12": [12 + 14],
+        "dagger13": [13 + 14],
+        
+        "spear0": [0 + 42],
+        "spear1": [1 + 42],
+        "spear2": [2 + 42],
+        "spear3": [3 + 42],
+        "spear4": [4 + 42],
+        "spear5": [5 + 42],
+        "spear6": [6 + 42],
+        "spear7": [7 + 42],
+        "spear8": [8 + 42],
+        "spear9": [9 + 42],
+        "spear10": [10 + 42],
+        "spear11": [11 + 42],
+        "spear12": [12 + 42],
+        "spear13": [13 + 42],
+      },
+        "images": [preload.getResult("weaponsSprites")],
+        "frames": {width:32, height:32}
+  });
+  
 }
