@@ -11,9 +11,18 @@ var defSkillCounter = 0;
 var attSkillCounter = 0;
 var uberSkillCounter = 0;
 
+function Weapon(name, attack, defence, img_url)
+{
+  this.name = name;
+  this.attack = attack;
+  this.defence = defence;
+  this.img_url = img_url;
+}
+
 function Combatant()
 {
   //[Properties]
+  this.weapon = new Weapon("None", 0, 0, "none");
   this.energy; //Essentially HP
   this.level;
   this.name;
@@ -25,7 +34,7 @@ function Combatant()
   
   //[Functions]
   this.attack = function (victim) {
-    var netDamage = parseInt(this.attackDice.roll() * this.attackMod) - parseInt(victim.defenceDice.roll() * victim.defenceMod);
+    var netDamage = parseInt((this.attackDice.roll() + this.weapon.attack) * this.attackMod) - parseInt((victim.defenceDice.roll() + victim.weapon.defence) * victim.defenceMod);
     if (netDamage <= 0)
     {
       log(victim.name + " blocked " + this.name + "'s attack!", "#FF6600");
@@ -47,9 +56,12 @@ function Combatant()
   }
 }
 
-function Player(name, level, energy, experience)
+function Player(name, level, energy, experience, weapon)
 {
-  //this.weapon;
+  if (weapon === undefined)
+    this.weapon = new Weapon("Sward", 999, 999, "spear13");
+  else
+    this.weapon = weapon;
   this.textColor = "#FF0000";
   this.isDead = false;
   this.name = name;
@@ -62,7 +74,6 @@ function Player(name, level, energy, experience)
   this.attackDice = new dice(2,15,3);
   this.defenceDice = new dice(1,4,5);
   
-    
   this.die = function () {
     menuStage.update();
     log("The nightmare sucks the last of your energy, and you pass out.", "#FF0000");

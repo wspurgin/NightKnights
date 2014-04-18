@@ -80,6 +80,7 @@ function initSpriteSheets () {
   weaponsSheet = new createjs.SpriteSheet({
     "animations":
       {
+        "none": [32],
         "sword0": [0],
         "sword1": [1],
         "sword2": [2],
