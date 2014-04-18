@@ -121,9 +121,8 @@ function doneLoading(event)
   stage.removeChildAt(0);
   
   //Create the player object. This is where we would use the data we got from the DB.
-  player = new Player("Pico", 1, 250, 0);
-  //THIS NEXT LINE IS WRONG!!!!! We'll need a function to import for the player's stats. This is a quick workaround to make it happen temporarily.
-  saveBattleResults(0);
+  var character = getPlayerData();
+  player = new Player(character.name, character.level, character.energy, character.experience);
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
