@@ -227,8 +227,16 @@ function initEncounter()
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
-  nightmare = new Nightmare("Big Snake", 50, 5, 5);
-  nightmare.initSprite("testMonster");
+  var areaNumber;
+  if (currentArea == "forest")
+    areaNumber = 1;
+  else if (currentArea == "mountain")
+    areaNumber = 2;
+  else if (currentArea == "castle")
+    areaNumber = 3;
+  var newMonster = getRandomMonster(areaNumber);
+  nightmare = new Nightmare(newMonster.name, newMonster.health_seed, newMonster.attack_seed, newMonster.defense_seed);
+  nightmare.initSprite(newMonster.img_url);
   
   switchToMenu(menuView); 
   encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
