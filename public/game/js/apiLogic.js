@@ -73,6 +73,7 @@ function getPlayerData()
     $.ajax({
             url: '/api/character/',
             type: 'GET',
+            async: false,
 
             error: function(res) {
                 data = res.responseJSON
