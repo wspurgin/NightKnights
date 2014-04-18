@@ -17,7 +17,7 @@ CREATE TABLE Users(
 CREATE TABLE Characters(
     `id` int(11) AUTO_INCREMENT PRIMARY KEY,
     `name` varchar(32) NOT NULL UNIQUE KEY,
-    `energy` int(11) NOT NULL DEFAULT 0,
+    `energy` int(11) NOT NULL DEFAULT 250,
     `experience` int(11) NOT NULL DEFAULT 0,
     `level` int(11) NOT NULL DEFAULT 1,
     
