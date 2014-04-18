@@ -62,7 +62,7 @@ function main()
   loadingText.y = bgCanvas.height / 2; //The game area is half of the canvas' height
   stage.addChild(loadingText);
   stage.update();   //Update the stage to show the text we just added.
-  
+  initialize(); //Initialize the monster array
   //Declare all of the resources up front, and give each one a unique id so that we can call it later.
   //This is all done in the background, so none of the images or sounds are rendered yet.
   manifest = [
@@ -78,7 +78,8 @@ function main()
             {src:"sprites/hpBarEmpty.png", id:"hpBarEmpty"},
             {src:"sprites/hpBarSmall.png", id:"hpBarSmall"},
             {src:"sprites/hpBarEmptySmall.png", id:"hpBarEmptySmall"},
-            {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
+            {src:monsters[0][0].img_url, id:"testMonster"},
+            //{src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
             {src:"sprites/Chest.png", id:"treasureChest"},
             {src:"sprites/LootPlaceholder.png", id:"loot"},
             {src:"backgrounds/BlackBG.png", id:"blackBG"},
