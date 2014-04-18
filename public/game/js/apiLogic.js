@@ -4,6 +4,38 @@
  * 
  */
 
+ var monsters = [];
+
+/**
+    initializes the monsters array
+*/
+function initialize()
+{
+    areas = getAreas();
+    var i = 0;
+    while(areas[i])
+    {
+        //console.log("Da Areas:", areas[i]);
+        monsters.push(getAreaMonsters(i+1));
+        i++;
+    }
+    //console.log("Monsters:", monsters);
+}
+
+
+/**
+    Send an area integer and funciton returns 
+    a monster associated with that area
+*/
+function getRandomMonster(area)
+{
+    var roll = Math.floor(Math.random()*(monsters[area-1].length));
+    //console.log("roll:", roll);
+    var chosen = monsters[area-1][roll];
+    //console.log("chosen monster:", chosen);
+    return chosen;
+}
+
 /*This function posts the data from the battle to the server, and then
  * returns to the caller whether or not the player has leveled up.
  */
@@ -42,8 +74,8 @@ function saveBattleResults(results)
             success: function(data) {
                 if (data.success) {
                     console.log("Player experience placed and level calculated");
-                    console.log("level:" + data.level);
-                    console.log("experience:" + data.experience);
+                    //console.log("level:" + data.level);
+                    //console.log("experience:" + data.experience);
                     console.log(data.message);
 
                     //successful api call
@@ -68,7 +100,7 @@ function getPlayerData()
 {
     console.log("GETTING PLAYER DATA...");
 
-    character = {};
+    var character = {};
 
     $.ajax({
             url: '/api/character/',
@@ -94,7 +126,7 @@ function getPlayerData()
             success: function(data) {
                 if (data.success) {
                     console.log("Character found");
-                    console.log("Character:", data);
+                    //console.log("Character:", data);
                     
                     console.log(data.message);
 
@@ -121,11 +153,12 @@ function getAreas()
 {
     console.log("GETTING MONSTER INFO BY AREA...");
 
-    areas = {};
+    var areas = {};
 
     $.ajax({
             url: '/api/areas',
             type: 'GET',
+            async: false,
 
             error: function(res) {
                 data = res.responseJSON
@@ -148,7 +181,7 @@ function getAreas()
                     console.log("Areas found");
                     //console.log("Areas:", data);
                     
-                    console.log(data.message);
+                    //console.log(data.message);
 
                     //successful api call
 
@@ -159,22 +192,24 @@ function getAreas()
                     alert(data.message);
                     console.log(data);
                 };
-                console.log(data);
+                //console.log(data);
             }
 
         }); //end of AJAX call
-    //return areas;  save return for when creating area/monster data structure
+    return areas;  //save return for when creating area/monster data structure
 }
 
 function getAreaMonsters(area)
 {
     console.log("GETTING MONSTER INFO BY AREA...");
-    console.log("val:" + area);
+    //console.log("val:" + area);
     var areaObj = {};
     areaObj.id = area;
     //expObj.experience = results.experience;
     //expObj.experience = results;
     data = JSON.stringify(areaObj);
+
+    var monsters = {};
 
     $.ajax({
             url: '/api/areas/' + area + '/monsters',
@@ -182,6 +217,7 @@ function getAreaMonsters(area)
             data: data,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
+            async: false,
 
             error: function(res) {
                 data = res.responseJSON
@@ -203,17 +239,19 @@ function getAreaMonsters(area)
                 if (data.success) {
                     console.log("Monsters found");
                     //console.log("monsters:" + data.monsters);
-                    console.log(data.message);
+                    //console.log(data.message);
 
                     //successful api call
+                    monsters = data.monsters;
 
                 } else {
                     // errors occured
                     alert(data.message);
                     console.log(data);
                 };
-                console.log(data);
+                //console.log(data);
             }
 
         }); //end of AJAX call
+    return monsters;
 }
