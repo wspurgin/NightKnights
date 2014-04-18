@@ -5,7 +5,6 @@
  */
 
 var currentArea;
-//Comment
 function initStatsView()
 {
   nameText = new createjs.Text("Name: " + player.name, "60px VT323", "#FFFFFF");

@@ -62,7 +62,9 @@ function main()
   loadingText.y = bgCanvas.height / 2; //The game area is half of the canvas' height
   stage.addChild(loadingText);
   stage.update();   //Update the stage to show the text we just added.
-  initialize(); //Initialize the monster array
+  
+  
+  initializeMonsterArray(); //Initialize the monster array
   //Declare all of the resources up front, and give each one a unique id so that we can call it later.
   //This is all done in the background, so none of the images or sounds are rendered yet.
   manifest = [
@@ -78,8 +80,7 @@ function main()
             {src:"sprites/hpBarEmpty.png", id:"hpBarEmpty"},
             {src:"sprites/hpBarSmall.png", id:"hpBarSmall"},
             {src:"sprites/hpBarEmptySmall.png", id:"hpBarEmptySmall"},
-            {src:monsters[0][0].img_url, id:"testMonster"},
-            //{src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
+            {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
             {src:"sprites/Chest.png", id:"treasureChest"},
             {src:"sprites/LootPlaceholder.png", id:"loot"},
             {src:"backgrounds/BlackBG.png", id:"blackBG"},
@@ -89,9 +90,16 @@ function main()
             {src:"sprites/Attack.png", id:"attack"},
             {src:"sprites/Defence.png", id:"defence"},
             {src:"sprites/Knight.png", id:"knight"},
-            {src:"sprites/Weapons.png", id:"weaponsSprites"},
-                        
+            {src:"sprites/Weapons.png", id:"weaponsSprites"},            
         ];
+  
+  //Add all of the monster images to the manifest
+  monsters.forEach(function(element, index, array) {
+    element.forEach(function(element, index, array) {
+      manifest.push({src:element.img_url, id:element.img_url});
+    });
+  });
+        
   
   //This is the preloader, which lets us load the images beforehand and keeps track of all of the resources.
   preload = new createjs.LoadQueue();
