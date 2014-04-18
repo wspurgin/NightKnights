@@ -4,6 +4,8 @@
  * Houses the code for initializing the views.
  */
 
+var currentArea;
+
 function initStatsView()
 {
   nameText = new createjs.Text("Name: " + player.name, "60px VT323", "#FFFFFF");
@@ -75,7 +77,12 @@ function initWorldView()
   forest.framerate = 10;
   forest.on("rollover", stageOver);
   forest.on("rollout", stageOut);
-  forest.on("click", function() {areaView.addChildAt(forestMap, 0); areaView.addChild(initNightmaresList()); switchTo(areaView);});
+  forest.on("click", function() {
+    currentArea = "forest";
+    areaView.addChildAt(forestMap, 0); 
+    areaView.addChild(initNightmaresList()); 
+    switchTo(areaView);
+  });
   
   mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
@@ -84,9 +91,11 @@ function initWorldView()
   mountain.on("rollout", stageOut);
   mountain.on("click", function() {
     if(!mountain.locked) {
+      currentArea = "mountain";
       areaView.addChildAt(mountainMap, 0); 
       areaView.addChild(initNightmaresList()); 
-      switchTo(areaView);}
+      switchTo(areaView);
+    }
   });
   mountain.lockLevel = 5;
   if (player.level < 5){
@@ -109,9 +118,11 @@ function initWorldView()
   castle.on("rollout", stageOut);
   castle.on("click", function() {
     if(!castle.locked) {
+      currentArea = "castle";
       areaView.addChildAt(castleMap, 0); 
       areaView.addChild(initNightmaresList()); 
-      switchTo(areaView);}
+      switchTo(areaView);
+    }
   });
   castle.lockLevel = 10;
   if (player.level < castle.lockLevel){
@@ -164,7 +175,7 @@ function initNightmaresList()
 
 function initEncounterView()
 {
-  var background = new createjs.Sprite(backgroundSheet, "forest4");
+  background = new createjs.Sprite(backgroundSheet, "forest0");
   background.scaleX = 3;
   background.scaleY = 3;
   
@@ -211,6 +222,8 @@ function initEncounterView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initEncounter()
 { 
+  
+  background.gotoAndPlay(currentArea + Math.floor((Math.random()*7)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
