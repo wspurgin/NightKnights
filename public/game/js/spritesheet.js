@@ -31,7 +31,7 @@ function initSpriteSheets () {
  
   backgroundSheet = new createjs.SpriteSheet({
     "animations":
-      { //I commented out the maps that didn't work. 
+      { //I commented out the maps that didn't work. Comment
         "forest0": [0],
         "mountain0": [1],
         "forest1": [2],

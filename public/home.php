@@ -17,7 +17,6 @@
 
   <?php include("modules/navbar.html"); ?>
 
-
   <div class="twocol" id="homewrapper">
     <div class="left" id="homeleft">
 

@@ -9,6 +9,7 @@
 /**
     initializes the monsters array
 */
+//Comment
 function initialize()
 {
     areas = getAreas();
