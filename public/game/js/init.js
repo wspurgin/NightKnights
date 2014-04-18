@@ -164,7 +164,7 @@ function initNightmaresList()
 
 function initEncounterView()
 {
-  var background = new createjs.Sprite(backgroundSheet, "forest");
+  var background = new createjs.Sprite(backgroundSheet, "forest4");
   background.scaleX = 3;
   background.scaleY = 3;
   

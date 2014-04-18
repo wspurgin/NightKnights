@@ -31,12 +31,40 @@ function initSpriteSheets () {
  
   backgroundSheet = new createjs.SpriteSheet({
     "animations":
-      {
-        "plain": [0],
-        "forest": [2]
+      { //I commented out the maps that didn't work. 
+        "forest0": [0],
+        "mountain0": [1],
+        "forest1": [2],
+        "forest2": [3],
+        "mountain1": [4],
+        "mountain2": [5],
+        "forest3": [6],
+        "world0": [7],
+        //"sword8": [8],
+        "castle0": [9],
+        "castle1": [10],
+        "forest4": [11],
+        //"sword12": [12],
+        "castle2": [13],
+        "mountain3": [14],
+        "forest5": [15],
+        "castle3": [16],
+        "castle4": [17],
+        "castle5": [18],
+        "castle6": [19],
+        "world1": [20],
+        "mountain4": [21],
+        "mountain5": [22],
+        //"forest6": [23],
+        "forest6": [24],
+        "mountain6": [25],
+        //"sword6": [26],
+        "world2": [27],
+        //"sword8": [28],
+        "world3": [29]
       },
         "images": [preload.getResult("bgSprites")],
-        "frames": {width:257, height:112}
+        "frames": {width:256, height:112}
   });
   
   treasureSheet = new createjs.SpriteSheet({
