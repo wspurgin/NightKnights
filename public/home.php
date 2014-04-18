@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="/css/home.css">
   <script src="game/js/createjs/easeljs-0.7.1.min.js"></script>
   <script src="game/js/createjs/preloadjs-0.4.1.min.js"></script>
+  <script src="game/js/apiLogic.js"></script>
   <script src="js/weapon.js"></script>
   <?php include("modules/commonHead.html"); ?>
 </head>
