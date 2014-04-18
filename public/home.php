@@ -7,9 +7,10 @@
   <link rel="stylesheet" type="text/css" href="/css/home.css">
   <script src="game/js/createjs/easeljs-0.7.1.min.js"></script>
   <script src="game/js/createjs/preloadjs-0.4.1.min.js"></script>
+  <?php include("modules/commonHead.html"); ?>
   <script src="game/js/apiLogic.js"></script>
   <script src="js/weapon.js"></script>
-  <?php include("modules/commonHead.html"); ?>
+  <script src="js/home.js"></script>
 </head>
 
 <body onload="main();">
@@ -22,20 +23,19 @@
 
       <p class="infocaption">Knight Stats</p>
       <div id="knightstats" class="infobox">
-        <p>Energy: X</p>
-        <p>Level: Y</p>
-        <p>Experience: Z</p>
-        <p>To Next: YYZ</p>
-        <p>Rank: 9001</p>
+        <div>Energy: <span id="Energy"></span></div>
+        <div>Level: <span id="Level"></span></div>
+        <div>Experience: <span id="Experience"></span></div>
+        <div>XP To Next Level: <span id="xpToNextLevel"></span></div>
       </div>
 
       <p class="infocaption">Current Weapon</p>
       <div id="knightweapon" class="infobox">
         <canvas id="weaponCanvas" width="64" height="64"></canvas>
-        <p>Crazy Husky</p>
-        <p>Attack: +3</p>
-        <p>Defense: -1</p>
-        <p>Magic: +1</p>
+        <div>Weapon Name: <span id="weaponName"></span></div>
+        <div>Attack: <span id="weaponAttack"></span></div>
+        <div>Defense: <span id="weaponDefense"></span></div>
+        <div>Magic: <span id="weaponMagic"></span></div>
       </div>
     </div>
 
