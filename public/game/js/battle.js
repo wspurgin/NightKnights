@@ -17,6 +17,7 @@ function Weapon(name, attack, defence, img_url)
   this.attack = attack;
   this.defence = defence;
   this.img_url = img_url;
+  this.equipped = false;
 }
 
 function Combatant()
@@ -248,8 +249,16 @@ function dice(numberOfDice, numberOfSides, bonusModifier)
     return sum;
   }
   
+  this.min = function ()
+  {
+    return (this.quantity + this.modifier);
+  }
+  
+  this.max = function ()
+  {
+    return ((this.quantity * this.sides) + this.modifier);
+  }
 }
-
 
 /*This function calculates the experience a monster will give you
  * upon its defeat. 
@@ -259,3 +268,10 @@ function getExpFromNightmare(nightmare)
   return nightmare.maxEnergy / 2;
 }
   
+function equip(weapon)
+{
+  if (player.weapon !== undefined)
+    player.weapon.equipped = false;
+  player.weapon = weapon;
+  weapon.equipped = true;
+}
