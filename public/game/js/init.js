@@ -135,9 +135,21 @@ function initWorldView()
     castle.gotoAndPlay("default");
   };
   
+  worldBossButton = new createjs.Sprite(worldBossSelectSheet, "default");
+  worldBossButton.setTransform(700, 10);
+  worldBossButton.framerate = 10;
+  worldBossButton.on("rollover", stageOver);
+  worldBossButton.on("rollout", stageOut);
+  
+  worldBossText = new createjs.Text("World\nBosses", "22px VT323", "#000000");
+  worldBossText.maxWidth = 1000;
+  worldBossText.textAlign = "center";
+  worldBossText.x = 725;
+  worldBossText.y = 50;
+  
   lockList.push(castle);
   
-  stageSelect.addChild(forest, mountain, castle);  
+  stageSelect.addChild(forest, mountain, castle, worldBossButton, worldBossText);  
   
   worldView.addChild(worldMap, stageSelect);
 }

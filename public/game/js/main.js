@@ -70,9 +70,11 @@ function main()
   manifest = [
             {src:"backgrounds/raws/TheMasterSheet.png", id:"bgSprites"},
             {src:"backgrounds/WorldMapLines.png", id:"worldMap"},
+            {src:"backgrounds/WorldBossMap.png", id:"worldBossMap"},
             {src:"backgrounds/ForestMap.png", id:"forestMap"},
             {src:"backgrounds/MountainMap.png", id:"mountainMap"},
             {src:"backgrounds/CastleMap.png", id:"castleMap"},
+            {src:"backgrounds/BlackBG.png", id:"blackBG"},
             {src:"sprites/back.png", id:"backButton"},
             {src:"sprites/Button.png", id:"button"},
             {src:"sprites/bigButton.png", id:"bigButton"},
@@ -83,14 +85,14 @@ function main()
             {src:"sprites/Dragons/BigSnake.png", id:"testMonster"},
             {src:"sprites/Chest.png", id:"treasureChest"},
             {src:"sprites/LootPlaceholder.png", id:"loot"},
-            {src:"backgrounds/BlackBG.png", id:"blackBG"},
             {src:"sprites/stageSelect.png", id:"stageSelectSprites"},
             {src:"sprites/monsterSelect.png", id:"monsterSelectSprites"},
             {src:"sprites/Energy.png", id:"energy"},
             {src:"sprites/Attack.png", id:"attack"},
             {src:"sprites/Defence.png", id:"defence"},
             {src:"sprites/Knight.png", id:"knight"},
-            {src:"sprites/Weapons.png", id:"weaponsSprites"},            
+            {src:"sprites/Weapons.png", id:"weaponsSprites"}, 
+            {src:"sprites/worldBossButton.png", id:"worldBossButtonSprites"}
         ];
   
   //Add all of the monster images to the manifest
