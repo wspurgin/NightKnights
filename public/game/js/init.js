@@ -140,6 +140,9 @@ function initWorldView()
   worldBossButton.framerate = 10;
   worldBossButton.on("rollover", stageOver);
   worldBossButton.on("rollout", stageOut);
+  worldBossButton.on("click", function() {
+      switchTo(worldBossView);    
+  });
   
   worldBossText = new createjs.Text("World\nBosses", "22px VT323", "#000000");
   worldBossText.maxWidth = 1000;
@@ -165,6 +168,17 @@ function initAreaViews()
   backButton.on("click", function() {areaView.removeChildAt(2); areaView.removeChildAt(0); switchTo(worldView);}); //Remove the Monsters, then the background.
   
   areaView.addChild(backButton);
+}
+
+function initWorldBossView()
+{
+  worldBossMap = new createjs.Bitmap(preload.getResult("worldBossMap"));
+  
+  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  backButton.setTransform(10, 10);
+  backButton.on("click", function() {switchTo(worldView);}); //Remove the Monsters, then the background.
+  
+  worldBossView.addChild(worldBossMap, backButton);
 }
 
 function initNightmaresList()

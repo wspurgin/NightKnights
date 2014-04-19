@@ -21,6 +21,7 @@ var attackMenu = new createjs.Container();
 var magicMenu = new createjs.Container();
 var gameOverView = new createjs.Container();
 var statsView = new createjs.Container();
+var worldBossView = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
@@ -144,6 +145,7 @@ function doneLoading(event)
   initConsole();
   initGameOverView();
   initStatsView();
+  initWorldBossView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   if (player.energy <= 0)
   {
