@@ -6,6 +6,7 @@
 
 var player;
 var nightmare;
+var inventory = [];
 var menuLocked;
 var defSkillCounter = 0;
 var attSkillCounter = 0;

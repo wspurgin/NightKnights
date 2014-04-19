@@ -66,6 +66,15 @@ function initGameOverView()
   gameOverView.addChild(gameOverText, moreEnergyText);
 }
 
+function initInventoryView()
+{
+  inventory.forEach(function(element, index, array) {
+    item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
+    item.setTransform(70 * index, 10, 2, 2);
+    inventoryView.addChild(item);
+  });
+}
+
 function initWorldView()
 {
  worldMap = new createjs.Bitmap(preload.getResult("worldMap"));
@@ -395,5 +404,11 @@ function openChest(event) {
     switchTo(areaView);
     menuLocked = false;
   });
+}
+
+function initInventory() 
+{
+  inventory.push(new Weapon("NRNRNR", 999, 999, "sword13"));
+  inventory.push(new Weapon("BingBing", 1234, 1234, "spear13"));  
 }
 

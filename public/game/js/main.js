@@ -22,6 +22,7 @@ var magicMenu = new createjs.Container();
 var gameOverView = new createjs.Container();
 var statsView = new createjs.Container();
 var worldBossView = new createjs.Container();
+var inventoryView = new createjs.Container();
 
 //[Miscellaneous]
 var loadingText;
@@ -136,6 +137,9 @@ function doneLoading(event)
   var character = getPlayerData();
   player = new Player(character.name, character.level, character.energy, character.experience);
   
+  //Initialize the inventory. We'll need an api call for this later.
+  initInventory();
+  
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
   initMenuView();
@@ -146,6 +150,7 @@ function doneLoading(event)
   initGameOverView();
   initStatsView();
   initWorldBossView();
+  initInventoryView();
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   if (player.energy <= 0)
   {
