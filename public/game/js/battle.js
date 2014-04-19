@@ -170,7 +170,7 @@ function startTurn(attackType)
   else if (attackType === "defSkill")
   {
     defSkillCounter = 3;
-    log(player.name + "'s skin became tough!", "#6E00C9");
+    log(player.name + " focused on defence!", "#6E00C9");
     nightmare.attack(player);
   }
   else if (attackType === "attSkill")

@@ -178,7 +178,45 @@ function initWorldBossView()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(worldView);}); //Remove the Monsters, then the background.
   
-  worldBossView.addChild(worldBossMap, backButton);
+  worldBoss1 = getRandomMonster(3);
+  worldBoss2 = getRandomMonster(3);
+  
+  worldBoss1Button = new createjs.Bitmap(preload.getResult(worldBoss1.img_url));
+  worldBoss1Button.regX = worldBoss1Button.getBounds().width / 2;
+  worldBoss1Button.regY = worldBoss1Button.getBounds().height / 2;
+  worldBoss1Button.setTransform(165, 100);
+  createjs.Tween.get(worldBoss1Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
+  worldBoss1Button.on("click", function() {
+    nightmare = new Nightmare(worldBoss1.name, worldBoss1.health_seed * 100, worldBoss1.attack_seed, worldBoss1.defense_seed);
+    nightmare.initSprite(worldBoss1.img_url);
+    initWorldBossEncounter(); 
+    switchTo(encounterView);
+  });  
+  
+  worldBoss2Button = new createjs.Bitmap(preload.getResult(worldBoss2.img_url));
+  worldBoss2Button.regX = worldBoss2Button.getBounds().width / 2;
+  worldBoss2Button.regY = worldBoss2Button.getBounds().height / 2;
+  worldBoss2Button.setTransform(500, 100);
+  createjs.Tween.get(worldBoss2Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
+  worldBoss2Button.on("click", function() {
+    nightmare = new Nightmare(worldBoss2.name, worldBoss2.health_seed * 100, worldBoss2.attack_seed, worldBoss2.defense_seed);
+    nightmare.initSprite(worldBoss2.img_url);
+    initWorldBossEncounter(); 
+    switchTo(encounterView);
+  });  
+  worldBossView.addChild(worldBossMap, backButton, worldBoss1Button, worldBoss2Button);
+}
+  
+//This function initializes the actual entities in the encounter, not the view itself
+function initWorldBossEncounter()
+{ 
+  background.gotoAndPlay("world" + Math.floor((Math.random()*7)));
+  playerhp.text = "x" + player.energy;
+  hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
+  hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
+  
+  switchToMenu(menuView); 
+  encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
 }
 
 function initNightmaresList()
@@ -247,7 +285,6 @@ function initEncounterView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initEncounter()
 { 
-  
   background.gotoAndPlay(currentArea + Math.floor((Math.random()*7)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
