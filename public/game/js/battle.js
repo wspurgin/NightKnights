@@ -60,9 +60,7 @@ function Combatant()
 
 function Player(name, level, energy, experience, weapon)
 {
-  if (weapon === undefined)
-    this.weapon = new Weapon("Sward", 999, 999, "spear13");
-  else
+  if (weapon !== undefined)
     this.weapon = weapon;
   this.textColor = "#FF0000";
   this.isDead = false;
@@ -271,6 +269,7 @@ function getExpFromNightmare(nightmare)
   
 function equip(weapon)
 {
+  console.log("Swapped for " + weapon.name);
   if (player.weapon !== undefined)
     player.weapon.equipped = false;
   player.weapon = weapon;

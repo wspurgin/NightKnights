@@ -71,7 +71,14 @@ function initInventoryView()
   inventory.forEach(function(element, index, array) {
     item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
     item.setTransform(70 * index, 10, 2, 2);
-    inventoryView.addChild(item);
+    item.index = index;
+    item.on("click", function() {
+      equip(inventory[index]);
+    });
+    itemText = new createjs.Text(inventory[index].name, "20px VT323", "#FFFFFF");
+    itemText.textAlign = "center";
+    itemText.setTransform(70 * index + 32, 70, 1, 1);
+    inventoryView.addChild(item, itemText);
   });
 }
 
@@ -409,6 +416,7 @@ function openChest(event) {
 function initInventory() 
 {
   inventory.push(new Weapon("NRNRNR", 999, 999, "sword13"));
-  inventory.push(new Weapon("BingBing", 1234, 1234, "spear13"));  
+  inventory.push(new Weapon("BingBing", 1234, 1234, "spear11"));  
+  inventory.push(new Weapon("Sward", 999, 999, "spear13"));
 }
 

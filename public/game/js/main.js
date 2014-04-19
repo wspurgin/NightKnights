@@ -133,12 +133,13 @@ function doneLoading(event)
   //Remove the loading text.
   stage.removeChildAt(0);
   
-  //Create the player object. This is where we would use the data we got from the DB.
-  var character = getPlayerData();
-  player = new Player(character.name, character.level, character.energy, character.experience);
-  
   //Initialize the inventory. We'll need an api call for this later.
   initInventory();
+  
+  //Create the player object. This is where we would use the data we got from the DB.
+  var character = getPlayerData();
+  player = new Player(character.name, character.level, character.energy, character.experience, inventory[0]);
+
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initSpriteSheets();
