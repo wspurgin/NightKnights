@@ -1,9 +1,78 @@
 $(document).ready(function() {
 
+  getLocalLeaderboard();  //first setup global leaderboard object
+  populateLeaderboardTable('topten', 1, 10); //next render top ten
 
+  //then get player's rank
+
+  //last render personal leaderboard
 
 }); //end of $(document).ready()
 
-function buildTableRow(rowData) {
-  
-}
+/*
+* populates the global leaderboard object from the API
+*/
+function getLocalLeaderboard() {
+  $.ajax({
+    url: '/api/leaderboard',
+    type: 'GET',
+    dataType: 'json',
+    contentType: 'application/json; charset=utf-8',
+
+    error: function(res) {
+      data = res.responseJSON;
+      if (data.success == false) {
+        alert(data.message);
+      } else {
+        console.log(data);
+        alert('start crying...');
+      };
+    },
+
+    success: function(data) {
+      if (data.success) {
+        leaderboard = data.leaderboard;
+        console.log(leaderboard);
+      } else {
+        console.log(data);
+        alert('cry everytim');
+      };
+    }
+  });  //end of AJAX call
+} //end of getLocalLeaderboard()
+
+/*
+* populates the <table> with id=#tableID from the global leaderboard object.
+* will render count rows starting from row start.
+* 
+* tableID = string (eg, "#topten")
+* start = integer, minimum 1 (this is a ranking, NOT an array index!)
+* count = integer, minimum 1
+*/
+function populateLeaderboardTable(tableID, start, count) {
+
+  //validate start and count inputs
+  if(count < 1 | start < 1) {
+    console.log('populateLeaderboardTable(): start or count was invalid')
+    return;
+  }
+
+  //get handle to and validate table to insert into
+  var table = document.getElementById(tableID);
+  if(table === null) {
+    console.log('populateLeaderboardTable(): table not found');
+    return;
+  }
+
+  //super awesome loop control structure for great justice
+  var firstIndex = start-1;           //loop from this index
+  var finalIndex = start + count - 2; //to this index
+  for(var i=firstIndex; i<=finalIndex; i++) {
+    //make sure the leaderboard[i] exists
+
+    //build the new row
+
+    //append to the table
+  }
+
+} //end of populateLeaderboardTable()

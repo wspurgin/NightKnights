@@ -1,5 +1,5 @@
 /*
-  login.js: only meant to interact with login.php, as that *should* be the only page allowing for
+  login.js: only meant to interact with index.php, as that *should* be the only page allowing for
   account creation and login.
   */
 
