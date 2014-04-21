@@ -54,6 +54,14 @@ Class Api
         }
     }
 
+    private function login($user)
+    {
+        newSession(md5(SALT.$user->username));
+        $_SESSION['user_id'] = $user->id;
+        $_SESSION['username'] = $user->username;
+        $_SESSION['email'] = $user->email;
+    }
+
     public function loginUser()
     {
         $app = \Slim\Slim::getInstance();
@@ -82,10 +90,7 @@ Class Api
                 else
                 {
                     // user authentication completed. Start session
-                    newSession(md5(SALT.$user->username));
-                    $_SESSION['user_id'] = $user->id;
-                    $_SESSION['username'] = $user->username;
-                    $_SESSION['email'] = $user->email;
+                    $this->login($user);
                     $response['success'] = true;
                     $response['message'] = "$user->username logged in successfully";
                     $response['request'] = $_SESSION;
@@ -219,18 +224,18 @@ Class Api
             );
             
 
-            $user_id = $this->db->insert($sql, $args);
+            $user->id = $this->db->insert($sql, $args);
+
 
             $sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
             $args = array(
-                ":user_id"  => $user_id,
+                ":user_id"  => $user->id,
                 ":username" => $user->username
             );
             $this->db->insert($sql, $args);
 
-            newSession(md5(SALT.$user->username));
-            $_SESSION['user_id'] = $user_id;
-            $_SESSION['username'] = $user->username;
+
+            $this->login($user);
             $response['success'] = true;
             $response['message'] = "$user->username created successfully, now logged in.";
             $response['request'] = $_SESSION;
