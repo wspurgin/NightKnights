@@ -4,10 +4,9 @@
 <head>
   <title>Night Knights - Leaderboards</title>
 
-  <link rel="stylesheet" type="text/css" href="">
-  <link rel="stylesheet" type="text/css" href="">
-
   <?php include("modules/commonHead.html"); ?>
+  <link rel="stylesheet" type="text/css" href="/css/leaderboards.css">
+  <script src="/js/leaderboards.js"></script>
 </head>
 <body>
 
@@ -17,9 +16,9 @@
 
   <div class="twocol" id="leaderwrapper">
 
-    <div class="left" id="topten">
+    <div class="left">
       <p class="infocaption">Top Ten Knights</p>
-        <table class="infotable">
+        <table id="topten" class="infotable">
               <thead>
                 <tr>
                   <th scope="col">Rank</th>
@@ -29,73 +28,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>6</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>7</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>8</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>9</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
-                <tr>
-                  <td>10</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                  <td>Marf</td>
-                </tr>
+                <tr><!--Test--></tr>
               </tbody>
             </table>
     </div>
 
-    <div class="right" id="myrank">
+    <div class="right">
       <p class="infocaption">My Ranking</p>
-      <table class="infotable">
+      <table id="myrank" class="infotable">
               <thead>
                 <tr>
                   <th scope="col">Rank</th>
