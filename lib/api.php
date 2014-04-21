@@ -664,8 +664,7 @@ Class Api
             if(empty($itemAdd))
                 throw new Exception("Invlaid json '$body'", 1);
 
-            $sql = "UPDATE Inventories SET `is_equipped`=1
-            WHERE `item_id`=:item_id AND `character_id`=:id";
+            $sql = "CALL equip_item(:item_id, :id)";
             $args = array(
                 ":item_id" => $itemAdd->item_id,
                 ":id" => $_SESSION['user_id']
