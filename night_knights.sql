@@ -162,7 +162,7 @@ VALUES
 
 INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
-    (1, 'picoriley', 0, 0, 1);
+    (1, 'picoriley', 250, 0, 1);
 
 INSERT INTO `Areas` (`id`, `name`, `img_url`)
 VALUES
@@ -172,12 +172,13 @@ VALUES
 
 INSERT INTO `Items` (`id`, `name`, `attack_stat`, `defense_stat`, `magic_stat`, `classification`, `img_url`)
 VALUES
-    (1, 'Iron Sword', 1, 0, 0, 'Weapon', 'Sword.png'),
+    (1, 'Iron Sword', 4, 0, 0, 'Weapon', 'sword0'),
     (2, 'Iron Staff', 0, 0, 1, 'Weapon', 'Staff.png'),
-    (3, 'Steel Sword', 2, 1, 0, 'Weapon', 'SSword.png'),
+    (3, 'Steel Sword', 6, 1, 0, 'Weapon', 'sword3'),
     (4, 'Steel Staff', 0, 1, 2, 'Weapon', 'SStaff.png'),
     (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'SwordOfTruth.png'),
-    (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png');
+    (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png'),
+    (7, 'Iron Dagger', 1, 0, 0, 'Weapon', 'dagger0');
 
 -- img guidelines: sprites/folder/name.png
 
@@ -359,6 +360,31 @@ BEGIN
     DECLARE v_level INT;
     SELECT FLOOR((SQRT(625+100*v_exp)-25)/50)+1 INTO v_level;
     RETURN v_level;
+END;;
+DELIMITER ;
+
+-- Procedures
+
+DELIMITER ;;
+CREATE PROCEDURE `equip_item`(IN p_item_id INT, IN p_character_id INT)
+BEGIN
+    DECLARE p_category VARCHAR(32);
+    DECLARE p_check INT(11);
+    
+    # equip item
+    UPDATE Inventories SET `is_equipped`=1 WHERE `item_id`=p_item_id AND `character_id`=p_character_id;
+    
+    # check if any rows were update (if none, then the character_id or item_id wasn't found)
+    SELECT ROW_COUNT() INTO p_check;
+    
+    IF (p_check != 0)
+    THEN 
+        # get item category
+        SELECT `classification` INTO p_category FROM Items WHERE `id`=p_item_id;
+        
+        # unequip all items of the same category
+        UPDATE Inventories inv INNER JOIN Items i SET `is_equipped`=0 WHERE inv.`character_id`=p_character_id AND inv.`item_id`!=p_item_id AND i.`classification`=p_category;
+    END IF;
 END;;
 DELIMITER ;
 
