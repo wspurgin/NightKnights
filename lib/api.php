@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * NightKnights Api Class
 * 
@@ -216,7 +216,7 @@ Class Api
             if($user->username == '' || $user->email == '' || $user->password == '')
                 throw new Exception("Invalid Account Information");
             $passwd = new Password($user->password);
-            $sql = "CALL create_user(:email, :username, :password)";
+            $sql = "CALL create_user(:username, :email, :password)";
             $args = array(
                 ":email"    => $user->email,
                 ":username" => $user->username,
@@ -224,8 +224,13 @@ Class Api
             );
             
 
-            $user->id = $this->db->insert($sql, $args);
-
+            $this->db->insert($sql, $args);
+            $res = $this->db->select(
+                "SELECT `id` FROM Users WHERE `username`=:username",
+                array(":username" => $user->username),
+                false
+            );
+            $user = (object) array_merge( (array)$user, array( 'id' => $res->id ) );
 
             $this->login($user);
             $response['success'] = true;

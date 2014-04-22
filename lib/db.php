@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * NightKnights Mysql DB interface

@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
 * Password type that handles hashing and checking hashed passwords for

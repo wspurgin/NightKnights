@@ -159,10 +159,13 @@ INSERT INTO `Users` (`id`, `username`, `email`, `password`)
 VALUES
     (1, 'picoriley', 'acloudy@smu.edu', '$2y$10$ewAtLrK7Xojl.fj2330hGumzMCJfR35vn4e7sbNee9Wlvm30yFzvO');
 
-
 INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
     (1, 'picoriley', 250, 0, 1);
+
+INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)
+VALUES
+    (7, 1, 1);
 
 INSERT INTO `Areas` (`id`, `name`, `img_url`)
 VALUES
