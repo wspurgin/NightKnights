@@ -15,7 +15,7 @@ function initHelp()
   helpStage.update();   //Update the stage to show the text we just added.
 }
 
-function textFactory(text, color, size, y)
+function helpTextFactory(text, color, size, y)
 {
   var newText = new createjs.Text(text, size + " VT323", "#FFFFFF");
   newText.lineWidth = 240;
@@ -32,8 +32,8 @@ function textFactory(text, color, size, y)
 function helpSplash(titleText, descriptionText)
 {
   
-  var title = textFactory(titleText, "#00FF00", "50px", 10);
-  var description = textFactory(descriptionText, "#FF9900", "30px", 100);
+  var title = helpTextFactory(titleText, "#00FF00", "50px", 10);
+  var description = helpTextFactory(descriptionText, "#FF9900", "30px", 100);
   
   
   helpView.addChild(title, description);
