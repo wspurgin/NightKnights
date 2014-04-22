@@ -388,6 +388,32 @@ BEGIN
 END;;
 DELIMITER ;
 
+DELIMITER ;;
+CREATE PROCEDURE `create_user`(IN p_username VARCHAR(256), IN p_email VARCHAR(256), IN p_password VARCHAR(256))
+BEGIN
+    DECLARE p_check INT(11);
+    DECLARE p_user_id INT(11);
+    
+    # create user
+    INSERT INTO `Users`(`email`, `username`, `password`) VALUES (p_email, p_username, p_password);
+    
+    # get user id
+    SELECT LAST_INSERT_ID() INTO p_user_id;
+    
+    # check if any rows were inserted (if none, then there was an error)
+    SELECT ROW_COUNT() INTO p_check;
+    
+    IF (p_check != 0)
+    THEN 
+        # create characters
+        INSERT INTO `Characters`(`id`, `name`) VALUES (p_user_id, p_username);
+        
+        # give them default item
+        INSERT INTO `Inventories`(`item_id`, `character_id`, `is_equipped`) VALUES (7, p_user_id, 1);
+    END IF;
+END;;
+DELIMITER ;
+
 -- Triggers
 
 DELIMITER ;;

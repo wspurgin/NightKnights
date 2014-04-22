@@ -216,7 +216,7 @@ Class Api
             if($user->username == '' || $user->email == '' || $user->password == '')
                 throw new Exception("Invalid Account Information");
             $passwd = new Password($user->password);
-            $sql = "INSERT INTO `Users`(`email`, `username`, `password`) VALUES (:email, :username, :password)";
+            $sql = "CALL create_user(:email, :username, :password)";
             $args = array(
                 ":email"    => $user->email,
                 ":username" => $user->username,
@@ -225,14 +225,6 @@ Class Api
             
 
             $user->id = $this->db->insert($sql, $args);
-
-
-            $sql = "INSERT INTO `Characters`(`id`, `name`) VALUES (:user_id, :username)";
-            $args = array(
-                ":user_id"  => $user->id,
-                ":username" => $user->username
-            );
-            $this->db->insert($sql, $args);
 
 
             $this->login($user);
