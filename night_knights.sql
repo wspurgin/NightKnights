@@ -163,10 +163,6 @@ INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
     (1, 'picoriley', 250, 0, 1);
 
-INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)
-VALUES
-    (7, 1, 1);
-
 INSERT INTO `Areas` (`id`, `name`, `img_url`)
 VALUES
     (1, 'Forest', '/game/backgrounds/ForestMap.png'),
@@ -182,6 +178,10 @@ VALUES
     (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'SwordOfTruth.png'),
     (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png'),
     (7, 'Iron Dagger', 1, 0, 0, 'Weapon', 'dagger0');
+
+INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)
+VALUES
+    (7, 1, 1);
 
 -- img guidelines: sprites/folder/name.png
 
