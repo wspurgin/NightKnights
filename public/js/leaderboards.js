@@ -76,17 +76,25 @@ function populateLeaderboardTable(tableID, start, count) {
     finalIndex = (window.leaderboard.length - 1);
   }
   for(var i=firstIndex; i<=finalIndex; i++) {
-    //build the new row
+    //get the new row's data in easy-to-use vars
     var rank = i+1;
     var name = window.leaderboard[i].name;
     var level = window.leaderboard[i].level;
     var experience = window.leaderboard[i].experience;
-    console.log('rank: ' + rank);
-    console.log('name: ' + name);
-    console.log('level: ' + level);
-    console.log('experience: ' + experience);
-
-    //append to the table
-    //$(table).append(row);
+    $(table)
+      .append($('<tr>')
+        .append($('<td> ')
+          .append(rank)
+        )
+        .append($('<td> ')
+          .append(name)
+        )
+        .append($('<td> ')
+          .append(level)
+        )
+        .append($('<td> ')
+          .append(experience)
+        )
+      );
   }
 } //end of populateLeaderboardTable()
