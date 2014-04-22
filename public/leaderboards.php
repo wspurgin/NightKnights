@@ -28,7 +28,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><!--Test--></tr>
+                <tr id="blankrow"><!--Test--></tr>
               </tbody>
             </table>
     </div>

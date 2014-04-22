@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  getLocalLeaderboard();  //first setup global leaderboard object
+  getLocalLeaderboard();  //first setup global leaderboard object (synchronous)
   populateLeaderboardTable('topten', 1, 10); //next render top ten
 
   //then get player's rank
@@ -13,7 +13,6 @@ $(document).ready(function() {
 * populates the global leaderboard object from the API
 */
 function getLocalLeaderboard() {
-  console.log('getLocalLeaderboard() start');
   $.ajax({
     async: false,
     url: '/api/leaderboard',
@@ -22,7 +21,6 @@ function getLocalLeaderboard() {
     contentType: 'application/json; charset=utf-8',
 
     error: function(res) {
-      console.log('getLocalLeaderboard() error');
       data = res.responseJSON;
       if (data.success == false) {
         alert(data.message);
@@ -33,17 +31,14 @@ function getLocalLeaderboard() {
     },
 
     success: function(data) {
-      console.log('getLocalLeaderboard() success');
       if (data.success) {
         window.leaderboard = data.leaderboard;
-        console.log(window.leaderboard);
       } else {
         console.log(data);
         alert('cry everytim');
       };
     }
   });  //end of AJAX call
-  console.log('getLocalLeaderboard() end');
 } //end of getLocalLeaderboard()
 
 /*
@@ -55,8 +50,6 @@ function getLocalLeaderboard() {
 * count = integer, minimum 1
 */
 function populateLeaderboardTable(tableID, start, count) {
-  console.log('populateLeaderboardTable() start');
-
   //ensure we even have a leaderboard
   if(window.leaderboard === null) {
     console.log('populateLeaderboardTable(): no leaderboard object found');
@@ -83,11 +76,25 @@ function populateLeaderboardTable(tableID, start, count) {
     finalIndex = (window.leaderboard.length - 1);
   }
   for(var i=firstIndex; i<=finalIndex; i++) {
-    console.log(i);
-    //build the new row
-
-    //append to the table
+    //get the new row's data in easy-to-use vars
+    var rank = i+1;
+    var name = window.leaderboard[i].name;
+    var level = window.leaderboard[i].level;
+    var experience = window.leaderboard[i].experience;
+    $(table)
+      .append($('<tr>')
+        .append($('<td> ')
+          .append(rank)
+        )
+        .append($('<td> ')
+          .append(name)
+        )
+        .append($('<td> ')
+          .append(level)
+        )
+        .append($('<td> ')
+          .append(experience)
+        )
+      );
   }
-
-  console.log('populateLeaderboardTable() end');
 } //end of populateLeaderboardTable()
