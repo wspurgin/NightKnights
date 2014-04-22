@@ -37,7 +37,11 @@ function initStatsView()
   experienceText.x = 200;
   experienceText.y = 140;  
   
-  statsView.addChild(nameText, knight, energyIcon, currentEnergy, levelText, experienceText);
+  equipButton = new createjs.Bitmap(preload.getResult("equipButton"));
+  equipButton.setTransform(500, 200, .5, .5);
+  equipButton.on("click", function() {switchToMenu(inventoryView);});
+  
+  statsView.addChild(nameText, knight, energyIcon, currentEnergy, levelText, experienceText, equipButton);
 }
 
 function updateStatsView()
@@ -68,17 +72,21 @@ function initGameOverView()
 
 function initInventoryView()
 {
+  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  backButton.setTransform(10, 10);
+  backButton.on("click", function() {switchToMenu(statsView);});
+  
   inventory.forEach(function(element, index, array) {
     item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
-    item.setTransform(70 * index, 10, 2, 2);
+    item.setTransform(70 * index, 100, 2, 2);
     item.index = index;
     item.on("click", function() {
       equip(inventory[index]);
     });
     itemText = new createjs.Text(inventory[index].name, "20px VT323", "#FFFFFF");
     itemText.textAlign = "center";
-    itemText.setTransform(70 * index + 32, 70, 1, 1);
-    inventoryView.addChild(item, itemText);
+    itemText.setTransform(70 * index + 32, 170, 1, 1);
+    inventoryView.addChild(item, itemText, backButton);
   });
 }
 
