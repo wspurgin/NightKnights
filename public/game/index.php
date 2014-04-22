@@ -15,6 +15,7 @@
         <script src="js/spritesheet.js"></script>
         <script src="js/battle.js"></script>
         <script src="js/init.js"></script>
+        <script src="js/help.js"></script>
         <script src="js/console.js"></script>
         <script src="js/main.js"></script>
         
@@ -28,7 +29,7 @@
       <div id="Canvases">
         <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
         <canvas id="backgroundCanvas" width="765" height="340"></canvas>
-        <canvas id="healthCanvas" class="sideCanvas" width="250" height="340"></canvas>
+        <canvas id="helpCanvas" class="sideCanvas" width="250" height="340"></canvas>
         <canvas id="menuCanvas" width="765" height="340"></canvas>
       </div>
       
