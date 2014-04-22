@@ -22,6 +22,38 @@ function initializeMonsterArray()
     //console.log("Monsters:", monsters);
 }
 
+function getCharacterInventory() {
+    var inventory = {}
+    $.ajax({
+        url: '/api/character/inventory',
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+
+        error: function(res) {
+            data = res.responseJSON
+            if (data.success == false) {
+                alert(data.message)
+            } else {
+                // If the error was for some other reason, than what
+                // could be caught, log data, and alert errors. Don't reset
+                console.log(data)
+                alert("Errors occured during your request. Please try again.");
+            };
+        },
+
+        success: function(data) {
+            if (data.success) {
+                inventory = data.inventory;
+            } else {
+                alert(data.message);
+            };
+        }
+
+    }); //end of AJAX call
+    return inventory;
+}
 
 /**
     Send an area integer and funciton returns 
