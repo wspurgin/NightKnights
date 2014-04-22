@@ -149,6 +149,7 @@ function doneLoading(event)
   initWorldView();
   initAreaViews();
   initEncounterView();
+  initHelp();
   initConsole();
   initGameOverView();
   initStatsView();
