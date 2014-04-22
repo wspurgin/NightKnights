@@ -25,19 +25,27 @@ function main() {
 //What gets called when we're done loading.  
 function doneLoading(event) {
     initSpritesheet();
-    setWeapon("dagger0");
+    setSessionInfo();
     stage.addChild(weapon);
     stage.update(); //Update the stage to show the text we just added.
 }
 
-function setWeapon(weaponName) {
-    weapon = new createjs.Sprite(weaponsSheet, weaponName);
+function setWeapon(item, info_div) {
+    weapon = new createjs.Sprite(weaponsSheet, item.img_url);
     weapon.setTransform(0, 0, 2, 2); //Set to top left corner of canvas, scale x and y by 2.
     weapon.framerate = 1;
+    info_div.find("#weaponName").append(item.name);
+    info_div.find("#weaponAttack").append(item.attack_stat);
+    info_div.find("#weaponDefense").append(item.defense_stat);
+    info_div.find("#weaponMagic").append(item.magic_stat);
 }
 
-function changeWeapon(weaponName) {
-    weapon.gotoAndPlay(weaponName);
+function changeWeapon(item, info_div) {
+    weapon.gotoAndPlay(item.img_url);
+    info_div.find("#weaponName").empty().append(item.name);
+    info_div.find("#weaponAttack").empty().append(item.attack_stat);
+    info_div.find("#weaponDefense").empty().append(item.defense_stat);
+    info_div.find("#weaponMagic").empty().append(item.magic_stat);
 }
 
 function initSpritesheet() {

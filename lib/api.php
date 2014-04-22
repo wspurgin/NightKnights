@@ -517,7 +517,7 @@ Class Api
             $app->halt(404);
         try
         {
-            $sql = "SELECT Items.name, is_equipped, attack_stat, defense_stat, 
+            $sql = "SELECT Items.id, Items.name, is_equipped, attack_stat, defense_stat, 
                     magic_stat, classification, img_url
                 FROM Characters 
                 INNER JOIN Inventories ON Characters.id = Inventories.character_id
