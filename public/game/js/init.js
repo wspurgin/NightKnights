@@ -150,6 +150,7 @@ function initWorldView()
   castle.unlock = function() {
     castle.gotoAndPlay("default");
   };
+  lockList.push(castle);
   
   worldBossButton = new createjs.Sprite(worldBossSelectSheet, "default");
   worldBossButton.setTransform(700, 10);
@@ -165,8 +166,6 @@ function initWorldView()
   worldBossText.textAlign = "center";
   worldBossText.x = 725;
   worldBossText.y = 50;
-  
-  lockList.push(castle);
   
   stageSelect.addChild(forest, mountain, castle, worldBossButton, worldBossText);  
   
@@ -346,27 +345,83 @@ function initMenuView()
   earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Medium", "80px", function() {startTurn("Medium"); swapMenu(attackMenu, combatMenu);});
   armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
   
-  normalMagicButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
-  blizzardButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Iron Skin", "80px", function() {startTurn("defSkill"); swapMenu(magicMenu, combatMenu);});
-  thunderBlastButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Bezerk", "80px", function() {startTurn("attSkill"); swapMenu(magicMenu, combatMenu);});
-  cosmicRayButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Overload", "80px", function() {startTurn("uberSkill"); swapMenu(magicMenu, combatMenu);});
+  skillBackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
+  ironSkinButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Iron Skin", "80px", function() {
+    if (!ironSkinButton.locked) {
+      startTurn("defSkill"); 
+      swapMenu(magicMenu, combatMenu);
+    }
+  });
+  bezerkButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Bezerk", "80px", function() {
+    if (!bezerkButton.locked) {
+      startTurn("attSkill"); swapMenu(magicMenu, combatMenu);
+    }
+  });
   
-  magicMenu.addChild(normalMagicButton, blizzardButton, thunderBlastButton, cosmicRayButton);
+  overloadButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Overload", "80px", function() {
+    if (!overloadButton.locked) {
+      startTurn("uberSkill"); 
+      swapMenu(magicMenu, combatMenu);
+    }
+  });
+  
+  ironSkinButton.lockLevel = 3;
+  if (player.level < ironSkinButton.lockLevel){
+    ironSkinButton.locked = true;
+    ironSkinButton.getChildAt(0).image = preload.getResult("lockedButton");
+  }
+  else {
+    ironSkinButton.locked = false;
+  }
+  ironSkinButton.unlock = function() {
+    ironSkinButton.getChildAt(0).image = preload.getResult("bigButton");
+  }
+  lockList.push(ironSkinButton);
+  
+  bezerkButton.lockLevel = 6;
+  if (player.level < bezerkButton.lockLevel){
+    bezerkButton.locked = true;
+    bezerkButton.getChildAt(0).image = preload.getResult("lockedButton");
+  }
+  else {
+    bezerkButton.locked = false;
+  }
+  bezerkButton.unlock = function() {
+    bezerkButton.getChildAt(0).image = preload.getResult("bigButton");
+  }
+  lockList.push(bezerkButton);
+  
+  overloadButton.lockLevel = 9;
+  if (player.level < overloadButton.lockLevel){
+    overloadButton.locked = true;
+    overloadButton.getChildAt(0).image = preload.getResult("lockedButton");
+  }
+  else {
+    overloadButton.locked = false;
+  }
+  overloadButton.unlock = function() {
+    overloadButton.getChildAt(0).image = preload.getResult("bigButton");
+  }
+  lockList.push(overloadButton);
+  
+  magicMenu.addChild(skillBackButton, ironSkinButton, bezerkButton, overloadButton);
   attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);
   menuView.addChild(combatMenu);
 }
 
 
-function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, clickEvent)
+function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, clickEvent, textColor)
 {
   var buttonContainer = new createjs.Container();
+  if (textColor === null)
+    textColor = "#000000";
   
   this.button = new createjs.Bitmap(preload.getResult(imageName));
   this.button.setTransform(x, y, scaleX, scaleY);
   this.button.on("click", function(){ if (!menuLocked){clickEvent();}});
   
   
-  this.text = new createjs.Text(buttonText, textSize + " VT323", "#000000");
+  this.text = new createjs.Text(buttonText, textSize + " VT323", textColor);
   this.text.setTransform(x, y, scaleX, scaleY);
   this.text.textAlign = "center";
   this.text.textBaseline = "middle";
