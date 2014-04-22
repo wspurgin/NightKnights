@@ -28,33 +28,29 @@
         <div>XP To Next Level: <span id="xpToNextLevel"></span></div>
       </div>
 
-      <p class="infocaption">Current Weapon</p>
-      <div id="knightweapon" class="infobox">
-        <canvas id="weaponCanvas" width="64" height="64"></canvas>
-        <div>Weapon Name: <span id="weaponName"></span></div>
-        <div>Attack: <span id="weaponAttack"></span></div>
-        <div>Defense: <span id="weaponDefense"></span></div>
-        <div>Magic: <span id="weaponMagic"></span></div>
-        <div><button type="button" href="#change" id="changeWeapon"><a href="#change">Change Weapon</a></button></div>
-        <div id="change" class="modalDialog">
-          <div>
-            <a href="#close" title="Close" class="close">X</a>
-            <h2>Pick Weapon</h2>
-            <div id="modalInventory" class="infobox"></div>
-          </div>
-        </div>
-      </div>
       <p class="infocaption">Inventory</p>
       <div class="infobox" id="knightinventory">
       </div>
     </div>
 
-    <div class="right" id="homeright">
-      <p class="infocaption">Current Worldbosses</p>
-      <div class="infobox" id="worldbosses">
-        <p>This some content</p>
+    <div class="home-right right">
+        <p class="infocaption">Current Weapon</p>
+        <div id="knightweapon" class="infobox">
+          <canvas id="weaponCanvas" width="64" height="64"></canvas>
+          <div>Weapon Name: <span id="weaponName"></span></div>
+          <div>Attack: <span id="weaponAttack"></span></div>
+          <div>Defense: <span id="weaponDefense"></span></div>
+          <div>Magic: <span id="weaponMagic"></span></div>
+          <div><button type="button" href="#change" id="changeWeapon"><a href="#change">Change Weapon</a></button></div>
+          <div id="change" class="modalDialog">
+            <div>
+              <a href="#close" title="Close" class="close">X</a>
+              <h2>Pick Weapon</h2>
+              <div id="modalInventory" class="infobox"></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 
 

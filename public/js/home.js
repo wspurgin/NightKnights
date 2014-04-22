@@ -14,7 +14,6 @@ function setSessionInfo() {
         var container = $("#knightinventory");
         for (item in inventory) {
             item = inventory[item];
-            console.log(item);
             container.append('<div class="infobox" id=item_' + item.id + ' ></div>');
             var well = $("#item_" + item.id);
             for (prop in item) {
