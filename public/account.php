@@ -5,6 +5,7 @@
   <title>Night Knights - Account Management</title>
 
   <?php include("modules/commonHead.html"); ?>
+  <script src="js/account.js"></script>
 </head>
 <body>
 
@@ -29,9 +30,8 @@
       <div class="infobox" id="accountpasswordreset">
         <form method="" id="passwordresetform">
           <ul>
-            <li><label for="oldpassword">Old Password: </label><input type="password" id="oldpassword"></li>
-            <li><label for="newpassword">New Password: </label><input type="password" id="newpassword"></li>
-            <li><label for="repeatpassword">Repeat New Password: </label><input type="password" id="repeatpassword"></li>
+            <li><label for="newpassword">New Password: </label><input type="password" name="password"></li>
+            <li><label for="repeatpassword">Repeat New Password: </label><input type="password" name="repeatpassword"></li>
             <li><input type="submit" id="changepassword" value="Change Password"></li>
           </ul>
         </form>
