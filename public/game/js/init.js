@@ -3,7 +3,7 @@
  * Author: Anthony Cloudy
  * Houses the code for initializing the views.
  */
-
+var inWorldBossEncounter = false;
 var currentArea;
 function initStatsView()
 {
@@ -327,7 +327,7 @@ function initEncounter()
   else if (currentArea == "castle")
     areaNumber = 3;
   var newMonster = getRandomMonster(areaNumber);
-  nightmare = new Nightmare(newMonster.name, newMonster.health_seed, newMonster.attack_seed, newMonster.defense_seed);
+  nightmare = new Nightmare(newMonster.name, newMonster.health_seed * 10, newMonster.attack_seed * 10, newMonster.defense_seed + 3);
   nightmare.initSprite(newMonster.img_url);
   
   switchToMenu(menuView); 
@@ -511,6 +511,7 @@ function openChest(event) {
     else
       switchTo(areaView);
     menuLocked = false;
+    inWorldBossEncounter = false;
   });
 }
 
