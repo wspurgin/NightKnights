@@ -47,7 +47,16 @@ function getRandomItem()
     console.log("roll:", roll);
     var chosen = items[roll];
     console.log("chosen item:", chosen);
-    return chosen;
+
+    check = createItem(chosen.id);
+    if(check == "weapon")
+    {
+        return chosen.img_url;
+    }
+    else
+    {
+        return "experience";
+    }
 }
 
 function getCharacterInventory() {
@@ -304,7 +313,7 @@ function getAreaMonsters(area)
 }
 
 /**
-*   funciton returns all areas in the database
+*   funciton returns all items in the database
 */
 function getItems()
 {
@@ -321,7 +330,6 @@ function getItems()
                 data = res.responseJSON
                 if (data.success == false) {
                     // errors occuerd
-                    form[0].reset();
                     console.log(res)
                     alert(data.message)
                 } else {
@@ -353,5 +361,78 @@ function getItems()
             }
 
         }); //end of AJAX call
-    return items;  //save return for when creating area/monster data structure
+    return items;
+}
+
+/**
+*   funciton creates an item in the users inventory
+*/
+function createItem(id)
+{
+    //check for the same item
+    //if not, create new item
+    //if same, turn into experience
+
+    inventory = getCharacterInventory();
+    console.log(inventory);
+
+    for(var i = 0; i < inventory.length; i++)
+    {
+        if(inventory[i].id == id)
+        {
+            //item is already in inventory
+            return "energy";
+        }
+    }
+
+    console.log("Creating Item...");
+
+    var addItem = {};
+    addItem.item_id = id;
+    //console.out(addItem);
+    data = JSON.stringify(addItem);
+
+    $.ajax({
+            url: '/api/character/inventory',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Created Item");
+                    //console.log("Areas:", data);
+                    
+                    //console.log(data.message);
+
+                    //successful api call
+                    console.log(data);
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                //console.log(data);
+            }
+
+        }); //end of AJAX call
+    return "weapon";
 }
