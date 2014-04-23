@@ -436,3 +436,55 @@ function createItem(id)
         }); //end of AJAX call
     return "weapon";
 }
+
+/**
+*   funciton returns all bosses in the database
+*/
+function getBosses()
+{
+    console.log("GETTING BOSSES...");
+
+    var bosses = {};
+
+    $.ajax({
+            url: '/api/bosses',
+            type: 'GET',
+            async: false,
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Bosses found");
+                    //console.log("Items:", data.items);
+                    
+                    //console.log(data.message);
+
+                    //successful api call
+
+                    bosses = data;
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                //console.log(data);
+            }
+
+        }); //end of AJAX call
+    return bosses;
+}

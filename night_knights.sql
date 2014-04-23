@@ -355,6 +355,11 @@ VALUES
     (3,81),
     (3,82);
 
+INSERT INTO `World_Bosses` (`id`, `monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
+VALUES
+    (1, 55, 1000, 1000, 1000, 1000, 5),
+    (2, 57, 1000, 1000, 1000, 1000, 5);
+
 -- Functions
 
 DELIMITER ;;
