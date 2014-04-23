@@ -15,10 +15,10 @@ var uberSkillCounter = 0;
 function Weapon(name, attack, defence, img_url)
 {
   this.name = name;
-  this.attack = attack;
-  this.defence = defence;
+  this.attack_stat = attack;
+  this.defense_stat = defence;
   this.img_url = img_url;
-  this.equipped = false;
+  this.is_equipped = false;
 }
 
 function Combatant()
@@ -36,7 +36,7 @@ function Combatant()
   
   //[Functions]
   this.attack = function (victim) {
-    var netDamage = parseInt((this.attackDice.roll() + this.weapon.attack) * this.attackMod) - parseInt((victim.defenceDice.roll() + victim.weapon.defence) * victim.defenceMod);
+    var netDamage = parseInt((this.attackDice.roll() + this.weapon.attack_stat) * this.attackMod) - parseInt((victim.defenceDice.roll() + victim.weapon.defense_stat) * victim.defenceMod);
     if (netDamage <= 0)
     {
       log(victim.name + " blocked " + this.name + "'s attack!", "#FF6600");

@@ -499,6 +499,7 @@ function helpOut(event) {
         
 function openChest(event) {
   loot.gotoAndPlay(getRandomItem());
+  initInventory();
   treasureChest.gotoAndPlay("open");
   encounterView.addChild(loot);
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
