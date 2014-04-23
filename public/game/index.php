@@ -27,9 +27,9 @@
       <?php include(__DIR__."/../modules/navbar.html"); ?>
       
       <div id="Canvases">
-        <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
-        <canvas id="backgroundCanvas" width="765" height="340"></canvas>
         <canvas id="helpCanvas" class="sideCanvas" width="250" height="340"></canvas>
+        <canvas id="backgroundCanvas" width="765" height="340"></canvas>
+        <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
         <canvas id="menuCanvas" width="765" height="340"></canvas>
       </div>
       
