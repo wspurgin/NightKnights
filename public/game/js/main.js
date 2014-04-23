@@ -41,6 +41,8 @@ function main()
   //These lines let us use mouse events, which are disabled by default.
   stage.mouseEventsEnabled = true;
   stage.enableMouseOver();
+  menuStage.mouseEventsEnabled = true;
+  menuStage.enableMouseOver();
   
   //Grabbing the web font from google
    WebFontConfig = {

@@ -385,6 +385,7 @@ function initMenuView()
     ironSkinButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(ironSkinButton);
+  ironSkinButton = setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2. Unlocked at level 3");
   
   bezerkButton.lockLevel = 6;
   if (player.level < bezerkButton.lockLevel){
@@ -398,6 +399,7 @@ function initMenuView()
     bezerkButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(bezerkButton);
+  bezerkButton = setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2. Unlocked at level 6");
   
   overloadButton.lockLevel = 9;
   if (player.level < overloadButton.lockLevel){
@@ -411,6 +413,7 @@ function initMenuView()
     overloadButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(overloadButton);
+  overloadButton = setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2. Unlocked at level 9");
   
   magicMenu.addChild(skillBackButton, ironSkinButton, bezerkButton, overloadButton);
   attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);
@@ -463,6 +466,23 @@ function stageOut(event) {
     this.gotoAndPlay("lockedDefault");
   else
     this.gotoAndPlay("default");
+}
+
+function setHelp(object, titleText, descriptionText)
+{
+  object.titleText = titleText;
+  object.descriptionText = descriptionText;
+  object.on("rollover", helpOver);
+  object.on("rollout", helpOut);
+  return object;
+}
+
+function helpOver(event) {
+  helpSplash(this.titleText, this.descriptionText);
+}
+
+function helpOut(event) {
+  clearHelp();
 }
         
 function openChest(event) {
