@@ -4,8 +4,11 @@ $(document).ready(function() {
   populateLeaderboardTable('topten', 1, 10); //next render top ten
 
   //then get player's rank
+  var id = getMyID();
+  var rank = $.inArray(id, leaderboard);
+  console.log(rank);
 
-  //last render personal leaderboard
+  //last render personal leaderboard (bounds-based error handling happens inside the call)
 
 }); //end of $(document).ready()
 
@@ -35,11 +38,47 @@ function getLocalLeaderboard() {
         window.leaderboard = data.leaderboard;
       } else {
         console.log(data);
-        alert('cry everytim');
+        alert('cry evertim');
       };
     }
   });  //end of AJAX call
 } //end of getLocalLeaderboard()
+
+/*
+* grabs the currently logged-in user's numerical ID.
+*/
+function getMyID() {
+  var id;
+
+  $.ajax({
+    async: false,
+    url: '/api/character',
+    type: 'GET',
+    dataType: 'json',
+    contentType: 'application/json; charset=utf-8',
+
+    error: function(res) {
+      data = res.responseJSON;
+      if (data.success == false) {
+        alert(data.message);
+      } else {
+        console.log(data);
+        alert('start crying...');
+      };
+    },
+
+    success: function(data) {
+      if(data !== null) {
+        id = data.id;
+      } else {
+        console.log(data);
+        alert('cry evertim');
+      }
+    }
+  });
+  return id;
+  console.log('getMyId() end');
+} //end of getMyRank()
 
 /*
 * populates the <table> with id=#tableID from the global leaderboard object.
@@ -56,16 +95,22 @@ function populateLeaderboardTable(tableID, start, count) {
     return;
   }
 
-  //validate start and count inputs
-  if(count < 1 | start < 1) {
-    console.log('populateLeaderboardTable(): start or count was invalid');
-    return;
+  //validate count input
+  if(count < 1) {
+    console.log('populateLeaderboardTable(): WARNING: count was invalid; set to 10 by default.');
+    count = 10;
+  }
+
+  //validate start input
+  if(start < 1) {
+    console.log('populateLeaderboardTable(): WARNING: start was invalid; set to 1 by default.');
+    start = 1;
   }
 
   //get handle to and validate table to insert into
   var table = document.getElementById(tableID);
   if(table === null) {
-    console.log('populateLeaderboardTable(): table not found');
+    console.log('populateLeaderboardTable(): ERROR: table not found');
     return;
   }
 
