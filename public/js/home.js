@@ -5,7 +5,7 @@ function setSessionInfo() {
     $("#Energy").append(character.energy);
     $("#Level").append(character.level);
     $("#Experience").append(character.experience);
-    $("#xpToNextLevel").append((25 * character.level * (1 + character.level)) - character.experience);
+    $("#xpToNextLevel").append((25 * Number(character.level) * (1 + Number(character.level))) - Number(character.experience));
 
     // attach weapon specific info
     inventory = getCharacterInventory();
