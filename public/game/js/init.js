@@ -300,8 +300,8 @@ function initEncounterView()
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
   fadeToBlack.alpha = 0;
   
-  loot = new createjs.Bitmap(preload.getResult("loot"));
-  loot.setTransform(bgCanvas.width / 2 - 25, bgCanvas.height / 2 - 25);
+  loot = new createjs.Sprite(weaponsSheet, "dagger0");
+  loot.setTransform(bgCanvas.width / 2 - 32, bgCanvas.height / 2 - 64, 2, 2);
   loot.alpha = 0;
 
   
@@ -498,6 +498,8 @@ function helpOut(event) {
 }
         
 function openChest(event) {
+  var newItem = getRandomItem();
+  loot.gotoAndPlay(newItem.img_url);
   treasureChest.gotoAndPlay("open");
   encounterView.addChild(loot);
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
