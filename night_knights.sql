@@ -172,11 +172,11 @@ VALUES
 INSERT INTO `Items` (`id`, `name`, `attack_stat`, `defense_stat`, `magic_stat`, `classification`, `img_url`)
 VALUES
     (1, 'Iron Sword', 4, 0, 0, 'Weapon', 'sword0'),
-    (2, 'Iron Staff', 0, 0, 1, 'Weapon', 'Staff.png'),
-    (3, 'Steel Sword', 6, 1, 0, 'Weapon', 'sword3'),
-    (4, 'Steel Staff', 0, 1, 2, 'Weapon', 'SStaff.png'),
-    (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'SwordOfTruth.png'),
-    (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'StaffOfPower.png'),
+    (2, 'Iron Staff', 0, 0, 1, 'Weapon', 'spear0'),
+    (3, 'Steel Sword', 6, 1, 0, 'Weapon', 'sword1'),
+    (4, 'Steel Staff', 0, 1, 2, 'Weapon', 'spear1'),
+    (5, 'Sword of Truth', 10, 5, 0, 'Weapon', 'sword2'),
+    (6, 'Magical Staff of Power', 0, 5, 10, 'Weapon', 'spear3'),
     (7, 'Iron Dagger', 1, 0, 0, 'Weapon', 'dagger0');
 
 INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)

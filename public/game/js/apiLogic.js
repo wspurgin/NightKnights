@@ -5,6 +5,7 @@
  */
 
  var monsters = [];
+ var items = [];
 
 /**
     initializes the monsters array
@@ -20,6 +21,33 @@ function initializeMonsterArray()
         i++;
     }
     //console.log("Monsters:", monsters);
+
+    items = getItems();
+}
+
+/**
+    Send an area integer and funciton returns 
+    a monster associated with that area
+*/
+function getRandomMonster(area)
+{
+    var roll = Math.floor(Math.random()*(monsters[area-1].length));
+    //console.log("roll:", roll);
+    var chosen = monsters[area-1][roll];
+    //console.log("chosen monster:", chosen);
+    return chosen;
+}
+
+/**
+    returns a random item
+*/
+function getRandomItem()
+{
+    var roll = Math.floor(Math.random()*(items.length-1));
+    console.log("roll:", roll);
+    var chosen = items[roll];
+    console.log("chosen item:", chosen);
+    return chosen;
 }
 
 function getCharacterInventory() {
@@ -53,19 +81,6 @@ function getCharacterInventory() {
 
     }); //end of AJAX call
     return inventory;
-}
-
-/**
-    Send an area integer and funciton returns 
-    a monster associated with that area
-*/
-function getRandomMonster(area)
-{
-    var roll = Math.floor(Math.random()*(monsters[area-1].length));
-    //console.log("roll:", roll);
-    var chosen = monsters[area-1][roll];
-    //console.log("chosen monster:", chosen);
-    return chosen;
 }
 
 /*This function posts the data from the battle to the server, and then
@@ -286,4 +301,57 @@ function getAreaMonsters(area)
 
         }); //end of AJAX call
     return monsters;
+}
+
+/**
+*   funciton returns all areas in the database
+*/
+function getItems()
+{
+    console.log("GETTING ITEMS...");
+
+    var items = {};
+
+    $.ajax({
+            url: '/api/items',
+            type: 'GET',
+            async: false,
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    form[0].reset();
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Items found");
+                    //console.log("Items:", data.items);
+                    
+                    //console.log(data.message);
+
+                    //successful api call
+
+                    items = data.items;
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                //console.log(data);
+            }
+
+        }); //end of AJAX call
+    return items;  //save return for when creating area/monster data structure
 }
