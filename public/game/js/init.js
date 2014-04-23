@@ -238,6 +238,7 @@ function initWorldBossView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initWorldBossEncounter()
 { 
+  inWorldBossEncounter = true;
   background.gotoAndPlay("world" + Math.floor((Math.random()*7)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
@@ -505,7 +506,10 @@ function openChest(event) {
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
     loot.y += 20;
     encounterCleanup();
-    switchTo(areaView);
+    if (inWorldBossEncounter)
+      switchTo(worldView);
+    else
+      switchTo(areaView);
     menuLocked = false;
   });
 }
