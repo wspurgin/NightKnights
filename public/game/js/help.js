@@ -31,7 +31,6 @@ function helpTextFactory(text, color, size, y)
 
 function helpSplash(titleText, descriptionText)
 {
-  
   var title = helpTextFactory(titleText, "#00FF00", "50px", 10);
   var description = helpTextFactory(descriptionText, "#FF9900", "30px", 100);
   

@@ -106,6 +106,7 @@ function initWorldView()
     areaView.addChild(initNightmaresList()); 
     switchTo(areaView);
   });
+  setHelp(forest, "Forest", "(Lvl 1-4) A forest filled with Nightmares. A great place to train for beginners.");
   
   mountain = new createjs.Sprite(stageSelectSheet, "default");
   mountain.setTransform(320, 170);
@@ -131,6 +132,7 @@ function initWorldView()
   mountain.unlock = function() {
     mountain.gotoAndPlay("default");
   };
+  setHelp(mountain, "Mountain", "(Lvl 5-9) Hiberia's mountain range. A cave runs through the mountain that Nightmares often like to hide in. Unlocked at Level 5");
  
   lockList.push(mountain);
   
@@ -158,6 +160,8 @@ function initWorldView()
   castle.unlock = function() {
     castle.gotoAndPlay("default");
   };
+  setHelp(castle, "Castle", "(Lvl 10+) The tower of Nightmares. This is the heart of darkness, and the source of all Nightmares in Hiberia. Unlocked at Level 10");
+  
   lockList.push(castle);
   
   worldBossButton = new createjs.Sprite(worldBossSelectSheet, "default");
@@ -168,6 +172,7 @@ function initWorldView()
   worldBossButton.on("click", function() {
       switchTo(worldBossView);    
   });
+  setHelp(worldBossButton, "World Boss", "Fight a huge boss Nightmare with the help of the NightKnights community!");
   
   worldBossText = new createjs.Text("World\nBosses", "22px VT323", "#000000");
   worldBossText.maxWidth = 1000;
@@ -344,14 +349,20 @@ function encounterCleanup()
 function initMenuView()
 {
   attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Melee", "80px", function() {swapMenu(combatMenu, attackMenu);});
-  magicButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Skills", "80px", function() {swapMenu(combatMenu, magicMenu);});
+  setHelp(attackButton, "Attack", "Attack the Nightmare with your current weapon.");
+  skillButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Skills", "80px", function() {swapMenu(combatMenu, magicMenu);});
+  setHelp(skillButton, "Skills", "Use some of your energy to boost your attack and/or defence.");
   
-  combatMenu.addChild(attackButton, magicButton);
+  combatMenu.addChild(attackButton, skillButton);
   
-  normalAttackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(attackMenu, combatMenu);});
-  powerStrikeButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Light", "80px", function() {startTurn("Light"); swapMenu(attackMenu, combatMenu);});
-  earthSplitterButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Medium", "80px", function() {startTurn("Medium"); swapMenu(attackMenu, combatMenu);});
-  armageddonButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
+  attackBackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(attackMenu, combatMenu);});
+  lightButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Light", "80px", function() {startTurn("Light"); swapMenu(attackMenu, combatMenu);});
+  setHelp(lightButton, "L. Attack", "ATT: x0.5\nDEF: x2\n\nAttack quickly and protect yourself.");
+  mediumButton = buttonFactory(0, menuCanvas.height / 2, 1, 1, "bigButton", "Medium", "80px", function() {startTurn("Medium"); swapMenu(attackMenu, combatMenu);});
+  setHelp(mediumButton, "M. Attack", "ATT: x1\nDEF: x1\n\nA balanced attack.");
+  heavyButton = buttonFactory(menuCanvas.width / 2, menuCanvas.height / 2, 1, 1, "bigButton", "Heavy", "80px", function() {startTurn("Heavy"); swapMenu(attackMenu, combatMenu);});
+  setHelp(heavyButton, "H. Attack", "ATT: x2\nDEF: x0.5\n\nAn all-in attack, but leaves you exposed.");
+  attackMenu.addChild(attackBackButton, lightButton, mediumButton, heavyButton);
   
   skillBackButton = buttonFactory(0, 0, 1, 1, "bigButton", "< Back", "80px", function() {swapMenu(magicMenu, combatMenu);});
   ironSkinButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Iron Skin", "80px", function() {
@@ -385,7 +396,7 @@ function initMenuView()
     ironSkinButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(ironSkinButton);
-  ironSkinButton = setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2. Unlocked at level 3");
+  setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2.\n\nUnlocked at level 3");
   
   bezerkButton.lockLevel = 6;
   if (player.level < bezerkButton.lockLevel){
@@ -399,7 +410,7 @@ function initMenuView()
     bezerkButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(bezerkButton);
-  bezerkButton = setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2. Unlocked at level 6");
+  setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2.\n\nUnlocked at level 6");
   
   overloadButton.lockLevel = 9;
   if (player.level < overloadButton.lockLevel){
@@ -413,10 +424,9 @@ function initMenuView()
     overloadButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(overloadButton);
-  overloadButton = setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2. Unlocked at level 9");
+  setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2.\n\nUnlocked at level 9");
   
   magicMenu.addChild(skillBackButton, ironSkinButton, bezerkButton, overloadButton);
-  attackMenu.addChild(normalAttackButton, powerStrikeButton, earthSplitterButton, armageddonButton);
   menuView.addChild(combatMenu);
 }
 
@@ -474,10 +484,10 @@ function setHelp(object, titleText, descriptionText)
   object.descriptionText = descriptionText;
   object.on("rollover", helpOver);
   object.on("rollout", helpOut);
-  return object;
 }
 
 function helpOver(event) {
+  clearHelp();
   helpSplash(this.titleText, this.descriptionText);
 }
 
