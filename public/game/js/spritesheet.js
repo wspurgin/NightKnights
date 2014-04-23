@@ -121,6 +121,8 @@ function initSpriteSheets () {
         "dagger12": [12 + 14],
         "dagger13": [13 + 14],
         
+        "experience": [5 + 28],
+        
         "spear0": [0 + 42],
         "spear1": [1 + 42],
         "spear2": [2 + 42],

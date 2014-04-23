@@ -498,8 +498,7 @@ function helpOut(event) {
 }
         
 function openChest(event) {
-  var newItem = getRandomItem();
-  loot.gotoAndPlay(newItem.img_url);
+  loot.gotoAndPlay(getRandomItem());
   treasureChest.gotoAndPlay("open");
   encounterView.addChild(loot);
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
@@ -512,8 +511,9 @@ function openChest(event) {
 
 function initInventory() 
 {
-  inventory.push(new Weapon("NRNRNR", 999, 999, "sword13"));
+  inventory = getCharacterInventory();
+  /*inventory.push(new Weapon("NRNRNR", 999, 999, "sword13"));
   inventory.push(new Weapon("BingBing", 1234, 1234, "spear11"));  
-  inventory.push(new Weapon("Sward", 999, 999, "spear13"));
+  inventory.push(new Weapon("Sward", 999, 999, "spear13"));*/
 }
 
