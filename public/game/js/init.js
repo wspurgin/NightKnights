@@ -449,6 +449,8 @@ function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, cl
   this.text.x += (this.button.getBounds().width / 2) * this.button.scaleX;
   this.text.y += (this.button.getBounds().height / 2) * this.button.scaleY;
   
+  this.text.on("click", function(){ if (!menuLocked){clickEvent();}});
+  
   
   buttonContainer.addChild(button, text);
   return buttonContainer;
