@@ -208,7 +208,7 @@ function checkUnlocks()
 
 function calculateNextLevel()
 {
-  var x = player.level;
-  return 25*x*(1+x);
+  var x = Number(player.level);
+  return (25*x*(1+x));
 }
   
