@@ -1,14 +1,9 @@
 $(document).ready(function() {
 
-  getLocalLeaderboard();  //first setup global leaderboard object (synchronous)
-  populateLeaderboardTable('topten', 1, 10); //next render top ten
-
-  //then get player's rank
-  var id = getMyID();
-  var rank = $.inArray(id, leaderboard);
-  console.log(rank);
-
-  //last render personal leaderboard (bounds-based error handling happens inside the call)
+  getLocalLeaderboard();  //first, setup global leaderboard object (synchronous)
+  var rank = getRankByID(getMe().id); //next, get player's rank
+  populateLeaderboardTable('topten', 1, 10); //then, render top ten
+  populateLeaderboardTable('myrank', rank-4, 10);
 
 }); //end of $(document).ready()
 
@@ -45,10 +40,10 @@ function getLocalLeaderboard() {
 } //end of getLocalLeaderboard()
 
 /*
-* grabs the currently logged-in user's numerical ID.
+* grabs the currently logged-in user's character object
 */
-function getMyID() {
-  var id;
+function getMe() {
+  var player;
 
   $.ajax({
     async: false,
@@ -69,16 +64,30 @@ function getMyID() {
 
     success: function(data) {
       if(data !== null) {
-        id = data.id;
+        player = data;
       } else {
         console.log(data);
         alert('cry evertim');
       }
     }
   });
-  return id;
-  console.log('getMyId() end');
-} //end of getMyRank()
+  return player;
+} //end of getMe()
+
+/*
+* uses the global leaderboard object and the id of a user to return
+* the numeric rank of that user
+*/
+function getRankByID(id) {
+  var lb = window.leaderboard;
+  var len = lb.length;
+
+  for(var i=0; i<len; i++) {
+    if(lb[i].id === id)
+      return i+1; //rank 1 = index 0, rank 5 = index 4, etc.
+  }
+  return -1;  //error
+} //end of getRankByID()
 
 /*
 * populates the <table> with id=#tableID from the global leaderboard object.
