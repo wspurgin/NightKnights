@@ -5,7 +5,8 @@
   <title>Night Knights - Account Management</title>
 
   <?php include("modules/commonHead.html"); ?>
-  <script src="js/account.js"></script>
+  <script src="/js/account.js"> </script>
+  <link rel="stylesheet" type="text/css" href="/css/account.css">
 </head>
 <body>
 

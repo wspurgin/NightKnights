@@ -3,7 +3,7 @@
  * Author: Anthony Cloudy
  * Houses the code for initializing the views.
  */
-
+var inWorldBossEncounter = false;
 var currentArea;
 function initStatsView()
 {
@@ -238,6 +238,7 @@ function initWorldBossView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initWorldBossEncounter()
 { 
+  inWorldBossEncounter = true;
   background.gotoAndPlay("world" + Math.floor((Math.random()*7)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
@@ -326,7 +327,7 @@ function initEncounter()
   else if (currentArea == "castle")
     areaNumber = 3;
   var newMonster = getRandomMonster(areaNumber);
-  nightmare = new Nightmare(newMonster.name, newMonster.health_seed, newMonster.attack_seed, newMonster.defense_seed);
+  nightmare = new Nightmare(newMonster.name, newMonster.health_seed * 10, newMonster.attack_seed * 10, newMonster.defense_seed + 3);
   nightmare.initSprite(newMonster.img_url);
   
   switchToMenu(menuView); 
@@ -505,8 +506,12 @@ function openChest(event) {
   createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
     loot.y += 20;
     encounterCleanup();
-    switchTo(areaView);
+    if (inWorldBossEncounter)
+      switchTo(worldView);
+    else
+      switchTo(areaView);
     menuLocked = false;
+    inWorldBossEncounter = false;
   });
 }
 

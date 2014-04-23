@@ -3,7 +3,7 @@ $(document).ready(function() {
   getLocalLeaderboard();  //first, setup global leaderboard object (synchronous)
   var rank = getRankByID(getMe().id); //next, get player's rank
   populateLeaderboardTable('topten', 1, 10); //then, render top ten
-  populateLeaderboardTable('myrank', rank-4, 10);
+  populateLeaderboardTable('myrank', rank-4, 10); //last, render personal leaderboard
 
 }); //end of $(document).ready()
 
