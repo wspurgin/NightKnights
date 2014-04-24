@@ -4,6 +4,7 @@
  * Houses the code for initializing the views.
  */
 var inWorldBossEncounter = false;
+var chestLocked = false;
 var currentArea;
 function initStatsView()
 {
@@ -499,20 +500,25 @@ function helpOut(event) {
 }
         
 function openChest(event) {
-  loot.gotoAndPlay(getRandomItem());
-  initInventory();
-  treasureChest.gotoAndPlay("open");
-  encounterView.addChild(loot);
-  createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
-    loot.y += 20;
-    encounterCleanup();
-    if (inWorldBossEncounter)
-      switchTo(worldView);
-    else
-      switchTo(areaView);
-    menuLocked = false;
-    inWorldBossEncounter = false;
-  });
+  if (!chestLocked)
+  {
+    chestLocked = true;
+    loot.gotoAndPlay(getRandomItem());
+    initInventory();
+    treasureChest.gotoAndPlay("open");
+    encounterView.addChild(loot);
+    createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
+      loot.y += 20;
+      encounterCleanup();
+      if (inWorldBossEncounter)
+        switchTo(worldView);
+      else
+        switchTo(areaView);
+      menuLocked = false;
+      inWorldBossEncounter = false;
+      chestLocked = false;
+    });
+  }
 }
 
 function initInventory() 
