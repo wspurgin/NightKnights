@@ -50,6 +50,7 @@ function Combatant()
     this.energy -= damage;
     if (this.energy <= 0) {
       this.energy = 0;
+      createjs.Sound.play(this.dieSound);
       this.die();
     }
     if(!this.isDead)
@@ -71,7 +72,8 @@ function Player(name, level, energy, experience, weapon)
   this.energy = energy;
   this.maxEnergy = energy;
   
-  this.hurtSound = "enemyDie";
+  this.hurtSound = "playerHit";
+  this.dieSound = "playerDie";
   
   //Hardcoded until I implement weapons.
   this.attackDice = new dice(2,15,3);
@@ -109,6 +111,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   this.maxEnergy = energy;
   
   this.hurtSound = "enemyHit";
+  this.dieSound = "enemyDie";
   
   this.attackDice = new dice(2, 10, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);

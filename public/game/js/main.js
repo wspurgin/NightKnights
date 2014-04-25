@@ -104,6 +104,9 @@ function main()
             {id:"enemyDie", src:"audio/Oracle_Enemy_Die.wav"},
             {id:"bossHit", src:"audio/Oracle_Boss_Hit.wav"},
             {id:"bossDie", src:"audio/Oracle_Boss_Die.wav"},
+            {id:"playerHit", src:"audio/Oracle_Link_Hurt.wav"},
+            {id:"playerDie", src:"audio/Oracle_Link_Dying.wav"},
+            {id:"itemFind", src:"audio/itemFind.mp3"},
         ];
   
   //Add all of the monster images to the manifest

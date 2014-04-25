@@ -508,10 +508,11 @@ function openChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
+    createjs.Sound.play("itemFind");
     loot.gotoAndPlay(getRandomItem());
     treasureChest.gotoAndPlay("open");
     encounterView.addChild(loot);
-    createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).call(function(){
+    createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).wait(1000).call(function(){
       loot.y += 20;
       encounterCleanup();
       if (inWorldBossEncounter)
