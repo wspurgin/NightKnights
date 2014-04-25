@@ -222,6 +222,8 @@ function initWorldBossView()
   createjs.Tween.get(worldBoss1Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   worldBoss1Button.on("click", function() {
     nightmare = new Nightmare(worldBoss1.name, worldBoss1.health_seed * 100, worldBoss1.attack_seed, worldBoss1.defense_seed);
+    nightmare.hurtSound = "bossHit";
+    nightmare.dieSound = "bossDie";
     nightmare.initSprite(worldBoss1.img_url);
     initWorldBossEncounter(); 
     switchTo(encounterView);
@@ -234,6 +236,8 @@ function initWorldBossView()
   createjs.Tween.get(worldBoss2Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   worldBoss2Button.on("click", function() {
     nightmare = new Nightmare(worldBoss2.name, worldBoss2.health_seed * 100, worldBoss2.attack_seed, worldBoss2.defense_seed);
+    nightmare.hurtSound = "bossHit";
+    nightmare.dieSound = "bossDie";
     nightmare.initSprite(worldBoss2.img_url);
     initWorldBossEncounter(); 
     switchTo(encounterView);
