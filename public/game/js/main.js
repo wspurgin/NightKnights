@@ -134,6 +134,7 @@ function updateLoading(event)
 //What gets called when we're done loading.  
 function doneLoading(event) 
 {
+  initSpriteSheets();
   //Remove the loading text.
   stage.removeChildAt(0);
   
@@ -146,7 +147,6 @@ function doneLoading(event)
 
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
-  initSpriteSheets();
   initMenuView();
   initWorldView();
   initAreaViews();
