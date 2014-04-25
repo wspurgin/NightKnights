@@ -5,7 +5,6 @@ body
   background-image: url("/res/twinkle_twinkle_@2X.png");
   color: white;
   font-family: 'VT323', '';
-  }
 }
 
 #navrule, #footrule
@@ -22,7 +21,7 @@ body
 .infocaption
 {
   margin-bottom: 0px;
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .infobox
@@ -72,14 +71,6 @@ body
   border: 1px solid white;
 }
 
-.center
-{
-  width: 20%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .twocol /*Two-Column Layout (needs .left or .right as well)*/
 {
   display: block;
@@ -89,19 +80,19 @@ body
 .twocol > div
 {
   display: inline-block;
-  width: 30%;
+  width: 300px;
 }
 
 .left /*Use with .twocol*/
 {
   float: left;
-  margin-left: 10%;
+  margin-left: 20%;
 }
 
 .right /*Use with .twocol*/
 {
   float:right;
-  margin-right: 10%;
+  margin-right: 20%;
 }
 
 .words p
@@ -142,4 +133,12 @@ body
 {
   margin: 0px;
   height: 100px;
+}
+
+.heading
+{
+  font-size: 5em;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

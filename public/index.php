@@ -14,9 +14,7 @@ if(_session('user_id', false))
 </head>
 
 <body>
-  <header>
-    <h1>NIGHT KNIGHTS</h1>
-  </header>
+    <p class="heading">NIGHT KNIGHTS</p>
 
   <div class="center" id="logindiv">
     <p class="infocaption">Returning Knights</p>
