@@ -74,9 +74,12 @@ function initGameOverView()
 function initInventoryView()
 {
   inventoryView.removeAllChildren();
+    
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchToMenu(statsView);});
+  
+  inventoryView.addChild(backButton);
   
   inventory.forEach(function(element, index, array) {
     item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
@@ -85,10 +88,11 @@ function initInventoryView()
     item.on("click", function() {
       equip(inventory[index]);
     });
-    itemText = new createjs.Text(inventory[index].name, "20px VT323", "#FFFFFF");
+    itemText = new createjs.Text(inventory[index].name.replace(" ", "\n"), "20px VT323", "#FFFFFF");
     itemText.textAlign = "center";
+    itemText.lineHeight = 15;
     itemText.setTransform(70 * index + 32, 170, 1, 1);
-    inventoryView.addChild(item, itemText, backButton);
+    inventoryView.addChild(item, itemText);
   });
 }
 

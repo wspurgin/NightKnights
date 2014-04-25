@@ -67,7 +67,6 @@ function main()
   stage.addChild(loadingText);
   stage.update();   //Update the stage to show the text we just added.
   
-  
   initializeMonsterArray(); //Initialize the monster array
   //Declare all of the resources up front, and give each one a unique id so that we can call it later.
   //This is all done in the background, so none of the images or sounds are rendered yet.
@@ -98,7 +97,13 @@ function main()
             {src:"sprites/Defence.png", id:"defence"},
             {src:"sprites/Knight.png", id:"knight"},
             {src:"sprites/Weapons.png", id:"weaponsSprites"}, 
-            {src:"sprites/worldBossButton.png", id:"worldBossButtonSprites"}
+            {src:"sprites/worldBossButton.png", id:"worldBossButtonSprites"},
+            
+            //SOUNDS
+            {id:"enemyHit", src:"audio/Oracle_Enemy_Hit.wav"},
+            {id:"enemyDie", src:"audio/Oracle_Enemy_Die.wav"},
+            {id:"bossHit", src:"audio/Oracle_Boss_Hit.wav"},
+            {id:"bossDie", src:"audio/Oracle_Boss_Die.wav"},
         ];
   
   //Add all of the monster images to the manifest
@@ -110,12 +115,14 @@ function main()
         
   
   //This is the preloader, which lets us load the images beforehand and keeps track of all of the resources.
-  preload = new createjs.LoadQueue();
-  preload.installPlugin(createjs.Sound);
+  preload = new createjs.LoadQueue();   
+  preload.installPlugin(createjs.Sound);  
   //Add event listeners for when events are fired during and after the loading process.
   preload.addEventListener("progress", updateLoading);
   preload.addEventListener("complete", doneLoading); 
   preload.loadManifest(manifest);
+  
+
 
   
   //Set the FPS of the game and link the stage to it.
