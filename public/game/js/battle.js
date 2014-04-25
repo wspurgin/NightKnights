@@ -54,6 +54,7 @@ function Combatant()
     }
     if(!this.isDead)
       log(this.name + " took " + damage + " damage and has " + this.energy + " left.", this.textColor);
+    createjs.Sound.play(this.hurtSound);
     this.animateHP(damage);
   }
 }
@@ -69,6 +70,8 @@ function Player(name, level, energy, experience, weapon)
   this.experience = experience;
   this.energy = energy;
   this.maxEnergy = energy;
+  
+  this.hurtSound = "enemyDie";
   
   //Hardcoded until I implement weapons.
   this.attackDice = new dice(2,15,3);
@@ -104,6 +107,8 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   this.name = name;
   this.energy = energy;
   this.maxEnergy = energy;
+  
+  this.hurtSound = "enemyHit";
   
   this.attackDice = new dice(2, 10, attackStat);
   this.defenceDice = new dice(1, 4, defenceStat);
