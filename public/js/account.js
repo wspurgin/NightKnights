@@ -1,6 +1,5 @@
 $(document).ready(function() {
     $("#passwordresetform").submit(function(event) {
-        console.log(formToJSON($(this)));
         event.preventDefault();
         var form = $(this);
         if (form.children("input[name='password']").val() == form.children("input[name='repeatpassword']").val()) {
