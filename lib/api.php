@@ -319,12 +319,12 @@ Class Api
             if(empty($fight))
                 throw new Exception("Invlaid json '$body'", 1);
 
-            $sql = "INSERT INTO `World_Fights`(`boss_id`, `character_id`) VALUES (:boss_id, :id)";
+            $sql = "CALL `create_fight`(:boss_id, :id)";
             $args = array(
                 ":boss_id" => $fight->boss_id,
                 ":id" => $_SESSION['user_id']   
             );
-            $this->db->insert($sql, $args);
+            $this->db->query($sql, $args);
 
             $username = $_SESSION['username'];
             $response['success'] = true;

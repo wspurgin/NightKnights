@@ -422,6 +422,14 @@ BEGIN
 END;;
 DELIMITER ;
 
+DELIMITER ;;
+CREATE PROCEDURE `create_fight`(IN p_boss_id INT, IN p_character_id INT)
+BEGIN
+    DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' BEGIN END; # Don't do anything if fight already exists
+    INSERT INTO `World_Fights`(`boss_id`, `character_id`) VALUES (p_boss_id, p_character_id);
+END;;
+DELIMITER ;
+
 -- Triggers
 
 DELIMITER ;;
