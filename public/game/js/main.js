@@ -107,6 +107,8 @@ function main()
             {id:"playerHit", src:"audio/Oracle_Link_Hurt.wav"},
             {id:"playerDie", src:"audio/Oracle_Link_Dying.wav"},
             {id:"itemFind", src:"audio/itemFind.mp3"},
+            {id:"menuMusic", src:"audio/questForGlory.mp3"},
+            {id:"battleMusic", src:"audio/raiseThySword.mp3"},
         ];
   
   //Add all of the monster images to the manifest
@@ -174,6 +176,7 @@ function doneLoading(event)
   }
   else
   {
+    playMusic("menuMusic");
     switchTo(worldView);
     switchToMenu(statsView);
     checkUnlocks();

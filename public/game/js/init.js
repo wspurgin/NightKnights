@@ -5,6 +5,7 @@
  */
 var inWorldBossEncounter = false;
 var chestLocked = false;
+var bgMusic = createjs.Sound.createInstance("menuMusic");
 var currentArea;
 function initStatsView()
 {
@@ -342,6 +343,7 @@ function initEncounter()
   
   switchToMenu(menuView); 
   encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
+  playMusic("battleMusic");
 }
 
 //Removes the sprites that were used for the encounter to ready for another battle.
@@ -512,7 +514,8 @@ function openChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
-    createjs.Sound.play("itemFind");
+    playMusic("itemFind");
+    bgMusic.setVolume(1);
     loot.gotoAndPlay(getRandomItem());
     treasureChest.gotoAndPlay("open");
     encounterView.addChild(loot);
@@ -527,6 +530,7 @@ function openChest(event) {
       inWorldBossEncounter = false;
       chestLocked = false;
       initInventory();
+      playMusic("menuMusic");
     });
   }
 }
@@ -535,5 +539,12 @@ function initInventory()
 {
   inventory = getCharacterInventory();
   initInventoryView();
+}
+
+function playMusic(songName)
+{
+  bgMusic.stop();
+  bgMusic = createjs.Sound.play(songName);
+  bgMusic.setVolume(0.5);
 }
 
