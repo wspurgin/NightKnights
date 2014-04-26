@@ -613,17 +613,21 @@ Class Api
             if(empty($itemAdd))
                 throw new Exception("Invlaid json '$body'", 1);
 
-            $sql = "INSERT INTO Inventories(item_id, character_id) VALUES (:item_id, :id)";
+            $sql = "CALL `create_inventory_item`(:item_id, :id)";
             $args = array(
                 ":item_id" => $itemAdd->item_id,
                 ":id" => $_SESSION['user_id']
             );
 
-            $this->db->insert($sql, $args);
+            // make a select statment to get the result from the procedure
+            $res = $this->db->select($sql, $args, false);
 
             $username = $_SESSION['username'];
             $response['success'] = true;
-            $response['message'] = "$username has a new item in inventory!";
+            if($res->item_already_existed)
+                $response['message'] = "$username already had item!";
+            else
+                $response['message'] = "$username has a new item in inventory!";
         }
         catch(PDOException $e)
         {

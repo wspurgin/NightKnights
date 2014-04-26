@@ -155,6 +155,23 @@ CREATE TABLE Inventories(
     
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+CREATE TABLE Messages(
+    `character_id` INT(11),
+    `date_created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    `message` TEXT NOT NULL,
+    `unread` TINYINT(1) NOT NULL DEFAULT 1,
+
+    PRIMARY KEY (`character_id`, `date_created`),
+
+    CONSTRAINT message_fk_character
+    FOREIGN KEY (`character_id`)
+        REFERENCES Characters(`id`)
+        ON UPDATE CASCADE ON DELETE CASCADE
+
+) ENGINE=INNODB CHARSET=utf8;
+
+-- Data dump
+
 INSERT INTO `Users` (`id`, `username`, `email`, `password`)
 VALUES
     (1, 'picoriley', 'acloudy@smu.edu', '$2y$10$ewAtLrK7Xojl.fj2330hGumzMCJfR35vn4e7sbNee9Wlvm30yFzvO');
@@ -429,6 +446,24 @@ BEGIN
     INSERT INTO `World_Fights`(`boss_id`, `character_id`) VALUES (p_boss_id, p_character_id);
 END;;
 DELIMITER ;
+
+DELIMITER ;;
+CREATE PROCEDURE `create_message`(IN p_character_id INT, IN p_message TEXT)
+BEGIN
+    INSERT INTO `Messages`(`character_id`, `message`) VALUES (p_character_id, p_message);
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE PROCEDURE `create_inventory_item`(IN p_item_id INT, IN p_character_id INT)
+BEGIN
+    DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SET @item_exists = 1;
+    SET @item_exists = 0;
+    INSERT INTO Inventories(`item_id`, `character_id`) VALUES (p_item_id, p_character_id);
+    SELECT @item_exists AS `item_already_existed`;
+END;;
+DELIMITER ;
+
 
 -- Triggers
 
