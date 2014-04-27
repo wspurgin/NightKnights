@@ -112,6 +112,7 @@ function initWorldView()
     areaView.addChildAt(forestMap, 0); 
     areaView.addChild(initNightmaresList()); 
     switchTo(areaView);
+    createjs.Sound.play("buttonPress");
   });
   setHelp(forest, "Forest", "(Lvl 1-4) A forest filled with Nightmares. A great place to train for beginners.");
   
@@ -125,7 +126,8 @@ function initWorldView()
       currentArea = "mountain";
       areaView.addChildAt(mountainMap, 0); 
       areaView.addChild(initNightmaresList()); 
-      switchTo(areaView);
+      switchTo(areaView); 
+      createjs.Sound.play("buttonPress");
     }
   });
   mountain.lockLevel = 5;
@@ -154,6 +156,7 @@ function initWorldView()
       areaView.addChildAt(castleMap, 0); 
       areaView.addChild(initNightmaresList()); 
       switchTo(areaView);
+      createjs.Sound.play("buttonPress");
     }
   });
   castle.lockLevel = 10;
@@ -177,7 +180,8 @@ function initWorldView()
   worldBossButton.on("rollover", stageOver);
   worldBossButton.on("rollout", stageOut);
   worldBossButton.on("click", function() {
-      switchTo(worldBossView);    
+      switchTo(worldBossView); 
+      createjs.Sound.play("buttonPress");
   });
   setHelp(worldBossButton, "World Boss", "Fight a huge boss Nightmare with the help of the NightKnights community!");
   
@@ -200,7 +204,7 @@ function initAreaViews()
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
-  backButton.on("click", function() {areaView.removeChildAt(2); areaView.removeChildAt(0); switchTo(worldView);}); //Remove the Monsters, then the background.
+  backButton.on("click", function() {areaView.removeChildAt(2); areaView.removeChildAt(0); switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
   
   areaView.addChild(backButton);
 }
@@ -211,7 +215,7 @@ function initWorldBossView()
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
-  backButton.on("click", function() {switchTo(worldView);}); //Remove the Monsters, then the background.
+  backButton.on("click", function() {switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
   
   worldBoss1 = getRandomMonster(3);
   worldBoss2 = getRandomMonster(3);

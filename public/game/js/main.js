@@ -109,6 +109,7 @@ function main()
             {id:"itemFind", src:"audio/itemFind.mp3"},
             {id:"menuMusic", src:"audio/questForGlory.mp3"},
             {id:"battleMusic", src:"audio/raiseThySword.mp3"},
+            {id:"buttonPress", src:"audio/Oracle_Menu_Select.wav"},
         ];
   
   //Add all of the monster images to the manifest
