@@ -136,6 +136,7 @@ function initInventoryView()
       checkForEquip();
     });
     
+    checkForEquip();
     inventoryView.addChild(itemSelector, item, itemText);
   });
 }

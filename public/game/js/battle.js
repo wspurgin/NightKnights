@@ -293,5 +293,5 @@ function equip(weapon)
   if (player.weapon !== undefined)
     player.weapon.is_equipped = false;
   player.weapon = weapon;
-  weapon.is_equipped = 1;
+  weapon.is_equipped = true;
 }
