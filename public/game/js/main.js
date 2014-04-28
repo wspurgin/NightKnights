@@ -110,7 +110,8 @@ function main()
             {id:"playerDie", src:"audio/Oracle_Link_Dying.wav"},
             {id:"itemFind", src:"audio/itemFind.mp3"},
             {id:"menuMusic", src:"audio/questForGlory.mp3"},
-            {id:"battleMusic", src:"audio/raiseThySword.mp3"},
+            {id:"battleMusic", src:"audio/letMySoulBurn.mp3"},
+            {id:"worldBossMusic", src:"audio/raiseThySword.mp3"},
             {id:"buttonPress", src:"audio/Oracle_Menu_Select.wav"},
         ];
   
