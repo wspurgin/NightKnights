@@ -355,6 +355,56 @@ Class Api
         echo json_encode($response);
     }
 
+    public function saveFight()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        if (!$this->session())
+            $app->halt(404);
+        try
+        {
+            $body = $app->request->getBody();
+            $fight = json_decode($body);
+            if(empty($fight))
+                throw new Exception("Invlaid json '$body'", 1);
+
+            $sql = "CALL `save_fight`(:boss_id, :id, :damage_done)";
+            $args = array(
+                ":boss_id" => $fight->boss_id,
+                ":id" => $_SESSION['user_id'],
+                ":damage_done" => $fight->damage_done
+            );
+            $this->db->query($sql, $args);
+
+            $username = $_SESSION['username'];
+            $response['success'] = true;
+            $response['message'] = "$username fight saved!";
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+            
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
     public function getItems()
     {
         $app = \Slim\Slim::getInstance();
@@ -561,12 +611,11 @@ Class Api
         $response = array();
         try
         {
-            $sql = "SELECT Monsters.name, img_url, damage_done, boss_health, 
-                boss_attack, boss_defense, boss_magic, achievable_item_id 
-                FROM World_Fights 
-                INNER JOIN World_Bosses ON World_Fights.boss_id = World_Bosses.id
+            $sql = "SELECT Monsters.name, img_url, boss_health, 
+                boss_attack, boss_defense, boss_magic, achievable_item_id  
+                FROM World_Bosses
                 INNER JOIN Monsters ON World_Bosses.monster_id = Monsters.id
-                Where World_Fights.active = 1";
+                WHERE World_Bosses.boss_health > 0";
             $bosses = $this->db->select($sql);
 
             $response['success'] = true;
