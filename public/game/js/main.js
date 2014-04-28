@@ -10,6 +10,7 @@ var stage; //A collection of things to be rendered; we'll add "children" to it t
 var menuStage;
 var consoleStage;
 var player;
+var volume = 1;
 
 //[Views and Containers]
 var worldView = new createjs.Container();

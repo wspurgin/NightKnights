@@ -7,6 +7,8 @@ var inWorldBossEncounter = false;
 var chestLocked = false;
 var bgMusic = createjs.Sound.createInstance("menuMusic");
 var currentArea;
+var monsterKey = 0;
+
 function initStatsView()
 {
   nameText = new createjs.Text("Name: " + player.name, "60px VT323", "#FFFFFF");
@@ -110,6 +112,7 @@ function initWorldView()
   forest.on("click", function() {
     currentArea = "forest";
     areaView.addChildAt(forestMap, 0); 
+    monsterKey = areaView.children.length;
     areaView.addChild(initNightmaresList()); 
     switchTo(areaView);
     createjs.Sound.play("buttonPress");
@@ -125,6 +128,7 @@ function initWorldView()
     if(!mountain.locked) {
       currentArea = "mountain";
       areaView.addChildAt(mountainMap, 0); 
+      monsterKey = areaView.children.length;
       areaView.addChild(initNightmaresList()); 
       switchTo(areaView); 
       createjs.Sound.play("buttonPress");
@@ -154,6 +158,7 @@ function initWorldView()
     if(!castle.locked) {
       currentArea = "castle";
       areaView.addChildAt(castleMap, 0); 
+      monsterKey = areaView.children.length;
       areaView.addChild(initNightmaresList()); 
       switchTo(areaView);
       createjs.Sound.play("buttonPress");
@@ -204,9 +209,15 @@ function initAreaViews()
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
-  backButton.on("click", function() {areaView.removeChildAt(2); areaView.removeChildAt(0); switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
+  backButton.on("click", function() {areaView.removeChildAt(monsterKey); areaView.removeChildAt(0); switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
   
-  areaView.addChild(backButton);
+  itemChest = new createjs.Sprite(treasureSheet, "closed");
+  itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
+  itemChest.framerate = 10;
+  itemChest.on("click", openItemChest);
+  itemChest.alpha = 0;
+  
+  areaView.addChild(backButton, itemChest);
 }
 
 function initWorldBossView()
@@ -529,12 +540,40 @@ function openChest(event) {
       if (inWorldBossEncounter)
         switchTo(worldView);
       else
+      {
         switchTo(areaView);
+        if (areaView.getChildAt(monsterKey).children.length === 0) //If there are no more nightmares...
+        {
+          itemChest.alpha = 1;
+        }
+      }
       menuLocked = false;
       inWorldBossEncounter = false;
       chestLocked = false;
       initInventory();
       playMusic("menuMusic");
+    });
+  }
+}
+
+function openItemChest(event) {
+  if (!chestLocked)
+  {
+    chestLocked = true;
+    playMusic("itemFind");
+    bgMusic.setVolume(1);
+    loot.gotoAndPlay(getRandomItem());
+    itemChest.gotoAndPlay("open");
+    areaView.addChild(loot);
+    createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).wait(1000).call(function(){
+      loot.y += 20;
+      switchTo(worldView);
+      chestLocked = false;
+      initInventory();
+      playMusic("menuMusic");
+      itemChest.alpha = 0;
+      itemChest.gotoAndPlay("closed");
+      areaView.removeChild(loot);
     });
   }
 }
@@ -549,6 +588,6 @@ function playMusic(songName)
 {
   bgMusic.stop();
   bgMusic = createjs.Sound.play(songName);
-  bgMusic.setVolume(0.5);
+  bgMusic.setVolume(0.5 * volume);
 }
 
