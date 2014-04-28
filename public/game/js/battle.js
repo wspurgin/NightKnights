@@ -291,7 +291,7 @@ function equip(weapon)
 {
   console.log("Swapped for " + weapon.name);
   if (player.weapon !== undefined)
-    player.weapon.equipped = false;
+    player.weapon.is_equipped = false;
   player.weapon = weapon;
-  weapon.equipped = true;
+  weapon.is_equipped = 1;
 }

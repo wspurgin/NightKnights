@@ -99,6 +99,7 @@ function main()
             {src:"sprites/Knight.png", id:"knight"},
             {src:"sprites/Weapons.png", id:"weaponsSprites"}, 
             {src:"sprites/worldBossButton.png", id:"worldBossButtonSprites"},
+            {src:"sprites/selectButton.png", id:"selectButton"},
             
             //SOUNDS
             {id:"enemyHit", src:"audio/Oracle_Enemy_Hit.wav"},

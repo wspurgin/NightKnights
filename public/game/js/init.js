@@ -72,6 +72,23 @@ function initGameOverView()
   gameOverView.addChild(gameOverText, moreEnergyText);
 }
 
+function checkForEquip()
+{
+  itemSelectors.forEach(function(element, index, array) {
+    if (inventory[element.index].is_equipped)
+    {
+      element.filters = [new createjs.ColorFilter(1,1,1,1, 0,255,0,0)];
+      element.cache(0, 0, 80, 80); 
+    }
+    else
+    {
+      element.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+      element.cache(0, 0, 80, 80); 
+    }
+  });
+  menuStage.update();
+}
+
 function initInventoryView()
 {
   inventoryView.removeAllChildren();
@@ -82,18 +99,44 @@ function initInventoryView()
   
   inventoryView.addChild(backButton);
   
+  itemSelectors = [];
+  
   inventory.forEach(function(element, index, array) {
-    item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
-    item.setTransform(70 * index, 100, 2, 2);
+    var itemSelector = new createjs.Bitmap(preload.getResult("selectButton"));
+    itemSelector.setTransform(90 * index - 6 + 10, 100 - 6, 2, 2);
+    itemSelector.index = index;
+    if (inventory[index].is_equipped)
+    {
+      itemSelector.filters = [new createjs.ColorFilter(1,1,1,1, 0,255,0,0)];
+      itemSelector.cache(0, 0, 80, 80); 
+    }
+    itemSelector.on("click", function() {
+      equip(inventory[index]);
+      createjs.Sound.play("buttonPress");
+      checkForEquip();
+    });
+    itemSelectors.push(itemSelector);
+    
+    var item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
+    item.setTransform(90 * index + 10, 100, 2, 2);
     item.index = index;
     item.on("click", function() {
       equip(inventory[index]);
+      createjs.Sound.play("buttonPress");
+      checkForEquip();
     });
-    itemText = new createjs.Text(inventory[index].name.replace(" ", "\n"), "20px VT323", "#FFFFFF");
+    
+    var itemText = new createjs.Text(inventory[index].name.replace(" ", "\n"), "20px VT323", "#FFFFFF");
     itemText.textAlign = "center";
     itemText.lineHeight = 15;
-    itemText.setTransform(70 * index + 32, 170, 1, 1);
-    inventoryView.addChild(item, itemText);
+    itemText.setTransform(90 * index + 32 + 10, 170, 1, 1);
+    itemText.on("click", function() {
+      equip(inventory[index]);
+      createjs.Sound.play("buttonPress");
+      checkForEquip();
+    });
+    
+    inventoryView.addChild(itemSelector, item, itemText);
   });
 }
 
@@ -585,7 +628,7 @@ function initInventory()
 function playMusic(songName)
 {
   bgMusic.stop();
-  bgMusic = createjs.Sound.play(songName);
+  bgMusic = createjs.Sound.play(songName, {loop:99});
   bgMusic.setVolume(0.5 * volume);
 }
 
