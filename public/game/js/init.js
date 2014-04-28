@@ -39,11 +39,9 @@ function initStatsView()
   experienceText.maxWidth = 1000;
   experienceText.textAlign = "left";
   experienceText.x = 200;
-  experienceText.y = 140;  
+  experienceText.y = 140;
   
-  equipButton = new createjs.Bitmap(preload.getResult("equipButton"));
-  equipButton.setTransform(500, 200, .5, .5);
-  equipButton.on("click", function() {switchToMenu(inventoryView);});
+  equipButton = buttonFactory(500, 200, .5, .5, "bigButton", "Equips >", "100px", function() {switchToMenu(inventoryView);}, "#000000");
   
   statsView.addChild(nameText, knight, energyIcon, currentEnergy, levelText, experienceText, equipButton);
 }
