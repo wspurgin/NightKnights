@@ -273,7 +273,7 @@ BEGIN
 
     # Create messages
     INSERT INTO `Messages` (`character_id`, `message`) 
-    SELECT `character_id`, "There's a new Item in your inventory!"
+    SELECT `character_id`, "Boss was defeated! There's a new Item in your inventory!"
     FROM `World_Fights` WHERE `boss_id`=p_boss_id;
 
 END;;
