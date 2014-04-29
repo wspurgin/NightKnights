@@ -906,6 +906,8 @@ Class Api
             if(empty($user))
                 throw new Exception("Invlaid json '$body'", 1);
             $sql = "UPDATE `Users` SET `password`=:password WHERE `id`=:id";
+            if ($user->password == '')
+                throw new Exception("Passwrod cannot be blank.");
             $args = array(
                 ":password" => new Password($user->password),
                 ":id" => $_SESSION['user_id']
