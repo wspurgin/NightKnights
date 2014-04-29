@@ -101,7 +101,8 @@ function saveBattleResults(results)
     console.log("val:" + results);
     var expObj = {};
     //expObj.experience = results.experience;
-    expObj.experience = results;
+    expObj.experience = results.experience;
+    expObj.energy = results.energy;
     data = JSON.stringify(expObj);
 
     $.ajax({
