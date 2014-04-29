@@ -42,6 +42,48 @@ function setSessionInfo() {
         };
         container.data("built", true);
     };
+
+    var messages = getMessages();
+    if (messages.length > 0) { // user has messages
+        var container = $("#knightmessages");
+        container.empty(); // empty container of default value.
+        for (var i = 0; i < messages.length; i++) {
+            var message = messages[i];
+            var selector = 'mark_as_read_' + String(i);
+            var html = '<div class="infobox" data-date_created="' + message.date_created + '">';
+            html += '<div><input type="button" id="' + selector + '" value="Mark As Read"/></div>'
+            html += '<div>Message: ' + message.message + '</div></div>';
+            container.append(html);
+            container.on('click', '#' + selector, markAsRead);
+        };
+    }
+}
+
+function getMessages() {
+    var messages = [];
+
+    $.ajax({
+        url: '/api/messages',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+
+        error: function(res) {
+            if (res.responseJSON !== undefined) {
+                console.log(res.responseJSON.message);
+            } else {
+                //If no response. log response for now.
+                console.log(res);
+            }
+        },
+
+        success: function(data) {
+            if (data.success) {
+                messages = data.messages;
+            }
+        }
+    });
+    return messages;
 }
 
 function changeButtonModal(event) {
@@ -83,6 +125,66 @@ function changeButtonModal(event) {
         }
 
     }); //end of AJAX call
+}
+
+// if container has no children or all are children are hidden, append the html
+function checkContainer(container, htmlToAppend) {
+    htmlToAppend = (typeof htmlToAppend === "undefined") ? "" : htmlToAppend;
+
+    var all_children_hidden = true
+    container.children().each(function() {
+        if ($(this).css('display') != 'none') {
+            all_children_hidden = false;
+        }
+    });
+    if (container.children().length === 0 || all_children_hidden) {
+        container.append(htmlToAppend);
+    }
+}
+
+function markAsRead(event) {
+    var message = {};
+    var parent = $(this).parent().parent(); // gets parent div of input div
+    message.date_created = parent.data("date_created");
+    var res = markMessagesRead([message]); // send individual message as array.
+    if (res === true) {
+        parent.hide();
+        checkContainer(parent.parent(), '<div><span>No Unread Messages</span></div>');
+    }
+}
+
+function markMessagesRead(messages) {
+    var response = false;
+    $.ajax({
+        url: '/api/messages',
+        type: 'PUT',
+        dataType: 'json',
+        data: JSON.stringify(messages),
+        contentType: 'application/json; charset=utf-8',
+        async: false,
+
+        error: function(res) {
+            data = res.responseJSON
+            if (data.success === false) {
+                alert(data.message)
+            } else {
+                // If the error was for some other reason, than what
+                // could be caught, log data, and alert errors. Don't reset.
+                console.log(data)
+                alert("Errors occured during your request. Please try again.");
+            };
+        },
+
+        success: function(data) {
+            if (data.success) {
+                response = true;
+            } else {
+                alert(data.message);
+            };
+        }
+
+    });
+    return response;
 }
 
 function isEmpty(obj) {

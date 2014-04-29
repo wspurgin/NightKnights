@@ -306,55 +306,6 @@ Class Api
         echo json_encode($response);
     }
 
-    public function createFight()
-    {
-        $app = \Slim\Slim::getInstance();
-        $response = array();
-        if (!$this->session())
-            $app->halt(404);
-        try
-        {
-            $body = $app->request->getBody();
-            $fight = json_decode($body);
-            if(empty($fight))
-                throw new Exception("Invlaid json '$body'", 1);
-
-            $sql = "CALL `create_fight`(:boss_id, :id)";
-            $args = array(
-                ":boss_id" => $fight->boss_id,
-                ":id" => $_SESSION['user_id']   
-            );
-            $this->db->query($sql, $args);
-
-            $username = $_SESSION['username'];
-            $response['success'] = true;
-            $response['message'] = "$username has a new fight!";
-        }
-        catch(PDOException $e)
-        {
-            $app->log->error($e->getMessage());
-            $response['success'] = false;
-
-            // while still debugging
-            $response['message'] = $e->getMessage();
-            // $response['message'] = "Errors occured";
-            
-            $app->halt(404, json_encode($response));
-        }
-        catch(Exception $e)
-        {
-            $app->log->error($e->getMessage());
-            $response['success'] = false;
-
-            // while still debugging
-            $response['message'] = $e->getMessage();
-            // $response['message'] = "Errors occured";
-            
-            $app->halt(500, json_encode($response));
-        }
-        echo json_encode($response);
-    }
-
     public function saveFight()
     {
         $app = \Slim\Slim::getInstance();
@@ -1108,6 +1059,101 @@ Class Api
             $response['message'] = $e->getMessage();
             // $response['message'] = "Errors occured";
             
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
+    public function getUnreadMessages()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        if(!$this->session())
+            $app->halt(404);
+        try
+        {
+            $sql = "SELECT `date_created`, `message` FROM `Messages` WHERE `character_id`=:id AND `unread`=1
+            ORDER BY `date_created`";
+            $messages = $this->db->select(
+                $sql,
+                array(":id" => $_SESSION['user_id'])
+            );
+
+            $response['success'] = true;
+            $response['messages'] = $messages;
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+
+            $app->halt(500, json_encode($response));
+        }
+        echo json_encode($response);
+    }
+
+    public function markMessagesRead()
+    {
+        $app = \Slim\Slim::getInstance();
+        $response = array();
+        if(!$this->session())
+            $app->halt(404);
+        try
+        {
+            $body = $app->request->getBody();
+            $messages = json_decode($body);
+            if(empty($messages))
+                throw new Exception("Invlaid json '$body'", 1);
+
+            $sql = "UPDATE `Messages` SET `unread`=0 WHERE `character_id`=:id
+                AND `date_created` IN (:date_created)";
+            $args = array(":id" => $_SESSION['user_id']);
+            $times = array();
+            foreach ($messages as $key => $message) {
+                $times[] = $message->date_created;
+            }
+            $args[":date_created"] = implode(",", $times);
+
+            $this->db->update($sql, $args);
+
+            $response['success'] = true;
+            $response['message'] = "Messages marked as read.";
+        }
+        catch(PDOException $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+
+            $app->halt(404, json_encode($response));
+        }
+        catch(Exception $e)
+        {
+            $app->log->error($e->getMessage());
+            $response['success'] = false;
+
+            // while still debugging
+            $response['message'] = $e->getMessage();
+            // $response['message'] = "Errors occured";
+
             $app->halt(500, json_encode($response));
         }
         echo json_encode($response);

@@ -50,6 +50,10 @@
             </div>
           </div>
         </div>
+        <p class="infocaption">Messages</p>
+        <div id="knightmessages" class="infobox">
+          <div><span>No Unread Messages</span></div>
+        </div>
       </div>
   </div>
 

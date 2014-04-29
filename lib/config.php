@@ -33,5 +33,7 @@ $ROUTES = array(
     new Route('/character/experience', Route::PUT, array($api, 'updateCharacterExperience')),
     new Route('/character/energy', Route::PUT, array($api, 'updateCharacterEnergy')),
     new Route('/leaderboard', Route::GET, array($api, 'getLeaderboard')),
-    new Route('/user/password', Route::PATCH, array($api, 'userChangePassword'))
+    new Route('/user/password', Route::PATCH, array($api, 'userChangePassword')),
+    new Route('/messages', Route::GET, array($api, 'getUnreadMessages')),
+    new Route('/messages', Route::PUT, array($api, 'markMessagesRead'))
 );
