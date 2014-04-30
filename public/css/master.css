@@ -40,6 +40,11 @@ body
   display: block;
 }
 
+.innerbox
+{
+  
+}
+
 .infobox input[type="text"], input[type="email"], input[type="password"]
 {
   float:right;

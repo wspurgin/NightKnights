@@ -160,7 +160,7 @@ function doneLoading(event)
   //Create the player object. This is where we would use the data we got from the DB.
   var character = getPlayerData();
   player = new Player(character.name, character.level, character.energy, character.experience, inventory[0]);
-
+  
   
   //Initialize each of the views of the world. These are the parts that are static and don't change each time.
   initMenuView();
@@ -173,6 +173,14 @@ function doneLoading(event)
   initStatsView();
   initWorldBossView();
   initInventoryView();
+  
+  inventory.forEach(function(element, index, array) {
+    if(inventory[index].is_equipped)
+    {
+      equip(inventory[index]);
+      checkForEquip();
+    }
+  });
   //Once everything is loaded, swap to the world view so that we can start playing the game!
   if (player.energy <= 0)
   {

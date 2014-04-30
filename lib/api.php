@@ -559,7 +559,7 @@ Class Api
         $response = array();
         try
         {
-            $sql = "SELECT Monsters.name, img_url, boss_health, 
+            $sql = "SELECT World_Bosses.id, Monsters.name, img_url, boss_health, 
                 boss_attack, boss_defense, boss_magic, achievable_item_id  
                 FROM World_Bosses
                 INNER JOIN Monsters ON World_Bosses.monster_id = Monsters.id
