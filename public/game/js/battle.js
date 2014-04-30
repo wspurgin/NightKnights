@@ -198,18 +198,40 @@ function startTurn(attackType)
   else if (attackType === "defSkill")
   {
     defSkillCounter = 3;
+    fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 110,0,156,0)];
+    fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
+    createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(500).to({alpha: 0}, 250).call(function(){
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
+    });
     log(player.name + " focused on defence!", "#6E00C9");
     nightmare.attack(player);
   }
   else if (attackType === "attSkill")
   {
     attSkillCounter = 3;
+    fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 232,232,0,0)];
+    fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
+    createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(500).to({alpha: 0}, 250).call(function(){
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
+    });
     log(player.name + " became enraged!", "#E8E800");
     nightmare.attack(player);
   }
   else if (attackType === "uberSkill")
   {
     uberSkillCounter = 3;
+    fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 127,255,0,0)];
+    fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
+    createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250).wait(250).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250).call(function(){
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
+    });
+    
     log(player.name + " broke all limits!", "#7FFF00");
     nightmare.attack(player);
   }

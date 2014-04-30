@@ -113,6 +113,7 @@ function main()
             {id:"battleMusic", src:"audio/letMySoulBurn.mp3"},
             {id:"worldBossMusic", src:"audio/raiseThySword.mp3"},
             {id:"buttonPress", src:"audio/Oracle_Menu_Select.wav"},
+            {id:"skillSound", src:"audio/Oracle_Sword_Charge.wav"},
         ];
   
   //Add all of the monster images to the manifest
