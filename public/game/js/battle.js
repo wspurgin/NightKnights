@@ -84,10 +84,24 @@ function Player(name, level, energy, experience, weapon)
     this.defenceDice = new dice(this.level, 5, 0);
   }
   
-  this.die = function () {
+  this.die = function() {
     menuStage.update();
     log("The nightmare sucks the last of your energy, and you pass out.", "#FF0000");
     this.isDead = true;
+  }
+  
+  this.useSkill = function(cost) {
+    if (this.energy - cost > 0)
+    {
+      this.energy -= cost;
+      playerhp.text = "x" + this.energy;
+      return true;
+    }
+    else
+    {
+      log("You don't have enough energy to use that skill!", "#FFFF00");
+      return false;
+    }
   }
   
   this.animateHP = function (damage) {
@@ -195,7 +209,7 @@ function startTurn(attackType)
     player.defenceMod = 0.5;
     player.attack(nightmare);
   }
-  else if (attackType === "defSkill")
+  else if (attackType === "defSkill" && player.useSkill(20))
   {
     defSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 110,0,156,0)];
@@ -208,7 +222,7 @@ function startTurn(attackType)
     log(player.name + " focused on defence!", "#6E00C9");
     nightmare.attack(player);
   }
-  else if (attackType === "attSkill")
+  else if (attackType === "attSkill" && player.useSkill(30))
   {
     attSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 232,232,0,0)];
@@ -221,7 +235,7 @@ function startTurn(attackType)
     log(player.name + " became enraged!", "#E8E800");
     nightmare.attack(player);
   }
-  else if (attackType === "uberSkill")
+  else if (attackType === "uberSkill" && player.useSkill(40))
   {
     uberSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 127,255,0,0)];
@@ -234,6 +248,13 @@ function startTurn(attackType)
     
     log(player.name + " broke all limits!", "#7FFF00");
     nightmare.attack(player);
+  }
+  else
+  {
+    menuView.alpha = 1;
+    menuStage.update();
+    menuLocked = false;
+    return;
   }
   if (defSkillCounter > 0)
   {

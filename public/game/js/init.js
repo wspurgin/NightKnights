@@ -281,6 +281,8 @@ function initWorldBossView()
   worldBoss1Button.regY = worldBoss1Button.getBounds().height / 2;
   worldBoss1Button.setTransform(165, 100);
   createjs.Tween.get(worldBoss1Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
+  setHelp(worldBoss1Button, worldBoss1.name, "Remaining Health: " + worldBoss1.boss_health + "\nEnergy Drain: " + worldBoss1.boss_attack + "\nDefence: " + worldBoss1.boss_defense);
+  
   worldBoss1Button.on("click", function() {
     nightmare = new Nightmare(worldBoss1.name, worldBoss1.boss_health, worldBoss1.boss_attack, worldBoss1.boss_defense);
     nightmare.hurtSound = "bossHit";
@@ -296,6 +298,8 @@ function initWorldBossView()
   worldBoss2Button.regY = worldBoss2Button.getBounds().height / 2;
   worldBoss2Button.setTransform(500, 100);
   createjs.Tween.get(worldBoss2Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
+  setHelp(worldBoss2Button, worldBoss2.name, "Remaining Health: " + worldBoss2.boss_health + "\nEnergy Drain: " + worldBoss2.boss_attack + "\nDefence: " + worldBoss2.boss_defense);
+  
   worldBoss2Button.on("click", function() {
     nightmare = new Nightmare(worldBoss2.name, worldBoss2.boss_health, worldBoss2.boss_attack, worldBoss2.boss_defense);
     nightmare.hurtSound = "bossHit";
