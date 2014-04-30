@@ -87,3 +87,5 @@
 }
 
 .close:hover { background: #080410; } /*old was #00d9ff*/
+
+#knightinventory { border-collapse: separate; }

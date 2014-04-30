@@ -27,7 +27,6 @@ footer
 #navbar, #footer
 {
   padding-top: 0.5em;
-  padding-bottom: 0.5em;
 }
 
 #wrapper
@@ -122,6 +121,7 @@ footer
 {
   height: 3em;
   text-align: center;
+  padding-bottom: 0.5em;
 }
 
 #navbar div

@@ -14,6 +14,10 @@ function setSessionInfo() {
         var container = $("#knightinventory");
         for (item in inventory) {
             item = inventory[item];
+            if (item.is_equipped == true) {
+                setWeapon(item, $("#knightweapon"));
+                continue;
+            };
             container.append('<div class="infobox" id=item_' + item.id + ' ></div>');
             var well = $("#item_" + item.id);
             for (prop in item) {
@@ -22,9 +26,6 @@ function setSessionInfo() {
                     well.append(html);
                 };
             };
-            if (item.is_equipped == true) {
-                setWeapon(item, $("#knightweapon"));
-            }
         };
     }
     var container = $("#modalInventory");
