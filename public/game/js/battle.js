@@ -237,7 +237,7 @@ function endCombat(playerWon)
   saveBattleResults(results.experience, results.energy);
   if (inWorldBossEncounter)
   {
-    saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy)
+    saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy);
   }
   if (playerWon){
     menuStage.update();
