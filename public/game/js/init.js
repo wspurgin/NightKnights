@@ -75,16 +75,15 @@ function initGameOverView()
 function checkForEquip()
 {
   itemSelectors.forEach(function(element, index, array) {
+    
+    element.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+    element.cache(0, 0, 80, 80); 
     if (inventory[element.index].is_equipped)
     {
       element.filters = [new createjs.ColorFilter(1,1,1,1, 0,255,0,0)];
       element.cache(0, 0, 80, 80); 
     }
-    else
-    {
-      element.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
-      element.cache(0, 0, 80, 80); 
-    }
+    
   });
   menuStage.update();
 }
@@ -111,6 +110,9 @@ function initInventoryView()
       itemSelector.cache(0, 0, 80, 80); 
     }
     itemSelector.on("click", function() {
+      inventory.forEach(function(element, index, array) {
+        inventory[index].is_equipped = false;
+      });
       equip(inventory[index]);
       createjs.Sound.play("buttonPress");
       checkForEquip();

@@ -294,4 +294,5 @@ function equip(weapon)
     player.weapon.is_equipped = false;
   player.weapon = weapon;
   weapon.is_equipped = true;
+  equipItem(weapon.id);
 }
