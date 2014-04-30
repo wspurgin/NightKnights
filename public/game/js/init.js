@@ -227,6 +227,7 @@ function initWorldView()
   worldBossButton.on("rollover", stageOver);
   worldBossButton.on("rollout", stageOut);
   worldBossButton.on("click", function() {
+      initWorldBossView();
       switchTo(worldBossView); 
       createjs.Sound.play("buttonPress");
   });
@@ -264,6 +265,7 @@ function initAreaViews()
 
 function initWorldBossView()
 {
+  worldBossView.removeAllChildren();
   var bossList = getBosses().bosses;
   worldBossMap = new createjs.Bitmap(preload.getResult("worldBossMap"));
   
@@ -311,7 +313,7 @@ function initWorldBossEncounter()
 { 
   playerStartEnergy = player.energy;
   inWorldBossEncounter = true;
-  background.gotoAndPlay("world" + Math.floor((Math.random()*7)));
+  background.gotoAndPlay("world" + Math.floor((Math.random()*4)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
@@ -580,7 +582,8 @@ function openChest(event) {
     chestLocked = true;
     playMusic("itemFind");
     bgMusic.setVolume(1);
-    loot.gotoAndPlay(getRandomItem());
+    loot.gotoAndPlay("experience");
+    saveBattleResults(parseInt((calculateNextLevel() - calculateExpTo(player.level - 1))*.02 + 5),0); 
     treasureChest.gotoAndPlay("open");
     encounterView.addChild(loot);
     createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).wait(1000).call(function(){
@@ -611,8 +614,11 @@ function openItemChest(event) {
     chestLocked = true;
     playMusic("itemFind");
     bgMusic.setVolume(1);
-    loot.gotoAndPlay(getRandomItem());
     itemChest.gotoAndPlay("open");
+    var item = getRandomItem();
+    if (item === "experience")
+      saveBattleResults(parseInt((calculateNextLevel() - calculateExpTo(player.level - 1))*.25 + 10),0); 
+    loot.gotoAndPlay(item);
     areaView.addChild(loot);
     createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).wait(1000).call(function(){
       loot.y += 20;

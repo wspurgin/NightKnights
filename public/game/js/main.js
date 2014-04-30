@@ -171,7 +171,6 @@ function doneLoading(event)
   initConsole();
   initGameOverView();
   initStatsView();
-  initWorldBossView();
   initInventoryView();
   
   inventory.forEach(function(element, index, array) {
@@ -217,10 +216,7 @@ function playerUpdate(updateObject)
     player.level = updateObject.level;
     console.log("LEVEL UP to " + player.level);
     checkUnlocks();
-    this.levelUp = function() {
-      this.attackDice = new dice(this.level, 10 , 0);
-      this.defenceDice = new dice(this.level, 5, 0);
-    }
+    player.levelUp();
   }
   updateStatsView();
 }
@@ -238,6 +234,12 @@ function checkUnlocks()
 function calculateNextLevel()
 {
   var x = Number(player.level);
+  return (25*x*(1+x));
+}
+
+function calculateExpTo(level)
+{
+  var x = Number(level);
   return (25*x*(1+x));
 }
   
