@@ -95,14 +95,13 @@ function getCharacterInventory() {
 /*This function posts the data from the battle to the server, and then
  * returns to the caller whether or not the player has leveled up.
  */
-function saveBattleResults(results)
+function saveBattleResults(experience, energy)
 {
     console.log("SAVING BATTLE RESULTS...");
-    console.log("val:" + results);
+
     var expObj = {};
     //expObj.experience = results.experience;
-    expObj.experience = results.experience;
-    expObj.energy = results.energy;
+    expObj.experience = experience;
     data = JSON.stringify(expObj);
 
     $.ajax({
@@ -151,6 +150,53 @@ function saveBattleResults(results)
     //player.experience += experience; //This property won't be used eventually. I'll remove it once we implement the real function call.
     //player.experience += results; //This property won't be used eventually. I'll remove it once we implement the real function call.
     //return player.level + 1; //New level to level up to. Hard coded for the time being.
+
+    var energyObj = {};
+    energyObj.energy = energy;
+    data = JSON.stringify(energyObj);
+
+    $.ajax({
+            url: '/api/character/energy',
+            type: 'PUT',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    form[0].reset();
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Player energy placed");
+                    //console.log("level:" + data.level);
+                    //console.log("experience:" + data.experience);
+                    console.log(data.message);
+
+                    //successful api call
+                    playerUpdate(data);
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                console.log(data);
+            }
+
+        }); //end of AJAX call
 }
 
 function getPlayerData()
@@ -544,4 +590,57 @@ function getBosses()
 
         }); //end of AJAX call
     return bosses;
+}
+
+/**
+*   function to save a boss fight
+*   requires a boss id and a damage done value
+*   damage done should be negative
+*/
+function saveFight(boss)
+{
+    console.log("SAVING BOSS FIGHT...");
+
+    var bossData = {};
+    bossData.boss_id = boss.boss_id;
+    bossData.damage_done = boss.damage_done;
+    var data = JSON.stringify(bossData);
+    console.log(data);
+
+    $.ajax({
+            url: '/api/fights',
+            type: 'PUT',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("fight saved");
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                //console.log(data);
+            }
+
+        }); //end of AJAX call
 }
