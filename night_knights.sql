@@ -289,8 +289,8 @@ BEGIN
     IF(t_check < 2)
     THEN
         INSERT INTO `World_Bosses` (`monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
-            SELECT m.`id`, POW(10, m.`health_seed`), POW(10, m.`attack_seed`),
-                POW(10, m.`defense_seed`), POW(10, m.`magic_seed`), i.`id`
+            SELECT m.`id`, 10 * m.`health_seed`, 20,
+                3, 1, i.`id`
                 FROM `Monsters` m JOIN (SELECT `id` FROM `Items` ORDER BY RAND() LIMIT 5) AS i
                 ORDER BY RAND() LIMIT 5;
     END IF;
