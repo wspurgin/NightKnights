@@ -217,6 +217,10 @@ function playerUpdate(updateObject)
     player.level = updateObject.level;
     console.log("LEVEL UP to " + player.level);
     checkUnlocks();
+    this.levelUp = function() {
+      this.attackDice = new dice(this.level, 10 , 0);
+      this.defenceDice = new dice(this.level, 5, 0);
+    }
   }
   updateStatsView();
 }

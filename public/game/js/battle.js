@@ -76,8 +76,13 @@ function Player(name, level, energy, experience, weapon)
   this.dieSound = "playerDie";
   
   //Hardcoded until I implement weapons.
-  this.attackDice = new dice(2,15,3);
-  this.defenceDice = new dice(1,4,5);
+  this.attackDice = new dice(this.level, 10 , 0);
+  this.defenceDice = new dice(this.level, 5, 0);
+  
+  this.levelUp = function() {
+    this.attackDice = new dice(this.level, 10 , 0);
+    this.defenceDice = new dice(this.level, 5, 0);
+  }
   
   this.die = function () {
     menuStage.update();
@@ -113,8 +118,8 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   this.hurtSound = "enemyHit";
   this.dieSound = "enemyDie";
   
-  this.attackDice = new dice(2, 10, attackStat);
-  this.defenceDice = new dice(1, 4, defenceStat);
+  this.attackDice = new dice(2, attackStat, 0);
+  this.defenceDice = new dice(1, defenceStat, 0);
   
   this.initSprite = function (spriteName) {
     nightmare.sprite = new createjs.Bitmap(preload.getResult(spriteName));
@@ -247,8 +252,9 @@ function endCombat(playerWon)
   else {
     encounterCleanup();
     areaView.removeChildAt(2); //Remove the monsters from the area.
-    switchTo(gameOverView);
     menuStage.removeAllChildren();
+    playMusic("");
+    switchTo(gameOverView);
     player.isDead = false;
   }  
 }
@@ -293,7 +299,7 @@ function getExpFromNightmare(nightmare)
   if (inWorldBossEncounter)
     return 0
   else
-    return nightmare.maxEnergy / 2;
+    return parseInt(nightmare.maxEnergy / 2);
 }
   
 function equip(weapon)
