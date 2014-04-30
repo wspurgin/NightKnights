@@ -186,7 +186,7 @@ function saveBattleResults(experience, energy)
                     console.log(data.message);
 
                     //successful api call
-                    playerUpdate(data);
+                    //playerUpdate(data);
 
                 } else {
                     // errors occured
