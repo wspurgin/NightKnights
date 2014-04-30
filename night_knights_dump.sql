@@ -348,10 +348,10 @@ VALUES
 	(97,'Peacock Bird',25,15,0,200,'sprites/Birds/PeacockBird.png'),
 	(98,'Surfer Penguin',25,15,0,200,'sprites/Birds/Penguin.png'),
 	(99,'Pidgeotto',25,15,0,200,'sprites/Birds/Pidgeotto.png'),
-	(100,'Purple Bird',25,15,0,200,'sprites/Birds/Purple Bird.png'),
+	(100,'Purple Bird',25,15,0,200,'sprites/Birds/PurpleBird.png'),
 	(101,'Skill Bird',25,15,0,200,'sprites/Birds/SkullBird.png'),
 	(102,'Snake Bird',25,15,0,200,'sprites/Birds/SnakeBird.png'),
-	(103,'Ant',3,3,3,30,'sprites/Bugs/Antpng'),
+	(103,'Ant',3,3,3,30,'sprites/Bugs/Ant.png'),
 	(104,'Beadrill',3,3,3,30,'sprites/Bugs/Beadrill.png'),
 	(105,'Big Purple Claw Bug',3,3,3,30,'sprites/Bugs/BigPurpleClawBug.png'),
 	(106,'Dung Beatle',3,3,3,30,'sprites/Bugs/BigStag.png'),
@@ -370,7 +370,7 @@ VALUES
 	(119,'Sea Bug',3,3,3,30,'sprites/Bugs/SeaBug.png'),
 	(120,'Slug',3,3,3,30,'sprites/Bugs/Slug.png'),
 	(121,'Leader Ant',3,3,3,30,'sprites/Bugs/Stag.png'),
-	(122,'Snail of Doom',3,3,3,30,'sprites/Bugs/WildEyes.png');
+	(122,'Snail of Doom',3,3,3,30,'sprites/Bugs/WideEyes.png');
 
 /*!40000 ALTER TABLE `Monsters` ENABLE KEYS */;
 UNLOCK TABLES;
