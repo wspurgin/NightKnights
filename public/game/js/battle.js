@@ -235,7 +235,10 @@ function endCombat(playerWon)
     menuStage.update();
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
     player.maxEnergy = player.energy;
-    saveBattleResults(getExpFromNightmare(nightmare));
+    results = {};
+    results.experience = getExpFromNightmare(nightmare);
+    results.energy = player.energy - playerStartEnergy;
+    saveBattleResults(results.experience, results.energy);
   }
   else {
     encounterCleanup();
@@ -289,6 +292,9 @@ function getExpFromNightmare(nightmare)
   
 function equip(weapon)
 {
+  inventory.forEach(function(element, index, array) {
+    inventory[index].is_equipped = false;
+  });
   console.log("Swapped for " + weapon.name);
   if (player.weapon !== undefined)
     player.weapon.is_equipped = false;

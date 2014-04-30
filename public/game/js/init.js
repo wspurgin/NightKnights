@@ -8,6 +8,7 @@ var chestLocked = false;
 var bgMusic = createjs.Sound.createInstance("menuMusic");
 var currentArea;
 var monsterKey = 0;
+var playerStartEnergy = 0;
 
 function initStatsView()
 {
@@ -110,9 +111,6 @@ function initInventoryView()
       itemSelector.cache(0, 0, 80, 80); 
     }
     itemSelector.on("click", function() {
-      inventory.forEach(function(element, index, array) {
-        inventory[index].is_equipped = false;
-      });
       equip(inventory[index]);
       createjs.Sound.play("buttonPress");
       checkForEquip();
@@ -400,6 +398,8 @@ function initEncounter()
   var newMonster = getRandomMonster(areaNumber);
   nightmare = new Nightmare(newMonster.name, newMonster.health_seed * 10, newMonster.attack_seed * 10, newMonster.defense_seed + 3);
   nightmare.initSprite(newMonster.img_url);
+  
+  playerStartEnergy = player.energy;
   
   switchToMenu(menuView); 
   encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
