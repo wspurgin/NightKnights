@@ -27,10 +27,10 @@
       <?php include(__DIR__."/../modules/navbar.html"); ?>
       
       <div id="Canvases" class="infobox">
-        <canvas id="consoleCanvas" class="sideCanvas infobox" width="250" height="340"></canvas>
-        <canvas id="backgroundCanvas" style="display: none" width="765" height="340"></canvas>
-        <canvas id="helpCanvas" class="sideCanvas infobox" width="250" height="340"></canvas>
-        <canvas id="menuCanvas" class="infobox" width="765" height="340"></canvas>
+        <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
+        <canvas id="backgroundCanvas" width="765" height="340"></canvas>
+        <canvas id="helpCanvas" class="sideCanvas" width="250" height="340"></canvas>
+        <canvas id="menuCanvas" width="765" height="340"></canvas>
       </div>
       
       <?php include(__DIR__."/../modules/copyright.html"); ?>
