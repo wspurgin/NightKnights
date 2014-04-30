@@ -597,15 +597,15 @@ function getBosses()
 *   requires a boss id and a damage done value
 *   damage done should be negative
 */
-function saveFight(boss)
+function saveFight(id, damage)
 {
     console.log("SAVING BOSS FIGHT...");
 
     var bossData = {};
-    bossData.boss_id = boss.boss_id;
-    bossData.damage_done = boss.damage_done;
+    bossData.boss_id = id;
+    bossData.damage_done = damage;
     var data = JSON.stringify(bossData);
-    console.log(data);
+    //console.log(data);
 
     $.ajax({
             url: '/api/fights',
