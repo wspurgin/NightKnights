@@ -402,8 +402,8 @@ LOCK TABLES `World_Bosses` WRITE;
 
 INSERT INTO `World_Bosses` (`id`, `monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
 VALUES
-	(1,55,1000,1000,1000,1000,5),
-	(2,57,1000,1000,1000,1000,5);
+	(1,55,4000,25,5,1,3),
+	(2,57,4000,25,5,1,5);
 
 /*!40000 ALTER TABLE `World_Bosses` ENABLE KEYS */;
 UNLOCK TABLES;
