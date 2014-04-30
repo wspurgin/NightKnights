@@ -117,6 +117,7 @@ function changeButtonModal(event) {
                 for (var i in inventory) {
                     if (item.item_id == inventory[i].id) {
                         changeWeapon(inventory[i], $("#knightweapon"));
+                        location.reload();
                         break;
                     }
                 }
