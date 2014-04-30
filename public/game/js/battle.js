@@ -235,6 +235,10 @@ function endCombat(playerWon)
   results.experience = getExpFromNightmare(nightmare);
   results.energy = player.energy - playerStartEnergy;
   saveBattleResults(results.experience, results.energy);
+  if (inWorldBossEncounter)
+  {
+    saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy)
+  }
   if (playerWon){
     menuStage.update();
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
@@ -286,7 +290,10 @@ function dice(numberOfDice, numberOfSides, bonusModifier)
  */
 function getExpFromNightmare(nightmare)
 {
-  return nightmare.maxEnergy / 2;
+  if (inWorldBossEncounter)
+    return 0
+  else
+    return nightmare.maxEnergy / 2;
 }
   
 function equip(weapon)

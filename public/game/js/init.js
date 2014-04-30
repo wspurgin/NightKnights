@@ -283,6 +283,7 @@ function initWorldBossView()
     nightmare = new Nightmare(worldBoss1.name, worldBoss1.boss_health, worldBoss1.boss_attack, worldBoss1.boss_defense);
     nightmare.hurtSound = "bossHit";
     nightmare.dieSound = "bossDie";
+    nightmare.id = worldBoss1.id;
     nightmare.initSprite(worldBoss1.img_url);
     initWorldBossEncounter(); 
     switchTo(encounterView);
@@ -297,6 +298,7 @@ function initWorldBossView()
     nightmare = new Nightmare(worldBoss2.name, worldBoss2.boss_health, worldBoss2.boss_attack, worldBoss2.boss_defense);
     nightmare.hurtSound = "bossHit";
     nightmare.dieSound = "bossDie";
+    nightmare.id = worldBoss2.id;
     nightmare.initSprite(worldBoss2.img_url);
     initWorldBossEncounter(); 
     switchTo(encounterView);
@@ -307,6 +309,7 @@ function initWorldBossView()
 //This function initializes the actual entities in the encounter, not the view itself
 function initWorldBossEncounter()
 { 
+  playerStartEnergy = player.energy;
   inWorldBossEncounter = true;
   background.gotoAndPlay("world" + Math.floor((Math.random()*7)));
   playerhp.text = "x" + player.energy;
