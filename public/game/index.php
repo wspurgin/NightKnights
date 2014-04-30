@@ -26,11 +26,11 @@
     
       <?php include(__DIR__."/../modules/navbar.html"); ?>
       
-      <div id="Canvases" class="infobox">
-        <canvas id="consoleCanvas" class="sideCanvas" width="250" height="340"></canvas>
-        <canvas id="backgroundCanvas" width="765" height="340"></canvas>
-        <canvas id="helpCanvas" class="sideCanvas" width="250" height="340"></canvas>
-        <canvas id="menuCanvas" width="765" height="340"></canvas>
+      <div id="Canvases">
+        <div class="infobox leftCanvas"><canvas id="backgroundCanvas" height="340" width="765"></canvas></div>
+        <div class="infobox rightCanvas"><canvas id="consoleCanvas" height="340" width="250"></canvas></div>
+        <div class="infobox leftCanvas"><canvas id="menuCanvas" height="340" width="765"></canvas></div>
+        <div class="infobox rightCanvas"><canvas id="helpCanvas" height="340" width="250"></canvas></div>
       </div>
       
       <?php include(__DIR__."/../modules/copyright.html"); ?>

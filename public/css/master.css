@@ -40,11 +40,6 @@ body
   display: block;
 }
 
-.innerbox
-{
-  
-}
-
 .infobox input[type="text"], input[type="email"], input[type="password"]
 {
   float:right;
@@ -85,7 +80,7 @@ body
 .twocol > div
 {
   display: inline-block;
-  width: 300px;
+  width: 400px;
 }
 
 .left /*Use with .twocol*/

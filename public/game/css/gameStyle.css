@@ -7,10 +7,24 @@
 {
   margin-left: auto;
   margin-right: auto;
-  width: 1015px; 
+  width: 1083px;
+  height: 738px;
 }
 
-.sideCanvas
+#Canvases > div
+{
+  margin: 5px;
+  height: 340px;
+}
+
+.leftCanvas
+{
+  float: left;
+  width: 765px;
+}
+
+.rightCanvas
 {
   float: right;
+  width: 250px;
 }
