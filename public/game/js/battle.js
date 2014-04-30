@@ -200,6 +200,7 @@ function startTurn(attackType)
     defSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 110,0,156,0)];
     fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
     createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(500).to({alpha: 0}, 250).call(function(){
       fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
       fadeToBlack.cache(0, 0, 765, 340);
@@ -212,6 +213,7 @@ function startTurn(attackType)
     attSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 232,232,0,0)];
     fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
     createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(500).to({alpha: 0}, 250).call(function(){
       fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
       fadeToBlack.cache(0, 0, 765, 340);
@@ -224,6 +226,7 @@ function startTurn(attackType)
     uberSkillCounter = 3;
     fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 127,255,0,0)];
     fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Sound.play("skillSound");
     createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250).wait(250).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250).call(function(){
       fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
       fadeToBlack.cache(0, 0, 765, 340);
