@@ -92,8 +92,11 @@ function Player(name, level, energy, experience, weapon)
   
   this.animateHP = function (damage) {
     playerhp.text = "x" + this.energy;
+    createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250);
     if(player.isDead)
     {
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
       createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(endCombat, [false]);
     }
     else

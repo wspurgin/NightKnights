@@ -318,6 +318,9 @@ function initWorldBossEncounter()
   hpBarSmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   hpBarEmptySmall.setTransform(bgCanvas.width /2 - 100, 50, 1, 1);
   
+  fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+  fadeToBlack.cache(0, 0, 765, 340);
+  
   playMusic("worldBossMusic");  
   switchToMenu(menuView); 
   encounterView.addChild(nightmare.sprite, fadeToBlack, nightmareDamageText);
@@ -375,6 +378,9 @@ function initEncounterView()
   
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
   fadeToBlack.alpha = 0;
+  
+  fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+  fadeToBlack.cache(0, 0, 765, 340);
   
   loot = new createjs.Sprite(weaponsSheet, "dagger0");
   loot.setTransform(bgCanvas.width / 2 - 32, bgCanvas.height / 2 - 64, 2, 2);
