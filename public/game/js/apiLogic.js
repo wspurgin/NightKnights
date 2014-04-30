@@ -439,6 +439,62 @@ function createItem(id)
 }
 
 /**
+*   funciton equips an item from the users inventory
+*/
+function equipItem(id)
+{
+    console.log("Equiping Item...");
+
+    var equipItem = {};
+    equipItem.item_id = id;
+    //console.out(addItem);
+    data = JSON.stringify(equipItem);
+
+    $.ajax({
+            url: '/api/character/inventory',
+            type: 'PUT',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            async: false,
+
+            error: function(res) {
+                data = res.responseJSON
+                if (data.success == false) {
+                    // errors occuerd
+                    console.log(res)
+                    alert(data.message)
+                } else {
+                    // If the error was for some other reason, than what
+                    // could be caught, log data, and alert errors. Don't reset
+                    console.log(res)
+                    alert("Errors occured during your request. Please try again.");
+                };
+                console.log(res);
+            },
+
+            success: function(data) {
+                if (data.success) {
+                    console.log("Equipted Item");
+                    //console.log("Areas:", data);
+                    
+                    //console.log(data.message);
+
+                    //successful api call
+                    console.log(data);
+
+                } else {
+                    // errors occured
+                    alert(data.message);
+                    console.log(data);
+                };
+                //console.log(data);
+            }
+
+        }); //end of AJAX call
+}
+
+/**
 *   funciton returns all bosses in the database
 */
 function getBosses()
