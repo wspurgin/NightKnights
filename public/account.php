@@ -9,10 +9,8 @@
   <link rel="stylesheet" type="text/css" href="/css/account.css">
 </head>
 <body>
-
+<div id="wrapper">
   <?php include("modules/navbar.html"); ?>
-
-  <div class="spacer"></div>
 
   <div class="twocol" id="accountwrapper">
     <div class="left" id="accountleft">
@@ -39,9 +37,8 @@
       </div>
     </div>
   </div>
-
-  <div class="spacer"></div>
-
+  <div id="push"></div>
+</div>
   <?php include("modules/copyright.html"); ?>
 
 </body>

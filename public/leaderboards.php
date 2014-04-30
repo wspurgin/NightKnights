@@ -9,12 +9,11 @@
   <script src="/js/leaderboards.js"></script>
 </head>
 <body>
-
+  
+<div id="wrapper">
   <?php include("modules/navbar.html"); ?>
-  <div class="spacer"></div>
 
-  <div class="twocol" id="leaderwrapper">
-
+  <div class="twocol">
     <div class="left">
       <p class="infocaption">Top Ten Knights</p>
       <table id="topten" class="infotable">
@@ -43,9 +42,9 @@
       </table>
     </div>
 
-  </div>  <!--This is the end of div #leaderwrapper-->
-
-  <div class="spacer"></div>
+  </div>
+  <div id="push"></div>
+</div>
   <?php include("modules/copyright.html"); ?>
 
 </body>

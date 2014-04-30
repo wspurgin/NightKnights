@@ -1,21 +1,49 @@
+html, body
+{
+  height: 100%;
+}
+
 body
 {
   background-color: black;
-  /*background-image: url("/res/zwartevilt_@2X.jpg");*/
   background-image: url("/res/twinkle_twinkle_@2X.png");
   color: white;
   font-family: 'VT323', '';
+  margin: 0px;
+  padding: 0px;
 }
 
-#navrule, #footrule
+p, hr
 {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
-.footer
+footer
+{
+  padding-top: 2em;
+}
+
+#navbar, #footer
+{
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+#wrapper
+{
+  height: 100%;
+  margin: 0px auto -4em;
+}
+
+#footer
 {
   text-align: center;
+}
+
+#footer, #push
+{
+  height: 3em;
 }
 
 .infocaption
@@ -59,18 +87,6 @@ body
   padding-bottom: 5px;
 }
 
-.infotable
-{
-  text-align: center;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.infotable td, .infotable th
-{
-  border: 1px solid white;
-}
-
 .twocol /*Two-Column Layout (needs .left or .right as well)*/
 {
   display: block;
@@ -104,7 +120,7 @@ body
 
 #navbar
 {
-  height: 50px;
+  height: 3em;
   text-align: center;
 }
 
@@ -129,16 +145,16 @@ body
   line-height: 0px;
 }
 
-.spacer
-{
-  margin: 0px;
-  height: 100px;
-}
-
 .heading
 {
   font-size: 5em;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.twocol, .center
+{
+  padding-top: 2em;
+  padding-bottom: 2em;
 }

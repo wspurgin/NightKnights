@@ -1,0 +1,15 @@
+.infotable
+{
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.infotable td, .infotable th
+{
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+  background-color: black;
+  border-radius: 5px;
+}

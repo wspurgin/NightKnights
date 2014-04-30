@@ -14,7 +14,7 @@
 </head>
 
 <body onload="main();">
-
+<div id="wrapper">
   <?php include("modules/navbar.html"); ?>
 
   <div class="twocol" id="homewrapper">
@@ -56,8 +56,8 @@
         </div>
       </div>
   </div>
-
-
+<div id="push"></div>
+</div>
   <?php include("modules/copyright.html"); ?>
 
 </body>

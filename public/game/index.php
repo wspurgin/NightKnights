@@ -24,14 +24,17 @@
     </head>
     <body onload="main();">
     
-      <?php include(__DIR__."/../modules/navbar.html"); ?>
-      
-      <div id="Canvases">
-        <div class="infobox leftCanvas"><canvas id="backgroundCanvas" height="340" width="765"></canvas></div>
-        <div class="infobox rightCanvas"><canvas id="consoleCanvas" height="340" width="250"></canvas></div>
-        <div class="infobox leftCanvas"><canvas id="menuCanvas" height="340" width="765"></canvas></div>
-        <div class="infobox rightCanvas"><canvas id="helpCanvas" height="340" width="250"></canvas></div>
-      </div>
+      <div id="wrapper">
+        <?php include(__DIR__."/../modules/navbar.html"); ?>
+            
+            <div id="Canvases">
+              <div class="infobox leftCanvas"><canvas id="backgroundCanvas" height="340" width="765"></canvas></div>
+              <div class="infobox rightCanvas"><canvas id="consoleCanvas" height="340" width="250"></canvas></div>
+              <div class="infobox leftCanvas"><canvas id="menuCanvas" height="340" width="765"></canvas></div>
+              <div class="infobox rightCanvas"><canvas id="helpCanvas" height="340" width="250"></canvas></div>
+            </div>
+            <div id="push"></div>
+        </div>
       
       <?php include(__DIR__."/../modules/copyright.html"); ?>
       
