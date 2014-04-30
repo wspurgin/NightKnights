@@ -233,6 +233,8 @@ BEGIN
         # give them default item
         INSERT INTO `Inventories`(`item_id`, `character_id`, `is_equipped`) VALUES (7, p_user_id, 1);
     END IF;
+
+    SELECT p_user_id AS `id`;
 END;;
 DELIMITER ;
 
@@ -257,10 +259,10 @@ DELIMITER ;
 DELIMITER ;;
 CREATE PROCEDURE `deactivate_boss`(IN p_boss_id INT)
 BEGIN
-    # Deactivate fights that have boss_id = p_boss_id
+    
     UPDATE `World_Fights` f SET f.`active`=0 WHERE f.`boss_id`=p_boss_id;
     
-    # Payout characters with items
+    
     INSERT INTO `Inventories` (`item_id`, `character_id`)
     SELECT b.`achievable_item_id`, fh.`character_id`
     FROM (
@@ -269,9 +271,9 @@ BEGIN
     JOIN `World_Bosses` b
     WHERE b.`id`=p_boss_id
     ON DUPLICATE KEY
-    UPDATE `item_id`=`item_id`, `character_id`= `Inventories`.`character_id`;
+    UPDATE `Inventories`.`item_id`=`Inventories`.`item_id`, `Inventories`.`character_id`= `Inventories`.`character_id`;
 
-    # Create messages
+    
     INSERT INTO `Messages` (`character_id`, `message`) 
     SELECT `character_id`, "Boss was defeated! There's a new Item in your inventory!"
     FROM `World_Fights` WHERE `boss_id`=p_boss_id;
@@ -280,16 +282,34 @@ END;;
 DELIMITER ;
 
 DELIMITER ;;
+CREATE PROCEDURE `add_more_bosses`()
+BEGIN
+    DECLARE t_check INT(11);
+    SELECT COUNT(`id`) INTO t_check FROM `World_Bosses` WHERE `boss_health` > 0;
+    IF(t_check < 2)
+    THEN
+        INSERT INTO `World_Bosses` (`monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
+            SELECT m.`id`, POW(10, m.`health_seed`), POW(10, m.`attack_seed`),
+                POW(10, m.`defense_seed`), POW(10, m.`magic_seed`), i.`id`
+                FROM `Monsters` m JOIN (SELECT `id` FROM `Items` ORDER BY RAND() LIMIT 5) AS i
+                ORDER BY RAND() LIMIT 5;
+    END IF;
+END;;
+DELIMITER ;
+
+DELIMITER ;;
 CREATE PROCEDURE `save_fight`(IN p_boss_id INT, IN p_character_id INT, IN p_add_damage INT)
 BEGIN
-    # First update fight
+    
     INSERT INTO `World_Fights`(`boss_id`, `character_id`, `damage_done`) VALUES (p_boss_id, p_character_id, p_add_damage)
     ON DUPLICATE KEY
     UPDATE `damage_done` = `damage_done`+ p_add_damage;
     
-    # Update boss' health
+    
     UPDATE `World_Bosses` SET `boss_health` = `boss_health` - p_add_damage
         WHERE `id` = p_boss_id;
+        
+    CALL `add_more_bosses`();
 END;;
 DELIMITER ;
 
@@ -321,22 +341,6 @@ CREATE TRIGGER `update_boss` BEFORE UPDATE ON `World_Bosses`
     IF(new.`boss_health` <= 0 & old.`boss_health` > 0)
     THEN
         CALL deactivate_boss(old.`id`);
-    END IF;
-END;;
-DELIMITER ;
-
-DELIMITER ;;
-CREATE TRIGGER `add_more_bosses` AFTER UPDATE ON `World_Bosses`
-FOR EACH ROW BEGIN
-    DECLARE t_check INT(11);
-    SELECT COUNT(`id`) INTO t_check FROM `World_Bosses` WHERE `boss_health` > 0;
-    IF(t_check < 2)
-    THEN
-        INSERT INTO `World_Bosses` (`monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
-            SELECT m.`id`, POW(10, m.`health_seed`), POW(10, m.`attack_seed`),
-                POW(10, m.`defense_seed`), POW(10, m.`magic_seed`), i.`id`
-                FROM `Monsters` m JOIN (SELECT `id` FROM `Items` ORDER BY RAND() LIMIT 5) AS i
-                ORDER BY RAND() LIMIT 5;
     END IF;
 END;;
 DELIMITER ;

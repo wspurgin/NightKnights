@@ -7,7 +7,7 @@
 #
 # Host: ec2-54-84-248-48.compute-1.amazonaws.com (MySQL 5.5.35-0ubuntu0.12.04.2)
 # Database: night_knights
-# Generation Time: 2014-04-29 14:37:17 +0000
+# Generation Time: 2014-04-30 00:47:53 +0000
 # ************************************************************
 
 
@@ -140,7 +140,10 @@ LOCK TABLES `Characters` WRITE;
 INSERT INTO `Characters` (`id`, `name`, `energy`, `experience`, `level`)
 VALUES
 	(1,'picoriley',250,0,1),
-	(2,'wspurgin',250,195,3);
+	(2,'wspurgin',250,195,3),
+	(3,'Sgt. Mom',250,0,1),
+	(4,'TheDogeFormerlyKnownasMarfleBark',250,0,1),
+	(5,'^C',250,0,1);
 
 /*!40000 ALTER TABLE `Characters` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -155,11 +158,19 @@ LOCK TABLES `Inventories` WRITE;
 INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)
 VALUES
 	(1,2,0),
+	(1,3,0),
+	(2,3,1),
 	(3,2,0),
+	(3,3,0),
+	(4,3,0),
 	(5,2,1),
 	(6,2,0),
+	(6,3,0),
 	(7,1,1),
-	(7,2,0);
+	(7,2,0),
+	(7,3,0),
+	(7,4,1),
+	(7,5,1);
 
 /*!40000 ALTER TABLE `Inventories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -294,7 +305,10 @@ LOCK TABLES `Users` WRITE;
 INSERT INTO `Users` (`id`, `username`, `email`, `password`)
 VALUES
 	(1,'picoriley','acloudy@smu.edu','$2y$10$ewAtLrK7Xojl.fj2330hGumzMCJfR35vn4e7sbNee9Wlvm30yFzvO'),
-	(2,'wspurgin','wspurgin@smu.edu','$2y$10$NV8/U2jLgXuUqVorGiZujugc9KvobJr4qSNZcKH9MIBsq8kbFHwTu');
+	(2,'wspurgin','wspurgin@smu.edu','$2y$10$NV8/U2jLgXuUqVorGiZujugc9KvobJr4qSNZcKH9MIBsq8kbFHwTu'),
+	(3,'Sgt. Mom','a@a.a','$2y$10$K01tm8MFw9zzKUGTbKNX9eqwZX/at6kc8olUO7qk0KwgqLl3qSKLO'),
+	(4,'The Doge Formerly Known as Marf','ebusbee@smu.edu','$2y$10$AnS.ItlKqHvqSoQwmEyk9e7geruz6qfl./eZD7Xv9w/cjfE5bE47G'),
+	(5,'^C','me@theboss.com','$2y$10$/6vepUUa/EcK21KFSHURIuFc5j6cZ4O.xLS0845xLqmf6XDrenINO');
 
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;

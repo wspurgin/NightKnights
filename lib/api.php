@@ -213,9 +213,11 @@ Class Api
             $user = json_decode($body);
             if(empty($user))
                 throw new Exception("Invlaid json '$body'", 1);
+            $user->username = preg_replace('/\s+/', '', $user->username);
             if($user->username == '' || $user->email == '' || $user->password == '')
                 throw new Exception("Invalid Account Information");
             $passwd = new Password($user->password);
+
             $sql = "CALL create_user(:username, :email, :password)";
             $args = array(
                 ":email"    => $user->email,
@@ -223,13 +225,8 @@ Class Api
                 ":password" => $passwd
             );
             
-
-            $this->db->insert($sql, $args);
-            $res = $this->db->select(
-                "SELECT `id` FROM Users WHERE `username`=:username",
-                array(":username" => $user->username),
-                false
-            );
+            // make select instead of insert to get return from procedure
+            $res = $this->db->select($sql, $args, false);
             $user = (object) array_merge( (array)$user, array( 'id' => $res->id ) );
 
             $this->login($user);
