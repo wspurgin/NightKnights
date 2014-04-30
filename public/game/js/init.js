@@ -264,14 +264,15 @@ function initAreaViews()
 
 function initWorldBossView()
 {
+  var bossList = getBosses().bosses;
   worldBossMap = new createjs.Bitmap(preload.getResult("worldBossMap"));
   
   backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function() {switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
   
-  worldBoss1 = getRandomMonster(3);
-  worldBoss2 = getRandomMonster(3);
+  worldBoss1 = bossList[0];
+  worldBoss2 = bossList[1];
   
   worldBoss1Button = new createjs.Bitmap(preload.getResult(worldBoss1.img_url));
   worldBoss1Button.regX = worldBoss1Button.getBounds().width / 2;
@@ -279,7 +280,7 @@ function initWorldBossView()
   worldBoss1Button.setTransform(165, 100);
   createjs.Tween.get(worldBoss1Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   worldBoss1Button.on("click", function() {
-    nightmare = new Nightmare(worldBoss1.name, worldBoss1.health_seed * 100, worldBoss1.attack_seed, worldBoss1.defense_seed);
+    nightmare = new Nightmare(worldBoss1.name, worldBoss1.boss_health, worldBoss1.boss_attack, worldBoss1.boss_defense);
     nightmare.hurtSound = "bossHit";
     nightmare.dieSound = "bossDie";
     nightmare.initSprite(worldBoss1.img_url);
@@ -293,7 +294,7 @@ function initWorldBossView()
   worldBoss2Button.setTransform(500, 100);
   createjs.Tween.get(worldBoss2Button, {loop:true}).to({y:90}, 1000).to({y:100}, 1000).to({y:110}, 1000).to({y:100}, 1000);
   worldBoss2Button.on("click", function() {
-    nightmare = new Nightmare(worldBoss2.name, worldBoss2.health_seed * 100, worldBoss2.attack_seed, worldBoss2.defense_seed);
+    nightmare = new Nightmare(worldBoss2.name, worldBoss2.boss_health, worldBoss2.boss_attack, worldBoss2.boss_defense);
     nightmare.hurtSound = "bossHit";
     nightmare.dieSound = "bossDie";
     nightmare.initSprite(worldBoss2.img_url);

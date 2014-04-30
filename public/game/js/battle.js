@@ -231,21 +231,20 @@ function endCombat(playerWon)
 {
   menuLocked = true;
   menuView.alpha = .5;
+  results = {};
+  results.experience = getExpFromNightmare(nightmare);
+  results.energy = player.energy - playerStartEnergy;
+  saveBattleResults(results.experience, results.energy);
   if (playerWon){
     menuStage.update();
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750);
     player.maxEnergy = player.energy;
-    results = {};
-    results.experience = getExpFromNightmare(nightmare);
-    results.energy = player.energy - playerStartEnergy;
-    saveBattleResults(results.experience, results.energy);
   }
   else {
     encounterCleanup();
     areaView.removeChildAt(2); //Remove the monsters from the area.
     switchTo(gameOverView);
-    player.energy = 250;
-    player.maxEnergy = 250;
+    menuStage.removeAllChildren();
     player.isDead = false;
   }  
 }
