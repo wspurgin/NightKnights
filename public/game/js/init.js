@@ -400,7 +400,7 @@ function initEncounter()
   else if (currentArea == "castle")
     areaNumber = 3;
   var newMonster = getRandomMonster(areaNumber);
-  nightmare = new Nightmare(newMonster.name, newMonster.health_seed, newMonster.attack_seed, newMonster.defense_seed);
+  nightmare = new Nightmare(newMonster.name, newMonster.health_seed + (player.level * 2), newMonster.attack_seed + player.level, newMonster.defense_seed + player.level);
   nightmare.initSprite(newMonster.img_url);
   
   playerStartEnergy = player.energy;
