@@ -1,3 +1,12 @@
+/*
+Colors
+
+Core blue: #000514
+Core blue(50% alpha): rgba(00, 10, 40, 0.5)
+Dark accent blue: #00030D
+Highlight blue: #3E518A;
+*/
+
 html, body
 {
   height: 100%;
@@ -5,8 +14,9 @@ html, body
 
 body
 {
-  background-color: black;
-  background-image: url("/res/twinkle_twinkle_@2X.png");
+  background-color: #000514;
+  /*background-image: url("/res/escheresque_ste_@2X.png");*/
+  background-image: url("/res/triangles_@2X.png");
   color: white;
   font-family: 'VT323', '';
   margin: 0px;
@@ -33,6 +43,13 @@ footer
 {
   height: 100%;
   margin: 0px auto -4em;
+}
+
+#wrapper, #wrapper::after
+{
+  /*#00030D*/
+  background-color: rgba(00, 03, 13, 0.8);
+  /*background-color: rgba(00, 10, 40, 0.5);*/
 }
 
 #footer
@@ -62,7 +79,7 @@ footer
   border-style: solid;
   border-color: white;
   border-width: 2px;
-  background-color: black;
+  background-color: #000514;
   border-radius: 5px;
 
   padding-left: 10px;
