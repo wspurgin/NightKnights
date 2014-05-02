@@ -35,15 +35,15 @@ if(_session('user_id', false))
     <div class="center" id="storydiv">
       <p class="infocaption">The Story So Far</p>
       <div id="blurb" class="infobox words">
-        <p>Welcome to Hiberia, a sleepy little kingdom in a faraway land. Things seem idyllic here, but all is not well: terrible Nightmares have been terrorizing the land, wreaking havoc upon the Hiber Nation.</p>
+        <p>Welcome to Hiberia, a sleepy little kingdom in a faraway land. Things seem idyllic here, but all is not well; terrible Nightmares have been terrorizing the land, wreaking havoc upon the Hiber Nation.</p>
         <br>
         <p>But all is not lost! The bravest and strongest Hiberions have banded together to form the Night Knights!</p>
         <br>
-        <p>With their powerful magic and shining armaments, the Night Knights hope to push back against the rising tide of Nightmares, find out where they're coming from, and take the fight to the Nightmares.</p>
+        <p>With their powerful skills and shining armaments, the Night Knights hope to push back against the rising tide of Nightmares, find out where they're coming from, and take them out for good.</p>
         <br>
-        <p>However, the Knights must expend their Energy to cast spells and defend against the Nightmares, and only a good night's sleep can restore lost Energy.</p>
+        <p>However, the Knights must expend their Energy to perform skills and defend against the Nightmares, and only a good night's sleep can restore lost Energy.</p>
         <br>
-        <p>Rest up, brave Knight: only by sleeping well can you defeat the Nightmares and reclaim Hiberia for the Hiberions... And everyone knows that a sleepless Knight can't fight effectively.</p>
+        <p>Rest up, brave Knight: only by sleeping well can you defeat the Nightmares and reclaim Hiberia for the Hiberions!</p>
       </div>
     </div>
     <div id="push"></div>
