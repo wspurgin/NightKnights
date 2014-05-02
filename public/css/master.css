@@ -59,25 +59,38 @@ footer
   background-color: black;
   border-radius: 5px;
 
-  padding-top: 5px;
-  padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 10px;
 
   display: block;
 }
 
-.infobox input[type="text"], input[type="email"], input[type="password"]
+input[type="text"], input[type="email"], input[type="password"]
 {
   float:right;
   margin-left: auto;
   margin-right: 0px;
 }
 
+input[type="button"], input[type="submit"]
+{
+  font-family: 'VT323', '';
+  font-size: 1.2em;
+  width: 100%;
+}
+
+::-webkit-input-placeholder
+{
+ font-family: 'VT323', '';
+ font-size: 1.2em;
+}
+
 .infobox form ul
 {
   list-style-type: none;
   padding-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .infobox form li
@@ -151,10 +164,4 @@ footer
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.twocol, .center
-{
-  padding-top: 2em;
-  padding-bottom: 2em;
 }
