@@ -95,7 +95,7 @@ footer
 .twocol > div
 {
   display: inline-block;
-  width: 400px;
+  width: 300px;
 }
 
 .left /*Use with .twocol*/
@@ -113,7 +113,7 @@ footer
 .words p
 {
   width: auto;
-  font-size: 2em;
+  font-size: 1.4em;
   text-align: center;
 }
 
