@@ -258,12 +258,17 @@ function initAreaViews()
   itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   itemChest.framerate = 10;
   itemChest.on("click", openItemChest);  
-  itemChest.on("rollover", function(){if(!chestLocked){
+ /* itemChest.on("rollover", function(){if(!chestLocked){
     this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    this.gotoAndPlay(this.currentAnimation);
+    
+  }});
   itemChest.on("rollout", function(){if(!chestLocked){
     this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    this.gotoAndPlay(this.currentAnimation);
+  }});*/
   itemChest.alpha = 0;
   
   areaView.addChild(backButton, itemChest);
@@ -384,12 +389,16 @@ function initEncounterView()
   treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   treasureChest.framerate = 10;
   treasureChest.on("click", openChest);
-  treasureChest.on("rollover", function(){if(!chestLocked){
+  /*treasureChest.on("rollover", function(){if(!chestLocked){
     this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    this.gotoAndPlay(this.currentAnimation);
+  }});
   treasureChest.on("rollout", function(){if(!chestLocked){
     this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    this.gotoAndPlay(this.currentAnimation);
+  }});*/
   treasureChest.alpha = 0;
   
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
