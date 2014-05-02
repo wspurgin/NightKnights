@@ -254,10 +254,12 @@ function initAreaViews()
   backButton.setTransform(10, 10);
   backButton.on("click", function() {areaView.removeChildAt(monsterKey); areaView.removeChildAt(0); switchTo(worldView); createjs.Sound.play("buttonPress");}); //Remove the Monsters, then the background.
   
-  itemChest = new createjs.Sprite(treasureSheet, "closed");
+  itemChest = new createjs.Sprite(treasureSheet, "itemclosed");
   itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   itemChest.framerate = 10;
   itemChest.on("click", openItemChest);
+  itemChest.on("rollover", function(){if(!chestLocked){this.alpha = .8;}});
+  itemChest.on("rollout", function(){if(!chestLocked){this.alpha = 1;}});
   itemChest.alpha = 0;
   
   areaView.addChild(backButton, itemChest);
@@ -378,6 +380,8 @@ function initEncounterView()
   treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   treasureChest.framerate = 10;
   treasureChest.on("click", openChest);
+  treasureChest.on("rollover", function(){if(!chestLocked){this.alpha = .8;}});
+  treasureChest.on("rollout", function(){if(!chestLocked){this.alpha = 1;}});
   treasureChest.alpha = 0;
   
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
@@ -611,6 +615,7 @@ function openChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
+    this.alpha = 1;
     playMusic("itemFind");
     bgMusic.setVolume(1);
     loot.gotoAndPlay("experience");
@@ -643,9 +648,10 @@ function openItemChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
+    this.alpha = 1;
     playMusic("itemFind");
     bgMusic.setVolume(1);
-    itemChest.gotoAndPlay("open");
+    itemChest.gotoAndPlay("itemopen");
     var item = getRandomItem();
     if (item === "experience")
       saveBattleResults(parseInt((calculateNextLevel() - calculateExpTo(player.level - 1))*.25 + 10),0); 
@@ -658,7 +664,7 @@ function openItemChest(event) {
       initInventory();
       playMusic("menuMusic");
       itemChest.alpha = 0;
-      itemChest.gotoAndPlay("closed");
+      itemChest.gotoAndPlay("itemclosed");
       areaView.removeChild(loot);
     });
   }

@@ -81,7 +81,11 @@ function initSpriteSheets () {
     "animations":
       {
         "closed": [0],
-        "open": [1]
+        "hover": [0, 2, "hover"],
+        "open": [3],
+        "itemclosed": [4],
+        "itemhover": [4, 6, "hover"],
+        "itemopen": [7]
       },
         "images": [preload.getResult("treasureChest")],
         "frames": {width:150, height:150}
