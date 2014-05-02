@@ -108,7 +108,8 @@ input[type="button"], input[type="submit"]
 .twocol > div
 {
   display: inline-block;
-  width: 300px;
+  width: 400px;
+  padding-top: 2em;
 }
 
 .left /*Use with .twocol*/
