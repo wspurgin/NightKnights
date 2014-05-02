@@ -106,7 +106,8 @@ function Player(name, level, energy, experience, weapon)
   
   this.animateHP = function (damage) {
     playerhp.text = "x" + this.energy;
-    createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250);
+    if (damage !== 0)
+      createjs.Tween.get(fadeToBlack).to({alpha: .5}, 250).wait(250).to({alpha: 0}, 250);
     if(player.isDead)
     {
       fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
@@ -168,10 +169,11 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
   this.animateHP = function (damage) {
     nightmareDamageText.text = (-1 * damage);
     createjs.Tween.get(nightmareDamageText).to({alpha: 1, y: nightmareDamageText.y - 20}, 1000).call(function(){
-    nightmareDamageText.y += 20;
-    nightmareDamageText.alpha = 0;
+      nightmareDamageText.y += 20;
+      nightmareDamageText.alpha = 0;
     });
-    createjs.Tween.get(nightmare.sprite).call(this.hurtOn).wait(300).call(this.hurtOff).wait(300).call(this.hurtOn).wait(300).call(this.hurtOff);
+    if (damage !== 0)
+      createjs.Tween.get(nightmare.sprite).call(this.hurtOn).wait(300).call(this.hurtOff).wait(300).call(this.hurtOn).wait(300).call(this.hurtOff);
     createjs.Tween.get(hpBarSmall).to({scaleX:(this.energy/this.maxEnergy)}, 1000).call(function() {
       if(nightmare.isDead)
         createjs.Tween.get(nightmare.sprite).to({scaleX:0, scaleY:0}, 750).call(endCombat, [true]);

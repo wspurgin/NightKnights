@@ -257,9 +257,13 @@ function initAreaViews()
   itemChest = new createjs.Sprite(treasureSheet, "itemclosed");
   itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   itemChest.framerate = 10;
-  itemChest.on("click", openItemChest);
-  itemChest.on("rollover", function(){if(!chestLocked){this.alpha = .8;}});
-  itemChest.on("rollout", function(){if(!chestLocked){this.alpha = 1;}});
+  itemChest.on("click", openItemChest);  
+  itemChest.on("rollover", function(){if(!chestLocked){
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+  itemChest.on("rollout", function(){if(!chestLocked){
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
   itemChest.alpha = 0;
   
   areaView.addChild(backButton, itemChest);
@@ -380,8 +384,12 @@ function initEncounterView()
   treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   treasureChest.framerate = 10;
   treasureChest.on("click", openChest);
-  treasureChest.on("rollover", function(){if(!chestLocked){this.alpha = .8;}});
-  treasureChest.on("rollout", function(){if(!chestLocked){this.alpha = 1;}});
+  treasureChest.on("rollover", function(){if(!chestLocked){
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
+  treasureChest.on("rollout", function(){if(!chestLocked){
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); }});
   treasureChest.alpha = 0;
   
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
@@ -615,7 +623,6 @@ function openChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
-    this.alpha = 1;
     playMusic("itemFind");
     bgMusic.setVolume(1);
     loot.gotoAndPlay("experience");
@@ -648,7 +655,6 @@ function openItemChest(event) {
   if (!chestLocked)
   {
     chestLocked = true;
-    this.alpha = 1;
     playMusic("itemFind");
     bgMusic.setVolume(1);
     itemChest.gotoAndPlay("itemopen");
@@ -659,6 +665,8 @@ function openItemChest(event) {
     areaView.addChild(loot);
     createjs.Tween.get(loot).to({alpha: 1, y: loot.y - 20}, 1000).wait(1000).call(function(){
       loot.y += 20;
+      areaView.removeChildAt(monsterKey); 
+      areaView.removeChildAt(0);
       switchTo(worldView);
       chestLocked = false;
       initInventory();
