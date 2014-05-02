@@ -51,14 +51,14 @@
 #modalInventory::-webkit-scrollbar {
     width: 12px;
 }
- 
+
 /* Track */
 #modalInventory::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
     -webkit-border-radius: 10px;
     border-radius: 10px;
 }
- 
+
 /* Handle */
 #modalInventory::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
@@ -89,3 +89,10 @@
 .close:hover { background: #080410; } /*old was #00d9ff*/
 
 #knightinventory { border-collapse: separate; }
+
+#changeWeapon /*only here as a hotfix, really*/
+{
+    font-family: 'VT323', '';
+    font-size: 1.2em;
+    width: 100%;
+}

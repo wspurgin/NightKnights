@@ -9,7 +9,7 @@ function setSessionInfo() {
 
     // attach weapon specific info
     inventory = getCharacterInventory();
-    console.log(inventory);
+    // console.log(inventory);
     if (!isEmpty(inventory)) {
         var container = $("#knightinventory");
         for (item in inventory) {
@@ -195,3 +195,12 @@ function isEmpty(obj) {
     }
     return true
 }
+
+$(document).ready(function() {
+
+    //I cannot believe this was the simplest way to do this. buttons hate me.
+    $('#changeWeapon').click(function() {
+        window.location.hash='change';
+    });
+
+});

@@ -51,6 +51,12 @@ footer
   font-size: 2em;
 }
 
+.infobox > div
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
 .infobox
 {
   border-style: solid;
@@ -61,6 +67,8 @@ footer
 
   padding-left: 10px;
   padding-right: 10px;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
 
   display: block;
 }

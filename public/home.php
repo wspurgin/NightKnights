@@ -41,7 +41,7 @@
           <div>Attack: <span id="weaponAttack"></span></div>
           <div>Defense: <span id="weaponDefense"></span></div>
           <div>Magic: <span id="weaponMagic"></span></div>
-          <div><button type="button" href="#change" id="changeWeapon"><a href="#change">Change Weapon</a></button></div>
+          <div><button id="changeWeapon">Change Equipped Weapon</button></div>
           <div id="change" class="modalDialog">
             <div>
               <a href="#close" title="Close" class="close">X</a>
