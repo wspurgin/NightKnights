@@ -222,7 +222,7 @@ function initWorldView()
   lockList.push(castle);
   
   worldBossButton = new createjs.Sprite(worldBossSelectSheet, "default");
-  worldBossButton.setTransform(700, 10);
+  worldBossButton.setTransform(450, 10);
   worldBossButton.framerate = 10;
   worldBossButton.on("rollover", stageOver);
   worldBossButton.on("rollout", stageOut);
@@ -236,7 +236,7 @@ function initWorldView()
   worldBossText = new createjs.Text("World\nBosses", "22px VT323", "#000000");
   worldBossText.maxWidth = 1000;
   worldBossText.textAlign = "center";
-  worldBossText.x = 725;
+  worldBossText.x = 475;
   worldBossText.y = 50;
   
   stageSelect.addChild(forest, mountain, castle, worldBossButton, worldBossText);  
@@ -526,19 +526,22 @@ function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, cl
   if (textColor === null)
     textColor = "#000000";
   
-  this.button = new createjs.Bitmap(preload.getResult(imageName));
-  this.button.setTransform(x, y, scaleX, scaleY);
-  this.button.on("click", function(){ if (!menuLocked){clickEvent();}});
+  var button = new createjs.Bitmap(preload.getResult(imageName));
+  button.setTransform(x, y, scaleX, scaleY);
+  
+  button.on("click", function(){ if (!menuLocked){clickEvent();}});
+  button.on("rollover", tintButton);
+  button.on("rollout", untintButton);
   
   
-  this.text = new createjs.Text(buttonText, textSize + " VT323", textColor);
-  this.text.setTransform(x, y, scaleX, scaleY);
-  this.text.textAlign = "center";
-  this.text.textBaseline = "middle";
-  this.text.x += (this.button.getBounds().width / 2) * this.button.scaleX;
-  this.text.y += (this.button.getBounds().height / 2) * this.button.scaleY;
+  var text = new createjs.Text(buttonText, textSize + " VT323", textColor);
+  text.setTransform(x, y, scaleX, scaleY);
+  text.textAlign = "center";
+  text.textBaseline = "middle";
+  text.x += (button.getBounds().width / 2) * button.scaleX;
+  text.y += (button.getBounds().height / 2) * button.scaleY;
   
-  this.text.on("click", function(){ if (!menuLocked){clickEvent();}});
+  text.on("click", function(){ if (!menuLocked){clickEvent();}});
   
   
   buttonContainer.addChild(button, text);
@@ -553,6 +556,24 @@ function swapMenu(oldView, newView){
   menuView.removeChild(oldView); 
   menuView.addChild(newView);
   menuStage.update();
+}
+
+function tintButton(event) {
+  if (!menuLocked)
+  {
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,255,0,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    menuStage.update();
+  }
+}
+
+function untintButton(event) {
+  if (!menuLocked)
+  {
+    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
+    menuStage.update();
+  }
 }
 
 function stageOver(event) {
