@@ -169,13 +169,15 @@ Class Api
             try
             {
                 $sql = "SELECT * FROM `Characters` WHERE `id`=:id";
-                $user = $this->db->select(
+                $character = $this->db->select(
                     $sql,
                     array(":id" => $_SESSION['user_id']),
                     false # to get only 1 row (as this should only match 1 row)
                 );
-                if(empty($user))
+                if(empty($character))
                     $app->halt(404);
+                $response['success'] = true;
+                $response['character'] = $character;
             }
             catch(PDOException $e)
             {
@@ -199,7 +201,7 @@ Class Api
                 
                 $app->halt(500, json_encode($response));
             }
-            echo json_encode($user);
+            echo json_encode($response);
         }
     }
 
@@ -464,46 +466,6 @@ Class Api
         echo json_encode($response);
     }
     
-    public function getCharacter()
-    {
-        $app = \Slim\Slim::getInstance();
-        $response = array();
-        if (!$this->session())
-            $app->halt(404);
-        try
-        {
-            $sql = "SELECT name, energy, experience, level FROM `Characters`
-                WHERE Characters.id=:id";
-
-            $character = $this->db->select($sql, array(":id" => $_SESSION['user_id']), false);
-            $response['success'] = true;
-            $response['character'] = $character;
-        }
-        catch(PDOException $e)
-        {
-            $app->log->error($e->getMessage());
-            $response['success'] = false;
-
-            // while still debugging
-            $response['message'] = $e->getMessage();
-            // $response['message'] = "Errors occured";
-            
-            $app->halt(404, json_encode($response));
-        }
-        catch(Exception $e)
-        {
-            $app->log->error($e->getMessage());
-            $response['success'] = false;
-
-            // while still debugging
-            $response['message'] = $e->getMessage();
-            // $response['message'] = "Errors occured";
-            
-            $app->halt(500, json_encode($response));
-        }
-        echo json_encode($response);
-    }
-
     public function getCharacterInventory()
     {
         $app = \Slim\Slim::getInstance();
