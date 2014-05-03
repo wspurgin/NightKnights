@@ -618,6 +618,9 @@ function buttonFactory(x, y, scaleX, scaleY, imageName, buttonText, textSize, cl
   button.on("click", function () {
     if (!menuLocked) {
       clickEvent();
+      this.filters = [new createjs.ColorFilter(1, 1, 1, 1, 0, 0, 0, 0)];
+      this.cache(0, 0, this.getBounds().width, this.getBounds().height);
+      menuStage.update();
     }
   });
   button.on("rollover", tintButton);

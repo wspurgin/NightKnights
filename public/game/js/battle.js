@@ -59,7 +59,7 @@ function Combatant()
       this.die();
     }
     if(!this.isDead)
-      log(this.name + " took " + damage + " damage and has " + this.energy + " left.", this.textColor);
+      log(this.name + " took " + damage + " damage", this.textColor);
     createjs.Sound.play(this.hurtSound);
     this.animateHP(damage);
   }
@@ -155,6 +155,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
     nightmare.sprite.regY = nightmare.sprite.getBounds().height / 2;
     //Idle animation. This is what makes the nightmare bob up and down.
     createjs.Tween.get(nightmare.sprite, {loop:true}).to({y:160}, 1000).to({y:170}, 1000).to({y:180}, 1000).to({y:170}, 1000);
+    setHelp(nightmare.sprite, nightmare.name, "Health: " + nightmare.energy + "/" + nightmare.maxEnergy + "\n");
   }
   
   this.die = function () {
@@ -315,6 +316,26 @@ function endCombat(playerWon)
     saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy);
   }
   if (playerWon){
+    if (inWorldBossEncounter)
+    {
+      menuLocked = true;
+      menuView.alpha = .5;
+      menuStage.update();
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
+      createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(function () {
+        encounterCleanup();
+        switchTo(worldView);
+        runAway.alpha = 0;
+        menuLocked = false;
+        inWorldBossEncounter = false;
+        initInventory();
+        playMusic("menuMusic");
+        fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+        fadeToBlack.cache(0, 0, 765, 340);
+      });
+      return;
+    }
     menuStage.update();
     chestLocked = true;
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750).call(function(){chestLocked = false});
