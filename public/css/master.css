@@ -1,10 +1,10 @@
 /*
 Colors
 
-Core blue: #000514
-Core blue(50% alpha): rgba(00, 10, 40, 0.5)
+Core blue (hex): #000514
+Core blue (dec): rgba(00, 10, 40, 0.5)
 Dark accent blue: #00030D
-Highlight blue: #3E518A;
+Light accent blue: #182A61;
 */
 
 html, body
@@ -15,11 +15,10 @@ html, body
 body
 {
   background-color: #000514;
-  /*background-image: url("/res/escheresque_ste_@2X.png");*/
   background-image: url("/res/triangles_@2X.png");
   color: white;
-  font-family: 'VT323', ''
-;  margin: 0px;
+  font-family: 'VT323', '';
+  margin: 0px;
   padding: 0px;
 }
 
@@ -65,7 +64,6 @@ button, input[type="submit"], input[type="button"]
 
 #wrapper, #wrapper::after
 {
-  /*#00030D*/
   background-color: rgba(00, 03, 13, 0.8);
 }
 
@@ -74,6 +72,12 @@ button, input[type="submit"], input[type="button"]
   text-align: center;
   background-color: #000514;
   padding-top: 0.5em;
+  border-color: white;
+  border-style: none;
+  border-top: 2px solid;
+  border-right: 0px;
+  border-bottom: 0px;
+  border-left: 0px;
 }
 
 #footer, #push
@@ -195,6 +199,11 @@ a
   padding-right: 0px;
   text-align: justify;
   background-color: #000514;
+  border-color: white;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 2px solid;
+  border-left: 0px;
 }
 
 #navbar::after
