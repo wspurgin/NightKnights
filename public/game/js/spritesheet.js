@@ -26,7 +26,7 @@ function initSpriteSheets () {
         "highlighted": [1, 3, "highlighted"]        
       },
         "images": [preload.getResult("worldBossButtonSprites")],
-        "frames": {width:50, height:50, count:4}
+        "frames": {width:200, height:200, count:4}
   });
   
   nightmareSelectSheet = new createjs.SpriteSheet({
