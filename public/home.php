@@ -39,8 +39,8 @@
         <div class="infobox" id="accountpasswordreset">
           <form method="" id="passwordresetform">
             <ul>
-              <li><label for="newpassword">New Password: </label><input type="password" name="password" required></li>
-              <li><label for="repeatpassword">Repeat: </label><input type="password" name="repeatpassword" required></li>
+              <li><label for="password">New Password: </label><input type="password" id="password" name="password" required></li>
+              <li><label for="repeatpassword">Repeat: </label><input type="password" id="repeatpassword" name="repeatpassword" required></li>
               <li><input type="submit" id="changepassword" value="Change Password"></li>
             </ul>
           </form>

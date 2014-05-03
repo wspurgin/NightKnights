@@ -2,12 +2,15 @@ $(document).ready(function() {
     $("#passwordresetform").submit(function(event) {
         event.preventDefault();
         var form = $(this);
-        if (form.children("input[name='password']").val() == form.children("input[name='repeatpassword']").val()) {
+        var data = formToJSON(form);
+        var check = JSON.parse(data);
+
+        if (check.password === check.repeatpassword && check.password != undefined) {
             $.ajax({
                 url: '/api/user/password',
                 type: 'PATCH',
                 dataType: 'json',
-                data: formToJSON($(this)),
+                data: data,
                 contentType: 'application/json; charset=utf-8',
 
                 error: function(res) {
@@ -42,7 +45,7 @@ $(document).ready(function() {
 
             }); //end of AJAX call
         } else {
-            alert("Passwords didn't matach.");
+            alert("Passwords didn't match.");
         }
     })
 });

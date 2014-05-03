@@ -863,10 +863,10 @@ Class Api
             $body = $app->request->getBody();
             $user = json_decode($body);
             if(empty($user))
-                throw new Exception("Invlaid json '$body'", 1);
+                throw new Exception("Invalid json '$body'", 1);
             $sql = "UPDATE `Users` SET `password`=:password WHERE `id`=:id";
             if ($user->password == '')
-                throw new Exception("Passwrod cannot be blank.");
+                throw new Exception("Password cannot be blank.");
             $args = array(
                 ":password" => new Password($user->password),
                 ":id" => $_SESSION['user_id']
@@ -874,7 +874,7 @@ Class Api
             $this->db->update($sql, $args);
 
             $response['success'] = true;
-            $response['message'] = "Password has been updated successfully";
+            $response['message'] = "Password has been updated successfully.";
 
         }
         catch(PDOException $e)

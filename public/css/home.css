@@ -1,13 +1,3 @@
-#knightinventory
-{
-    padding: 0px 0px 0px 0px;
-}
-
-#knightinventory > div
-{
-    border-collapse: collapse;
-}
-
 .modalDialog {
     position: absolute;
     top: 0;
