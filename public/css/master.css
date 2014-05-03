@@ -22,13 +22,7 @@ body
   padding: 0px;
 }
 
-p, hr
-{
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
-
-span
+span, p
 {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -64,7 +58,7 @@ button, input[type="submit"], input[type="button"]
 
 #wrapper, #wrapper::after
 {
-  background-color: rgba(00, 03, 13, 0.8);
+  background-color: rgba(00, 03, 13, 0.7);
 }
 
 #footer
@@ -95,6 +89,18 @@ button, input[type="submit"], input[type="button"]
 {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+}
+
+.infobox span
+{
+  float:right;
+}
+
+.infobox canvas
+{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 .infobox

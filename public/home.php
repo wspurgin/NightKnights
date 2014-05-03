@@ -11,6 +11,7 @@
   <script src="game/js/apiLogic.js"></script>
   <script src="js/weapon.js"></script>
   <script src="js/home.js"></script>
+  <script src="js/account.js"></script>
 </head>
 
 <body onload="main();">
@@ -33,7 +34,7 @@
       </div>
     </div>
 
-    <div class="home-right right">
+    <div class="right" id="homeright">
         <p class="infocaption">Current Weapon</p>
         <div id="knightweapon" class="infobox">
           <canvas id="weaponCanvas" width="64" height="64"></canvas>
