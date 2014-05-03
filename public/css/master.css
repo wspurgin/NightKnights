@@ -42,9 +42,12 @@ footer
   padding-top: 2em;
 }
 
-#navbar, #footer
+.heading
 {
-  padding-top: 0.5em;
+  font-size: 5em;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 #wrapper
@@ -63,6 +66,7 @@ footer
 {
   text-align: center;
   background-color: #000514;
+  padding-top: 0.5em;
 }
 
 #footer, #push
@@ -179,27 +183,11 @@ a
 #navbar
 {
   min-width: 1000px;
-  height: 3em;
-  padding-bottom: 0.5em;
+  height: 60px;
   padding-left: 0px;
   padding-right: 0px;
   text-align: justify;
   background-color: #000514;
-
-}
-
-#navbar > div
-{
-  width: 200px;
-  height: 3em;
-  text-align: center;
-  margin-left: 0px;
-  padding-left: 2%;
-  margin-right: 0px;
-  padding-right: 2%;
-  display: inline-block;
-  white-space: nowrap;
-  font-size: 3em;
 }
 
 #navbar::after
@@ -209,16 +197,38 @@ a
   display: inline-block;
 }
 
-#navbar p
+.navitem:first-child
+{
+  border-left: 0px;
+}
+
+.navitem:last-child
+{
+  border-right: 0px;
+}
+
+.navitem
+{
+  width: auto;
+  height: 60px;
+  margin: 0px 0px 0px 0px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  text-align: center;
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 3em;
+
+  border-collapse: collapse;
+  border-style: solid;
+  border-color: white;
+  border-top: 0px;
+  border-bottom: 0px;
+}
+
+.navitem p
 {
   margin-top: 0px;
   margin-bottom: 0px;
-}
-
-.heading
-{
-  font-size: 5em;
-  text-align: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
