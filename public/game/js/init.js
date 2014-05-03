@@ -40,7 +40,7 @@ function initStatsView() {
   experienceText.x = 200;
   experienceText.y = 140;
 
-  equipButton = buttonFactory(500, 200, .5, .5, "bigButton", "Equips >", "100px", function () {
+  equipButton = buttonFactory(550, 225, .5, .5, "bigButton", "Equips >", "100px", function () {
     switchToMenu(inventoryView);
   }, "#000000");
 
@@ -88,11 +88,13 @@ function checkForEquip() {
 function initInventoryView() {
   inventoryView.removeAllChildren();
 
-  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  var backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function () {
     switchToMenu(statsView);
-  });
+  });  
+  backButton.on("rollover", function(){this.alpha = .8; menuStage.update();});
+  backButton.on("rollout", function(){this.alpha = 1; menuStage.update();});
 
   inventoryView.addChild(backButton);
 
@@ -242,7 +244,7 @@ function initAreaViews() {
   mountainMap = new createjs.Bitmap(preload.getResult("mountainMap"));
   castleMap = new createjs.Bitmap(preload.getResult("castleMap"));
 
-  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  var backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function () {
     areaView.removeChildAt(monsterKey);
@@ -250,6 +252,8 @@ function initAreaViews() {
     switchTo(worldView);
     createjs.Sound.play("buttonPress");
   }); //Remove the Monsters, then the background.
+  backButton.on("rollover", function(){this.alpha = .8;});
+  backButton.on("rollout", function(){this.alpha = 1;});
 
   itemChest = new createjs.Sprite(treasureSheet, "itemclosed");
   itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
@@ -276,13 +280,15 @@ function initWorldBossView() {
   var bossList = getBosses().bosses;
   worldBossMap = new createjs.Bitmap(preload.getResult("worldBossMap"));
 
-  backButton = new createjs.Bitmap(preload.getResult("backButton"));
+  var backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function () {
     switchTo(worldView);
     createjs.Sound.play("buttonPress");
   }); //Remove the Monsters, then the background.
-
+  backButton.on("rollover", function(){this.alpha = .8;});
+  backButton.on("rollout", function(){this.alpha = 1;});
+  
   worldBoss1 = bossList[0];
   worldBoss2 = bossList[1];
 
