@@ -49,12 +49,12 @@ footer
 {
   /*#00030D*/
   background-color: rgba(00, 03, 13, 0.8);
-  /*background-color: rgba(00, 10, 40, 0.5);*/
 }
 
 #footer
 {
   text-align: center;
+  background-color: #000514;
 }
 
 #footer, #push
@@ -156,32 +156,50 @@ input[type="button"], input[type="submit"]
   text-align: center;
 }
 
-#navbar
+a
 {
-  height: 3em;
-  text-align: center;
-  padding-bottom: 0.5em;
+  color: white;
+  text-decoration: none;
 }
 
-#navbar div
+#navbar
 {
+  min-width: 1000px;
+  height: 3em;
+  padding-bottom: 0.5em;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: justify;
+  background-color: #000514;
+
+}
+
+#navbar > div
+{
+  min-width: 10%;
+  margin-left: 0px;
+  padding-left: 2%;
+  margin-right: 0px;
+  padding-right: 2%;
   display: inline-block;
+  white-space: nowrap;
   font-size: 3em;
+}
+
+#navbar:first-child
+{
+  padding-left: 0px;
+}
+
+#navbar:last-child
+{
+  padding-right: 0px;
 }
 
 #navbar p
 {
   margin-top: 0px;
   margin-bottom: 0px;
-}
-
-#navbar > div:after
-{
-  content: '';
-  width: 100%;
-  display: inline-block;
-  font-size: 0px;
-  line-height: 0px;
 }
 
 .heading
