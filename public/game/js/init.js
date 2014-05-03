@@ -217,7 +217,7 @@ function initWorldView() {
   lockList.push(castle);
 
   worldBossButton = new createjs.Sprite(worldBossSelectSheet, "default");
-  worldBossButton.setTransform(450, 10);
+  worldBossButton.setTransform(450, 10, .5, .5);
   worldBossButton.framerate = 10;
   worldBossButton.on("rollover", stageOver);
   worldBossButton.on("rollout", stageOut);
@@ -228,11 +228,11 @@ function initWorldView() {
   });
   setHelp(worldBossButton, "World Boss", "Fight a huge boss Nightmare with the help of the NightKnights community!");
 
-  worldBossText = new createjs.Text("World\nBosses", "22px VT323", "#000000");
+  worldBossText = new createjs.Text("World Bosses", "22px VT323", "#000000");
   worldBossText.maxWidth = 1000;
   worldBossText.textAlign = "center";
-  worldBossText.x = 475;
-  worldBossText.y = 50;
+  worldBossText.x = 500;
+  worldBossText.y = 110;
 
   stageSelect.addChild(forest, mountain, castle, worldBossButton, worldBossText);
 

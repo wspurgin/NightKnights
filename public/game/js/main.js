@@ -97,7 +97,7 @@ function main() {
             {src:"sprites/Defence.png", id:"defence"},
             {src:"sprites/Knight.png", id:"knight"},
             {src:"sprites/Weapons.png", id:"weaponsSprites"}, 
-            {src:"sprites/worldBossButton.png", id:"worldBossButtonSprites"},
+            {src:"sprites/worldBossPortal.png", id:"worldBossButtonSprites"},
             {src:"sprites/selectButton.png", id:"selectButton"},
             {src:"sprites/runAway.png", id:"runAway"},     
             
