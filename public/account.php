@@ -30,7 +30,7 @@
         <form method="" id="passwordresetform">
           <ul>
             <li><label for="newpassword">New Password: </label><input type="password" name="password" required></li>
-            <li><label for="repeatpassword">Repeat New Password: </label><input type="password" name="repeatpassword" required></li>
+            <li><label for="repeatpassword">Repeat: </label><input type="password" name="repeatpassword" required></li>
             <li><input type="submit" id="changepassword" value="Change Password"></li>
           </ul>
         </form>

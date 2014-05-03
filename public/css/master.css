@@ -42,6 +42,13 @@ footer
   padding-top: 2em;
 }
 
+button, input[type="submit"], input[type="button"]
+{
+  background-color: #182A61;
+  color: white;
+  border-style: 1px solid white;
+}
+
 .heading
 {
   font-size: 5em;
