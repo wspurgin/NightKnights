@@ -3,6 +3,16 @@
   vertical-align: top;
 }
 
+#knightinventory
+{
+    padding: 0px 0px 0px 0px;
+}
+
+#knightinventory > div
+{
+    border-collapse: collapse;
+}
+
 .modalDialog {
     position: absolute;
     top: 0;
@@ -87,8 +97,6 @@
 }
 
 .close:hover { background: #080410; } /*old was #00d9ff*/
-
-#knightinventory { border-collapse: separate; }
 
 #changeWeapon /*only here as a hotfix, really*/
 {

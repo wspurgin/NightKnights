@@ -18,8 +18,8 @@ body
   /*background-image: url("/res/escheresque_ste_@2X.png");*/
   background-image: url("/res/triangles_@2X.png");
   color: white;
-  font-family: 'VT323', '';
-  margin: 0px;
+  font-family: 'VT323', ''
+;  margin: 0px;
   padding: 0px;
 }
 
@@ -27,6 +27,14 @@ p, hr
 {
   margin-top: 0px;
   margin-bottom: 0px;
+}
+
+span
+{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
 }
 
 footer
@@ -90,6 +98,12 @@ footer
   display: block;
 }
 
+.infobox p
+{
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+
 input[type="text"], input[type="email"], input[type="password"]
 {
   float:right;
@@ -133,7 +147,7 @@ input[type="button"], input[type="submit"]
 .twocol > div
 {
   display: inline-block;
-  width: 400px;
+  width: 300px;
   padding-top: 2em;
 }
 
@@ -176,7 +190,9 @@ a
 
 #navbar > div
 {
-  min-width: 10%;
+  width: 200px;
+  height: 3em;
+  text-align: center;
   margin-left: 0px;
   padding-left: 2%;
   margin-right: 0px;
@@ -186,14 +202,11 @@ a
   font-size: 3em;
 }
 
-#navbar:first-child
+#navbar::after
 {
-  padding-left: 0px;
-}
-
-#navbar:last-child
-{
-  padding-right: 0px;
+  content: '';
+  width: 100%;
+  display: inline-block;
 }
 
 #navbar p
