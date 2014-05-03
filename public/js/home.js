@@ -117,7 +117,6 @@ function changeButtonModal(event) {
                 for (var i in inventory) {
                     if (item.item_id == inventory[i].id) {
                         changeWeapon(inventory[i], $("#knightweapon"));
-                        location.reload();
                         break;
                     }
                 }
@@ -200,7 +199,7 @@ $(document).ready(function() {
 
     //I cannot believe this was the simplest way to do this. buttons hate me.
     $('#changeWeapon').click(function() {
-        window.location.hash='change';
+        window.location.hash = 'change';
     });
 
 });
