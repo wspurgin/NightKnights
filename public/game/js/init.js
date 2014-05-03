@@ -440,6 +440,7 @@ function initEncounterView() {
   
   
   runAway = buttonFactory(10, 10, 0.25, 0.25, "bigButton", "< Run!", "80px", function () {
+    createjs.Sound.play("runAwaySound");
     log(player.name + " ran away from battle!", "#0058EB");
     log(player.name + " did a total of " +  (nightmare.maxEnergy - nightmare.energy) + " damage!", "#0058EB");
     menuLocked = true;
