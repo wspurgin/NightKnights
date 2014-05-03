@@ -15,26 +15,40 @@
 </head>
 
 <body onload="main();">
-<div id="wrapper">
-  <?php include("modules/navbar.html"); ?>
+  <div id="wrapper">
+    <?php include("modules/navbar.html"); ?>
 
-  <div class="twocol" id="homewrapper">
-    <div class="left" id="homeleft">
+    <div class="twocol" id="homewrapper">
+      <div class="left" id="homeleft">
 
-      <p class="infocaption">Knight Stats</p>
-      <div id="knightstats" class="infobox">
-        <div>Energy: <div class="infocontent" id="Energy"></div></div>
-        <div>Level: <div class="infocontent" id="Level"></div></div>
-        <div>Experience: <div class="infocontent" id="Experience"></div></div>
-        <div>XP To Next Level: <div class="infocontent" id="xpToNextLevel"></div></div>
+        <p class="infocaption">Knight Stats</p>
+        <div id="knightstats" class="infobox">
+          <div>Energy: <div class="infocontent" id="Energy"></div></div>
+          <div>Level: <div class="infocontent" id="Level"></div></div>
+          <div>Experience: <div class="infocontent" id="Experience"></div></div>
+          <div>XP To Next Level: <div class="infocontent" id="xpToNextLevel"></div></div>
+        </div>
+
+        <p class="infocaption">My Account</p>
+        <div class="infobox" id="accountstats">
+          <div>Username: <div class="infocontent"><?php echo $_SESSION['username']; ?></div></div>
+          <div>Email: <div class="infocontent" ><?php echo $_SESSION['email']; ?></div></div>
+        </div>
+
+        <p class="infocaption">Change Password</p>
+        <div class="infobox" id="accountpasswordreset">
+          <form method="" id="passwordresetform">
+            <ul>
+              <li><label for="newpassword">New Password: </label><input type="password" name="password" required></li>
+              <li><label for="repeatpassword">Repeat: </label><input type="password" name="repeatpassword" required></li>
+              <li><input type="submit" id="changepassword" value="Change Password"></li>
+            </ul>
+          </form>
+        </div>
       </div>
 
-      <p class="infocaption">Inventory</p>
-      <div class="infobox" id="knightinventory">
-      </div>
-    </div>
+      <div class="right" id="homeright">
 
-    <div class="right" id="homeright">
         <p class="infocaption">Current Weapon</p>
         <div id="knightweapon" class="infobox">
           <canvas id="weaponCanvas" width="64" height="64"></canvas>
@@ -43,23 +57,18 @@
           <div>Defense: <div class="infocontent" id="weaponDefense"></div></div>
           <div>Magic: <div class="infocontent" id="weaponMagic"></div></div>
           <div><button id="changeWeapon">Change Equipped Weapon</button></div>
-          <div id="change" class="modalDialog">
-            <div>
-              <a href="#close" title="Close" class="close">X</a>
-              <h2>Pick Weapon</h2>
-              <div id="modalInventory" class="infobox"></div>
-            </div>
-          </div>
         </div>
+
         <p class="infocaption">Messages</p>
         <div id="knightmessages" class="infobox">
           <div>Messages: <div class="infocontent" id="messageContent">No Unread Messages</div></div>
         </div>
-      </div>
-  </div>
-<div id="push"></div>
-</div>
-  <?php include("modules/copyright.html"); ?>
 
+      </div>
+    </div>
+    <div id="push"></div>
+  </div>
+  <?php include("modules/copyright.html"); ?>
+  <?php include('modules/changeInventory.html'); ?>
 </body>
 </html>
