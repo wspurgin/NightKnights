@@ -192,6 +192,7 @@ function Nightmare(name, energy, attackStat, defenceStat, spriteName)
           nightmare.attack(player);
       }
     });
+    setHelp(nightmare.sprite, nightmare.name, "Health: " + nightmare.energy + "/" + nightmare.maxEnergy + "\n");
   }
 }
 

@@ -352,6 +352,7 @@ function initWorldBossView() {
 function initWorldBossEncounter() {
   playerStartEnergy = player.energy;
   inWorldBossEncounter = true;
+  runAway.alpha = 1;
   background.gotoAndPlay("world" + Math.floor((Math.random() * 4)));
   playerhp.text = "x" + player.energy;
   hpBarSmall.setTransform(bgCanvas.width / 2 - 100, 50, 1, 1);
@@ -436,11 +437,37 @@ function initEncounterView() {
   loot = new createjs.Sprite(weaponsSheet, "dagger0");
   loot.setTransform(bgCanvas.width / 2 - 32, bgCanvas.height / 2 - 64, 2, 2);
   loot.alpha = 0;
+  
+  
+  runAway = buttonFactory(10, 10, 0.25, 0.25, "bigButton", "< Run!", "80px", function () {
+    log(player.name + " ran away from battle!", "#0058EB");
+    log(player.name + " did a total of " +  (nightmare.maxEnergy - nightmare.energy) + " damage!", "#0058EB");
+    menuLocked = true;
+    menuView.alpha = .5;
+    menuStage.update();
+    fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
+    fadeToBlack.cache(0, 0, 765, 340);
+    createjs.Tween.get(fadeToBlack).to({alpha: 1}, 2000).call(function () {
+      encounterCleanup();
+      switchTo(worldView);
+      runAway.alpha = 0;
+      menuLocked = false;
+      inWorldBossEncounter = false;
+      initInventory();
+      playMusic("menuMusic");
+      fadeToBlack.filters = [new createjs.ColorFilter(1,1,1,1, 255,0,0,0)];
+      fadeToBlack.cache(0, 0, 765, 340);
+    });
+    saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy);
+    
+  });
+  setHelp(runAway, "Run Away!", "Run away from the battle, back to the world screen.");
+  runAway.alpha = 0;
 
 
   textContainer.addChild(energy, playerhp, hpBarEmptySmall, hpBarSmall, treasureChest);
 
-  encounterView.addChild(background, textContainer);
+  encounterView.addChild(background, textContainer, runAway);
 }
 
 //This function initializes the actual entities in the encounter, not the view itself
