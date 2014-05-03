@@ -87,11 +87,13 @@ button, input[type="submit"], input[type="button"]
 
 .infobox > div
 {
+  margin-top: 0px;
+  margin-bottom: 0px;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
 
-.infobox span
+.infocontent
 {
   float:right;
 }

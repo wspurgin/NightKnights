@@ -23,10 +23,10 @@
 
       <p class="infocaption">Knight Stats</p>
       <div id="knightstats" class="infobox">
-        <div>Energy: <span id="Energy"></span></div>
-        <div>Level: <span id="Level"></span></div>
-        <div>Experience: <span id="Experience"></span></div>
-        <div>XP To Next Level: <span id="xpToNextLevel"></span></div>
+        <div>Energy: <div class="infocontent" id="Energy"></div></div>
+        <div>Level: <div class="infocontent" id="Level"></div></div>
+        <div>Experience: <div class="infocontent" id="Experience"></div></div>
+        <div>XP To Next Level: <div class="infocontent" id="xpToNextLevel"></div></div>
       </div>
 
       <p class="infocaption">Inventory</p>
@@ -38,10 +38,10 @@
         <p class="infocaption">Current Weapon</p>
         <div id="knightweapon" class="infobox">
           <canvas id="weaponCanvas" width="64" height="64"></canvas>
-          <div>Weapon Name: <span id="weaponName"></span></div>
-          <div>Attack: <span id="weaponAttack"></span></div>
-          <div>Defense: <span id="weaponDefense"></span></div>
-          <div>Magic: <span id="weaponMagic"></span></div>
+          <div>Weapon Name: <div class="infocontent" id="weaponName"></div></div>
+          <div>Attack: <div class="infocontent" id="weaponAttack"></div></div>
+          <div>Defense: <div class="infocontent" id="weaponDefense"></div></div>
+          <div>Magic: <div class="infocontent" id="weaponMagic"></div></div>
           <div><button id="changeWeapon">Change Equipped Weapon</button></div>
           <div id="change" class="modalDialog">
             <div>
@@ -53,7 +53,7 @@
         </div>
         <p class="infocaption">Messages</p>
         <div id="knightmessages" class="infobox">
-          <div><span>No Unread Messages</span></div>
+          <div>Messages: <div class="infocontent" id="messageContent">No Unread Messages</div></div>
         </div>
       </div>
   </div>
