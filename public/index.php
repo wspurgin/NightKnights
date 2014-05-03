@@ -15,15 +15,16 @@ if(_session('user_id', false))
 
 <body>
   <div id="wrapper">
+    
     <p class="heading">NIGHT KNIGHTS</p>
-  <div class="twocol">
+    <div class="twocol">
       <div class="left" id="logindiv">
         <p class="infocaption">Returning Knights</p>
         <div id="returning" class="infobox">
           <?php include("modules/login.html"); ?>
         </div>
       </div>
-    
+      
       <div class="right" id="accountdiv">
         <p class="infocaption">New Recruits</p>
         <div id="newbies" class="infobox">
@@ -35,7 +36,7 @@ if(_session('user_id', false))
     <div class="center" id="storydiv">
       <p class="infocaption">The Story So Far</p>
       <div id="blurb" class="infobox words">
-        <p>Welcome to Hiberia, a sleepy little kingdom in a faraway land. Things seem idyllic here, but all is not well; terrible Nightmares have been terrorizing the land, wreaking havoc upon the Hiber Nation.</p>
+        <p>Welcome to Hiberia, a sleepy little kingdom in a faraway land. Things seem idyllic here, but all is not well: horrific Nightmares have been terrorizing the land, wreaking havoc upon the Hiber Nation.</p>
         <br>
         <p>But all is not lost! The bravest and strongest Hiberions have banded together to form the Night Knights!</p>
         <br>
@@ -46,6 +47,7 @@ if(_session('user_id', false))
         <p>Rest up, brave Knight: only by sleeping well can you defeat the Nightmares and reclaim Hiberia for the Hiberions!</p>
       </div>
     </div>
+
     <div id="push"></div>
   </div>
   <?php include("modules/copyright.html"); ?>
