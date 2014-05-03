@@ -259,17 +259,15 @@ function initAreaViews() {
   itemChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   itemChest.framerate = 10;
   itemChest.on("click", openItemChest);
-  /* itemChest.on("rollover", function(){if(!chestLocked){
-    this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
-    this.gotoAndPlay(this.currentAnimation);
-    
+  itemChest.on("rollover", function(){if(!chestLocked){
+    if(!chestLocked){
+      createjs.Tween.get(this, {loop:true}).to({x:310}, 100).to({x:307.5}, 100).to({x:305}, 100).to({x:307.5}, 100);
+    }    
   }});
   itemChest.on("rollout", function(){if(!chestLocked){
-    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
-    this.gotoAndPlay(this.currentAnimation);
-  }});*/
+      createjs.Tween.removeTweens(this);
+      this.x = 307.5;    
+  }});
   itemChest.alpha = 0;
 
   areaView.addChild(backButton, itemChest);
@@ -416,16 +414,17 @@ function initEncounterView() {
   treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   treasureChest.framerate = 10;
   treasureChest.on("click", openChest);
-  /*treasureChest.on("rollover", function(){if(!chestLocked){
-    this.filters = [new createjs.ColorFilter(1,1,1,1, 30,30,30,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
-    this.gotoAndPlay(this.currentAnimation);
-  }});
+  
+  treasureChest.on("rollover", function()
+  {
+    if(!chestLocked){
+      createjs.Tween.get(this, {loop:true}).to({x:310}, 100).to({x:307.5}, 100).to({x:305}, 100).to({x:307.5}, 100);
+    }
+  });
   treasureChest.on("rollout", function(){if(!chestLocked){
-    this.filters = [new createjs.ColorFilter(1,1,1,1, 0,0,0,0)];
-    this.cache(0, 0, this.getBounds().width, this.getBounds().height); 
-    this.gotoAndPlay(this.currentAnimation);
-  }});*/
+    createjs.Tween.removeTweens(treasureChest);
+    this.x = 307.5;
+  }});
   treasureChest.alpha = 0;
 
   fadeToBlack = new createjs.Bitmap(preload.getResult("blackBG"));
@@ -704,6 +703,8 @@ function helpOut(event) {
 function openChest(event) {
   if (!chestLocked) {
     chestLocked = true;
+    createjs.Tween.removeTweens(treasureChest);
+    treasureChest.x = 307.5;
     playMusic("itemFind");
     bgMusic.setVolume(1);
     loot.gotoAndPlay("experience");
@@ -737,6 +738,8 @@ function openChest(event) {
 function openItemChest(event) {
   if (!chestLocked) {
     chestLocked = true;
+    createjs.Tween.removeTweens(itemChest);
+    itemChest.x = 307.5;
     playMusic("itemFind");
     bgMusic.setVolume(1);
     itemChest.gotoAndPlay("itemopen");
