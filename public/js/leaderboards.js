@@ -131,8 +131,13 @@ function populateLeaderboardTable(tableID, start, count) {
     //super awesome loop control structure for great justice
     var firstIndex = start - 1; //loop from this index
     var finalIndex = start + count - 2; //to this index
+
     if ((window.leaderboard.length - 1) < finalIndex) {
         finalIndex = (window.leaderboard.length - 1);
+    }
+
+    while(firstIndex > 0 && (finalIndex - firstIndex) < 9) {
+        firstIndex--;
     }
 
     for (var i = firstIndex; i <= finalIndex; i++) {
