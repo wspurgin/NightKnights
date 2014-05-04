@@ -1,6 +1,6 @@
  /* apiLogic.js
   * author: Justin
-  *
+  * note: it's been fun, thanks guys!
   */
 
  var monsters = [];
@@ -8,6 +8,9 @@
 
  /**
     initializes the monsters array
+    also calls the getitems() method to create
+    a global items array so other methods can
+    access them.
 */
  function initializeMonsterArray() {
      areas = getAreas();
@@ -51,6 +54,9 @@
      }
  }
 
+/**
+    gets a specific user's character's inventory
+*/
  function getCharacterInventory() {
      var inventory = {}
      $.ajax({
@@ -84,8 +90,10 @@
      return inventory;
  }
 
- /*This function posts the data from the battle to the server, and then
+ /**
+  * This function posts the data from the battle to the server, and then
   * returns to the caller whether or not the player has leveled up.
+  * Runs TWO ajax calls.
   */
  function saveBattleResults(experience, energy) {
      console.log("SAVING BATTLE RESULTS...");
@@ -138,10 +146,6 @@
 
      }); //end of AJAX call
 
-     //player.experience += experience; //This property won't be used eventually. I'll remove it once we implement the real function call.
-     //player.experience += results; //This property won't be used eventually. I'll remove it once we implement the real function call.
-     //return player.level + 1; //New level to level up to. Hard coded for the time being.
-
      var energyObj = {};
      energyObj.energy = energy;
      data = JSON.stringify(energyObj);
@@ -190,6 +194,12 @@
      }); //end of AJAX call
  }
 
+ /**
+    Get's a user's character object
+    important data being given are name, experience, energy, and level
+    also gives id
+ */
+ 
  function getPlayerData() {
      console.log("GETTING PLAYER DATA...");
 
@@ -240,7 +250,7 @@
  }
 
  /**
-  *   funciton returns all areas in the database
+  *   function returns all areas in the database
   */
  function getAreas() {
      console.log("GETTING MONSTER INFO BY AREA...");
@@ -291,6 +301,10 @@
      return areas; //save return for when creating area/monster data structure
  }
 
+ /**
+    given an iteger (area_id) returns all the monsters associated with that area
+    returns all monster data too
+ */
  function getAreaMonsters(area) {
      console.log("GETTING MONSTER INFO BY AREA...");
      //console.log("val:" + area);
@@ -399,7 +413,7 @@
  }
 
  /**
-  *   funciton creates an item in the users inventory
+  *   funciton creates a given item (id) in the users inventory
   */
  function createItem(id) {
      //check for the same item
