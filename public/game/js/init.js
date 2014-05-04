@@ -522,7 +522,7 @@ function initMenuView() {
   attackButton = buttonFactory(0, 0, 1, 1, "bigButton", "Melee", "80px", function () {
     swapMenu(combatMenu, attackMenu);
   });
-  setHelp(attackButton, "Attack", "Attack the Nightmare with your current weapon.");
+  setHelp(attackButton, "Melee", "Attack the Nightmare with your current weapon.");
   skillButton = buttonFactory(menuCanvas.width / 2, 0, 1, 1, "bigButton", "Skills", "80px", function () {
     swapMenu(combatMenu, magicMenu);
   });
