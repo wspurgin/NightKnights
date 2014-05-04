@@ -184,15 +184,14 @@ VALUES
 	(3,'Sgt. Mom',375,5079,14),
 	(4,'TheDogeFormerlyKnownasMarfleBark',250,0,1),
 	(5,'^C',176,139,2),
-	(9,'thingssssss',250,0,1),
-	(11,'Sarah',1193,18424,27),
-	(12,'test',250,0,1),
-	(13,'$_username',193,67,2),
-	(14,'ellyonia',266,0,1),
-	(15,'jsmith',0,0,1),
-	(18,'LelzMarfs',250,0,1),
-	(19,'Porcupine^2',250,0,1),
-	(20,'Nergal_the_Cowardly',250,0,1);
+	(6,'thingssssss',250,0,1),
+	(7,'Sarah',1193,18424,27),
+	(8,'$_username',193,67,2),
+	(9,'ellyonia',266,0,1),
+	(10,'jsmith',0,0,1),
+	(11,'LelzMarfs',250,0,1),
+	(12,'Porcupine^2',250,0,1),
+	(13,'Nergal_the_Cowardly',250,0,1);
 
 /*!40000 ALTER TABLE `Characters` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -206,42 +205,19 @@ LOCK TABLES `Inventories` WRITE;
 
 INSERT INTO `Inventories` (`item_id`, `character_id`, `is_equipped`)
 VALUES
-	(1,2,0),
-	(1,3,1),
-	(1,17,0),
-	(2,3,0),
-	(2,11,0),
-	(2,17,0),
-	(3,2,0),
-	(3,3,0),
-	(3,5,0),
-	(3,11,0),
-	(3,17,0),
-	(4,3,0),
-	(4,13,1),
-	(5,2,1),
-	(5,5,1),
-	(5,11,0),
-	(5,17,1),
-	(6,2,0),
-	(6,3,0),
-	(6,11,0),
-	(6,17,0),
 	(7,1,1),
-	(7,2,0),
-	(7,3,0),
+	(7,2,1),
+	(7,3,1),
 	(7,4,1),
-	(7,5,0),
+	(7,5,1),
+	(7,6,1),
+	(7,7,1),
+	(7,8,1),
 	(7,9,1),
+	(7,10,1),
 	(7,11,1),
 	(7,12,1),
-	(7,13,0),
-	(7,14,1),
-	(7,15,1),
-	(7,17,0),
-	(7,18,1),
-	(7,19,1),
-	(7,20,1);
+	(7,13,1);
 
 /*!40000 ALTER TABLE `Inventories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -255,10 +231,10 @@ LOCK TABLES `Items` WRITE;
 
 INSERT INTO `Items` (`id`, `name`, `attack_stat`, `defense_stat`, `magic_stat`, `classification`, `img_url`)
 VALUES
-	(1,'Iron Sword',2,2,0,'Weapon','sword0'),
+	(1,'Sword of Truth',10,10,10,'Weapon','spear13'),
 	(2,'Bastard Sword',8,8,0,'Weapon','sword7'),
-	(3,'Dire Knife',7,0,0,'Weapon','dagger6'),
-	(4,'Sword of Truth',10,10,10,'Weapon','spear13'),
+	(3,'Iron Sword',2,2,0,'Weapon','sword0'),
+	(4,'Dire Knife',7,0,0,'Weapon','dagger6'),
 	(5,'Tribal Spear',2,3,0,'Weapon','spear4'),
 	(6,'Greatsword',7,5,0,'Weapon','sword6'),
 	(7,'Iron Dagger',1,0,0,'Weapon','dagger0'),
@@ -421,16 +397,14 @@ VALUES
 	(3,'Sgt. Mom','a@a.a','$2y$10$K01tm8MFw9zzKUGTbKNX9eqwZX/at6kc8olUO7qk0KwgqLl3qSKLO'),
 	(4,'The Doge Formerly Known as Marf','ebusbee@smu.edu','$2y$10$AnS.ItlKqHvqSoQwmEyk9e7geruz6qfl./eZD7Xv9w/cjfE5bE47G'),
 	(5,'^C','me@theboss.com','$2y$10$/6vepUUa/EcK21KFSHURIuFc5j6cZ4O.xLS0845xLqmf6XDrenINO'),
-	(9,'thingssssss','a@a.abd','$2y$10$bJ.OxfmoBDaSQ4BMMuZtYeX/YEgYy0mHuxcbw9z0XombkwNDvNykG'),
-	(11,'Sarah','lovely@luscious.lips','$2y$10$poDT1G9z.slDbw1It4MbkOnT4OS3DsSdn7q8G3JYUzX0dxfoCkIyK'),
-	(12,'test','test@testing.com','$2y$10$lNBsCPPWNFse35/Y4PXBueZGnXLzB7GsCtWTBVKGXGZyoFESrL1mi'),
-	(13,'$_username','asdf@jkl.com','$2y$10$K2yUrEG4qOo.mHoV7hmX/OmaFOdfj/mI8tlOXqFJ9dbt7sfRlRA.W'),
-	(14,'ellyonia','camikeith@gmail.com','$2y$10$ODUS4QF1.r3oHNn5.UdZ7.YLX7IMAgw.VoMJHNB33GHdTGzCANjiq'),
-	(15,'jsmith','jsmith@me.com','$2y$10$C1p9xTlYXBXbt.x3l4T7YO8DZ7/5.jc7PQheWKE.fJE8nY2gXsuYW'),
-	(17,'fuckyou','fuck@you.com','$2y$10$EOHunULJR1PeDIJrpv/V5O1CY2ccs4PEP/Masx6JJhDS/ioxHXozi'),
-	(18,'LelzMarfs','Ethan.busbee@gmail.com','$2y$10$mZd7.KdYkdH6mPTT0lKodOA0vfSDxbIp7KTyOs.a.okAkqIiRLgGu'),
-	(19,'Porcupine^2','a@b.c','$2y$10$64zZ.mzV8ZT1TvMLIP1nS.N9T9mdn0H2QzR7Np.0iY23hzECLVdSe'),
-	(20,'Nergal_the_Cowardly','b.@rh','$2y$10$RHoonUdURpYM.ikIU9lCQOCzxh2nzQHkFVaiuae8yWszu4.QwNV9y');
+	(6,'thingssssss','a@a.abd','$2y$10$bJ.OxfmoBDaSQ4BMMuZtYeX/YEgYy0mHuxcbw9z0XombkwNDvNykG'),
+	(7,'Sarah','lovely@luscious.lips','$2y$10$poDT1G9z.slDbw1It4MbkOnT4OS3DsSdn7q8G3JYUzX0dxfoCkIyK'),
+	(8,'$_username','asdf@jkl.com','$2y$10$K2yUrEG4qOo.mHoV7hmX/OmaFOdfj/mI8tlOXqFJ9dbt7sfRlRA.W'),
+	(9,'ellyonia','camikeith@gmail.com','$2y$10$ODUS4QF1.r3oHNn5.UdZ7.YLX7IMAgw.VoMJHNB33GHdTGzCANjiq'),
+	(10,'jsmith','jsmith@me.com','$2y$10$C1p9xTlYXBXbt.x3l4T7YO8DZ7/5.jc7PQheWKE.fJE8nY2gXsuYW'),
+	(11,'LelzMarfs','Ethan.busbee@gmail.com','$2y$10$mZd7.KdYkdH6mPTT0lKodOA0vfSDxbIp7KTyOs.a.okAkqIiRLgGu'),
+	(12,'Porcupine^2','a@b.c','$2y$10$64zZ.mzV8ZT1TvMLIP1nS.N9T9mdn0H2QzR7Np.0iY23hzECLVdSe'),
+	(13,'Nergal_the_Cowardly','b.@rh','$2y$10$RHoonUdURpYM.ikIU9lCQOCzxh2nzQHkFVaiuae8yWszu4.QwNV9y');
 
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -444,13 +418,10 @@ LOCK TABLES `World_Bosses` WRITE;
 
 INSERT INTO `World_Bosses` (`id`, `monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
 VALUES
-	(1,55,0,25,5,1,3),
-	(2,57,0,25,5,1,5),
-	(3,46,1872,20,3,1,4),
-	(4,85,0,20,3,1,7),
-	(5,87,2000,20,3,1,5),
-	(6,15,300,20,3,1,4),
-	(7,28,2000,20,3,1,6);
+	(1,46,1872,20,3,1,1),
+	(2,87,2000,20,3,1,1),
+	(3,15,300,20,3,1,2),
+	(4,28,2000,20,3,1,1);
 
 /*!40000 ALTER TABLE `World_Bosses` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -464,9 +435,7 @@ LOCK TABLES `World_Fights` WRITE;
 
 INSERT INTO `World_Fights` (`boss_id`, `character_id`, `damage_done`, `active`)
 VALUES
-	(1,11,4000,0),
-	(2,11,4000,0),
-	(3,15,128,1),
+	(1,13,128,1),
 	(4,3,2000,0);
 
 /*!40000 ALTER TABLE `World_Fights` ENABLE KEYS */;

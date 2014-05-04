@@ -35,12 +35,12 @@
  }
 
  /**
-    returns a random item
+    returns a random item (not op ones)
 */
  function getRandomItem() {
-     var roll = Math.floor(Math.random() * (items.length - 1));
+     var roll = Math.floor(Math.random() * (items.length-2));
      console.log("roll:", roll);
-     var chosen = items[roll];
+     var chosen = items[roll+2];
      console.log("chosen item:", chosen);
 
      check = createItem(chosen.id);

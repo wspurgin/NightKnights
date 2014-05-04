@@ -291,7 +291,7 @@ BEGIN
         INSERT INTO `World_Bosses` (`monster_id`, `boss_health`, `boss_attack`, `boss_defense`, `boss_magic`, `achievable_item_id`)
             SELECT m.`id`, 10 * m.`health_seed`, 20,
                 3, 1, i.`id`
-                FROM `Monsters` m JOIN (SELECT `id` FROM `Items` ORDER BY RAND() LIMIT 5) AS i
+                FROM `Monsters` m JOIN (SELECT `id` FROM `Items` LIMIT 2) AS i
                 ORDER BY RAND() LIMIT 5;
     END IF;
 END;;
