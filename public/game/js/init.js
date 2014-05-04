@@ -247,10 +247,13 @@ function initAreaViews() {
   var backButton = new createjs.Bitmap(preload.getResult("backButton"));
   backButton.setTransform(10, 10);
   backButton.on("click", function () {
-    areaView.removeChildAt(monsterKey);
-    areaView.removeChildAt(0);
-    switchTo(worldView);
-    createjs.Sound.play("buttonPress");
+    if (itemChest.alpha === 0)
+    {
+      areaView.removeChildAt(monsterKey);
+      areaView.removeChildAt(0);
+      switchTo(worldView);
+      createjs.Sound.play("buttonPress");
+    }
   }); //Remove the Monsters, then the background.
   backButton.on("rollover", function(){this.alpha = .8;});
   backButton.on("rollout", function(){this.alpha = 1;});
@@ -269,6 +272,7 @@ function initAreaViews() {
       this.x = 307.5;    
   }});
   itemChest.alpha = 0;
+  setHelp(itemChest, "Item Chest", "This special chest contains a weapon inside of it. If you already have that weapon, you'll earn lots of experience instead.");
 
   areaView.addChild(backButton, itemChest);
 }
@@ -378,6 +382,7 @@ function initNightmaresList() {
       initEncounter();
       switchTo(encounterView);
     });
+    setHelp(nightmareSelection, "Nightmare", "This is a Nightmare. Fight it to earn experience. If you defeat all of the nightmares on the map, something good will happen!");
 
     nightmaresList.addChild(nightmareSelection);
   }
@@ -414,6 +419,7 @@ function initEncounterView() {
   treasureChest.setTransform(bgCanvas.width / 2 - 75, bgCanvas.height / 2 - 75);
   treasureChest.framerate = 10;
   treasureChest.on("click", openChest);
+  setHelp(treasureChest, "Chest", "Congratulations! Click to open this treasure chest and receive your reward!");
   
   treasureChest.on("rollover", function()
   {
@@ -461,7 +467,7 @@ function initEncounterView() {
     saveFight(nightmare.id, nightmare.maxEnergy - nightmare.energy);
     
   });
-  setHelp(runAway, "Run Away!", "Run away from the battle, back to the world screen.");
+  setHelp(runAway, "Run Away!", "Run away from the battle, back to the world screen. Any damage you've done so far will be saved.");
   runAway.alpha = 0;
 
 
