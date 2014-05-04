@@ -7,14 +7,38 @@
 
 .infotable td, .infotable th
 {
+  background-color: #000514;
   border-style: solid;
   border-color: white;
   border-width: 2px;
-  background-color: #000514;
-  border-radius: 5px;
+}
+
+.infotable td:first-child, .infotable th:first-child
+{
+  border-left: none;
+}
+
+.infotable td:last-child, .infotable th:last-child
+{
+  border-right: none;
+}
+
+.infotable th
+{
+  border-top: none !important;
+}
+
+.infotable tr:last-child > td
+{
+  border-bottom: none !important;
 }
 
 .highlight > td
 {
   background-color: #182A61;
+}
+
+.infobox
+{
+  padding: 0px 0px 0px 0px !important;
 }

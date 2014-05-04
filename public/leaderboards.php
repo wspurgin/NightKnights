@@ -9,43 +9,46 @@
   <script src="/js/leaderboards.js"></script>
 </head>
 <body>
-  
-<div id="wrapper">
-  <?php include("modules/navbar.html"); ?>
 
-  <div class="twocol">
-    <div class="left">
-      <p class="infocaption">Top Ten Knights</p>
-      <table id="topten" class="infotable">
-        <thead>
-          <tr>
-            <th scope="col">Rank</th>
-            <th scope="col">Name</th>
-            <th scope="col">Level</th>
-            <th scope="col">Experience</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
+  <div id="wrapper">
+    <?php include("modules/navbar.html"); ?>
 
-    <div class="right">
-      <p class="infocaption">My Ranking</p>
-      <table id="myrank" class="infotable">
-        <thead>
-          <tr>
-            <th scope="col">Rank</th>
-            <th scope="col">Name</th>
-            <th scope="col">Level</th>
-            <th scope="col">Experience</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
+    <div class="twocol">
 
-  </div>
-  <div id="push"></div>
-</div>
-  <?php include("modules/copyright.html"); ?>
+      <div class="left">
+        <p class="infocaption">Top Ten Knights</p>
+        <div class="infobox">
+          <table id="topten" class="infotable">
+            <thead>
+              <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">Level</th>
+                <th scope="col">Experience</th>
+              </tr>
+            </thead>
+          </table></div>
+        </div>
 
-</body>
-</html>
+        <div class="right">
+          <p class="infocaption">My Ranking</p>
+          <div class="infobox">
+            <table id="myrank" class="infotable">
+              <thead>
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Level</th>
+                  <th scope="col">Experience</th>
+                </tr>
+              </thead>
+            </table></div>
+          </div>
+
+        </div>
+        <div id="push"></div>
+      </div>
+      <?php include("modules/copyright.html"); ?>
+
+    </body>
+    </html>
