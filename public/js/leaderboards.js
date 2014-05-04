@@ -1,10 +1,15 @@
 $(document).ready(function() {
 
     getLocalLeaderboard(); //first, setup global leaderboard object (synchronous)
-    var rank = getRankByID(getMe().id); //next, get player's rank
+    window.myRank = getRankByID(getMe().id); //next, get player's rank
     populateLeaderboardTable('topten', 1, 10); //then, render top ten
-    populateLeaderboardTable('myrank', rank - 4, 10); //last, render personal leaderboard
+    populateLeaderboardTable('myrank', window.myRank - 4, 10); //last, render personal leaderboard
 
+    $('tr').each(function() {
+        if($('td:first-child:contains(' + window.myRank + ')', this).length > 0) {
+            $(this).addClass('highlight');
+        };
+    });
 }); //end of $(document).ready()
 
 /*
@@ -129,12 +134,14 @@ function populateLeaderboardTable(tableID, start, count) {
     if ((window.leaderboard.length - 1) < finalIndex) {
         finalIndex = (window.leaderboard.length - 1);
     }
+
     for (var i = firstIndex; i <= finalIndex; i++) {
         //get the new row's data in easy-to-use vars
         var rank = i + 1;
         var name = window.leaderboard[i].name;
         var level = window.leaderboard[i].level;
         var experience = window.leaderboard[i].experience;
+
         $(table)
             .append($('<tr>')
                 .append($('<td> ')

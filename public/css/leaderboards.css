@@ -13,3 +13,8 @@
   background-color: #000514;
   border-radius: 5px;
 }
+
+.highlight > td
+{
+  background-color: #182A61;
+}
