@@ -584,7 +584,7 @@ function initMenuView() {
     ironSkinButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(ironSkinButton);
-  setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2.\n\nCosts 20 Energy to use.\n\nUnlocked at level 3.");
+  setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2 for the next three turns.\n\nCosts 20 Energy to use.\n\nUnlocked at level 3.");
 
   bezerkButton.lockLevel = 6;
   if (player.level < bezerkButton.lockLevel) {
@@ -597,7 +597,7 @@ function initMenuView() {
     bezerkButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(bezerkButton);
-  setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2.\n\nCosts 30 Energy to use.\n\nUnlocked at level 6.");
+  setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2 for the next three turns.\n\nCosts 30 Energy to use.\n\nUnlocked at level 6.");
 
   overloadButton.lockLevel = 9;
   if (player.level < overloadButton.lockLevel) {
@@ -610,7 +610,7 @@ function initMenuView() {
     overloadButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(overloadButton);
-  setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2.\n\nCosts 40 Energy to use.\n\nUnlocked at level 9.");
+  setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2 for the next three turns.\n\nCosts 40 Energy to use.\n\nUnlocked at level 9.");
 
   magicMenu.addChild(skillBackButton, ironSkinButton, bezerkButton, overloadButton);
   menuView.addChild(combatMenu);
