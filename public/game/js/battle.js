@@ -96,9 +96,9 @@ function Player(name, level, energy, experience, weapon)
   }
   
   this.useSkill = function(cost) {
-    if (this.energy - cost > 0)
+    if (this.energy - (cost - this.weapon.magic_stat) > 0)
     {
-      this.energy -= cost;
+      this.energy -= (cost - this.weapon.magic_stat);
       playerhp.text = "x" + this.energy;
       return true;
     }

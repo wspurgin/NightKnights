@@ -114,6 +114,7 @@ function initInventoryView() {
       checkForEquip();
     });
     itemSelectors.push(itemSelector);
+    setHelp(itemSelector, inventory[index].name, "Attack: " + inventory[index].attack_stat + "\n\nDefense: " + inventory[index].defense_stat + "\n\nSkill: " + inventory[index].magic_stat);
 
     var item = new createjs.Sprite(weaponsSheet, inventory[index].img_url);
     item.setTransform(90 * index + 10, 100, 2, 2);
@@ -123,6 +124,8 @@ function initInventoryView() {
       createjs.Sound.play("buttonPress");
       checkForEquip();
     });
+    setHelp(item, inventory[index].name, "Attack: " + inventory[index].attack_stat + "\n\nDefense: " + inventory[index].defense_stat + "\n\nSkill: " + inventory[index].magic_stat);
+
 
     var itemText = new createjs.Text(inventory[index].name.replace(" ", "\n"), "20px VT323", "#FFFFFF");
     itemText.textAlign = "center";
@@ -133,6 +136,8 @@ function initInventoryView() {
       createjs.Sound.play("buttonPress");
       checkForEquip();
     });
+    setHelp(itemText, inventory[index].name, "Attack: " + inventory[index].attack_stat + "\n\nDefense: " + inventory[index].defense_stat + "\n\nSkill: " + inventory[index].magic_stat);
+
 
     checkForEquip();
     inventoryView.addChild(itemSelector, item, itemText);
@@ -309,7 +314,7 @@ function initWorldBossView() {
   }, 1000).to({
     y: 100
   }, 1000);
-  setHelp(worldBoss1Button, worldBoss1.name, "Remaining Health: " + worldBoss1.boss_health + "\nEnergy Drain: " + worldBoss1.boss_attack + "\nDefence: " + worldBoss1.boss_defense);
+  setHelp(worldBoss1Button, worldBoss1.name, "Remaining Health: " + worldBoss1.boss_health + "\n\nEnergy Drain: " + worldBoss1.boss_attack + "\n\nDefence: " + worldBoss1.boss_defense);
 
   worldBoss1Button.on("click", function () {
     nightmare = new Nightmare(worldBoss1.name, worldBoss1.boss_health, worldBoss1.boss_attack, worldBoss1.boss_defense);
@@ -336,7 +341,7 @@ function initWorldBossView() {
   }, 1000).to({
     y: 100
   }, 1000);
-  setHelp(worldBoss2Button, worldBoss2.name, "Remaining Health: " + worldBoss2.boss_health + "\nEnergy Drain: " + worldBoss2.boss_attack + "\nDefence: " + worldBoss2.boss_defense);
+  setHelp(worldBoss2Button, worldBoss2.name, "Remaining Health: " + worldBoss2.boss_health + "\n\nEnergy Drain: " + worldBoss2.boss_attack + "\n\nDefence: " + worldBoss2.boss_defense);
 
   worldBoss2Button.on("click", function () {
     nightmare = new Nightmare(worldBoss2.name, worldBoss2.boss_health, worldBoss2.boss_attack, worldBoss2.boss_defense);
@@ -579,7 +584,7 @@ function initMenuView() {
     ironSkinButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(ironSkinButton);
-  setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2.\n\nUnlocked at level 3");
+  setHelp(ironSkinButton, "Iron Skin", "Multiply your defence by 2.\n\nCosts 20 Energy to use.\n\nUnlocked at level 3.");
 
   bezerkButton.lockLevel = 6;
   if (player.level < bezerkButton.lockLevel) {
@@ -592,7 +597,7 @@ function initMenuView() {
     bezerkButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(bezerkButton);
-  setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2.\n\nUnlocked at level 6");
+  setHelp(bezerkButton, "Bezerk", "Multiply your attack by 2.\n\nCosts 30 Energy to use.\n\nUnlocked at level 6.");
 
   overloadButton.lockLevel = 9;
   if (player.level < overloadButton.lockLevel) {
@@ -605,7 +610,7 @@ function initMenuView() {
     overloadButton.getChildAt(0).image = preload.getResult("bigButton");
   }
   lockList.push(overloadButton);
-  setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2.\n\nUnlocked at level 9");
+  setHelp(overloadButton, "Overload", "Multiply both your attack and defence by 2.\n\nCosts 40 Energy to use.\n\nUnlocked at level 9.");
 
   magicMenu.addChild(skillBackButton, ironSkinButton, bezerkButton, overloadButton);
   menuView.addChild(combatMenu);
