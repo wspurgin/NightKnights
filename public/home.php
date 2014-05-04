@@ -55,7 +55,7 @@
           <div>Weapon Name: <div class="infocontent" id="weaponName"></div></div>
           <div>Attack: <div class="infocontent" id="weaponAttack"></div></div>
           <div>Defense: <div class="infocontent" id="weaponDefense"></div></div>
-          <div>Magic: <div class="infocontent" id="weaponMagic"></div></div>
+          <div>Skill: <div class="infocontent" id="weaponMagic"></div></div>
           <div><button id="changeWeapon">Change Equipped Weapon</button></div>
         </div>
 

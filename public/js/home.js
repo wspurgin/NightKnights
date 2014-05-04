@@ -32,10 +32,10 @@ function setSessionInfo() {
     if (container.data("built") !== true) {
         for (var i in inventory) {
             var item = inventory[i];
-            var html = '<div class="infobox" data-itemid="' + item.id + '"><div>Name: ' + item.name + '</div>';
-            html += '<div>Attack: ' + item.attack_stat + '</div>';
-            html += '<div>Defense: ' + item.defense_stat + '</div>';
-            html += '<div>Magic: ' + item.magic_stat + '</div>';
+            var html = '<div class="infobox" data-itemid="' + item.id + '"><div>Name: <div class="infocontent">' + item.name + '</div></div>';
+            html += '<div>Attack: <div class="infocontent">' + item.attack_stat + '</div></div>';
+            html += '<div>Defense: <div class="infocontent">' + item.defense_stat + '</div></div>';
+            html += '<div>Skill: <div class="infocontent">' + item.magic_stat + '</div></div>';
             html += '<div><input type="button" id="change_item_' + item.id + '" value="I Choose You!"/></div>'
             container.append(html);
             var selector = '#change_item_' + item.id

@@ -1,3 +1,8 @@
+#homenav
+{
+    background-color: #182A61;
+}
+
 .modalDialog {
     position: absolute;
     top: 0;
@@ -19,16 +24,16 @@
 }
 
 .modalDialog > div {
-    width: 400px;
+    width: 300px;
     
     position: relative;
     margin: 10% auto;
     padding: 5px 20px 13px 20px;
     border-radius: 10px;
-    background: #111;
-    background: -moz-linear-gradient(#111, #999);
-    background: -webkit-linear-gradient(#111, #999);
-    background: -o-linear-gradient(#111, #999);
+    background: #00030D;
+    background: -moz-linear-gradient(#00030D, #182A61);
+    background: -webkit-linear-gradient(#00030D, #182A61);
+    background: -o-linear-gradient(#00030D, #182A61);
 }
 
 #modalInventory {
@@ -63,7 +68,7 @@
 }
 
 .close {
-    background: #606061;
+    background: #000514;
     color: #FFFFFF;
     line-height: 25px;
     position: absolute;
@@ -81,7 +86,7 @@
     box-shadow: 1px 1px 3px #000;
 }
 
-.close:hover { background: #080410; } /*old was #00d9ff*/
+.close:hover { background: #182A61; }
 
 #changeWeapon /*only here as a hotfix, really*/
 {

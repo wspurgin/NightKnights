@@ -1,3 +1,8 @@
+#leaderboardnav
+{
+  background-color: #182A61;
+}
+
 .infotable
 {
   text-align: center;
@@ -41,4 +46,9 @@
 .infobox
 {
   padding: 0px 0px 0px 0px !important;
+}
+
+th, td
+{
+  font-size: 1.2em;
 }
