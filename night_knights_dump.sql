@@ -190,7 +190,6 @@ VALUES
 	(13,'$_username',193,67,2),
 	(14,'ellyonia',266,0,1),
 	(15,'jsmith',0,0,1),
-	(17,'fuckyou',0,730,5),
 	(18,'LelzMarfs',250,0,1),
 	(19,'Porcupine^2',250,0,1),
 	(20,'Nergal_the_Cowardly',250,0,1);
