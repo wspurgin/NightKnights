@@ -340,9 +340,6 @@ function endCombat(playerWon)
     chestLocked = true;
     createjs.Tween.get(treasureChest).to({alpha: 1}, 750).call(function(){
       chestLocked = false
-      /*
-      createjs.Tween.removeTweens(this);
-      this.x = 307.5;*/
     });
     player.maxEnergy = player.energy;
   }
