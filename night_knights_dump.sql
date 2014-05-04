@@ -256,13 +256,13 @@ LOCK TABLES `Items` WRITE;
 
 INSERT INTO `Items` (`id`, `name`, `attack_stat`, `defense_stat`, `magic_stat`, `classification`, `img_url`)
 VALUES
-	(1,'Iron Sword',4,0,0,'Weapon','sword0'),
-	(2,'Iron Staff',0,0,1,'Weapon','spear0'),
-	(3,'Steel Sword',6,1,0,'Weapon','sword1'),
-	(4,'Steel Staff',0,1,2,'Weapon','spear1'),
-	(5,'Sword of Truth',10,5,0,'Weapon','sword2'),
-	(6,'Magical Staff of Power',0,5,10,'Weapon','spear3'),
-	(7,'Iron Dagger',1,0,0,'Weapon','dagger0');
+	(1,'Iron Sword',2,2,0,'Weapon','sword0'),
+	(2,'Bastard Sword',8,5,0,'Weapon','sword7'),
+	(3,'Dire Knige',7,0,0,'Weapon','dagger6'),
+	(4,'Trident',0,1,2,'Weapon','spear6'),
+	(5,'Sword of Truth',20,20,15,'Weapon','spear13'),
+	(6,'Cutless',10,10,10,'Weapon','sword13'),
+	(7,'Tribal Spear',6,10,0,'Weapon','spear10');
 
 /*!40000 ALTER TABLE `Items` ENABLE KEYS */;
 UNLOCK TABLES;
