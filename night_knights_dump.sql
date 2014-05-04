@@ -261,7 +261,7 @@ VALUES
 	(4,'Trident',0,1,2,'Weapon','spear6'),
 	(5,'Sword of Truth',20,20,15,'Weapon','spear13'),
 	(6,'Cutless',10,10,10,'Weapon','sword13'),
-	(7,'Tribal Spear',6,10,0,'Weapon','spear10');
+	(7,'Iron Dagger',1,0,0,'Weapon','dagger0');
 
 /*!40000 ALTER TABLE `Items` ENABLE KEYS */;
 UNLOCK TABLES;
